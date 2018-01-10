@@ -1,0 +1,52 @@
+.card-img-top{
+	width: 35%;
+}
+
+img{
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.card{
+    margin: auto;
+        width: 25rem;
+            margin-top: 6%;
+}
+.row{
+	height:100vh;
+}
+
+.card-block{
+	margin:20px;
+}
+
+.white-font{
+	color: #ffffff;
+}
+
+.welcome-text{
+	font-weight: 700;
+    font-size: 24px;
+    color: #676a6c
+}
+
+.showprogress{
+	  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+          width: 25rem;
+  
+}
+.progress{
+background-color: red !important;	
+}
+
+
+.themecolor{
+	color: #ffffff;
+    background-color: #eb384f;
+    border-color: #eb384f;
+	}

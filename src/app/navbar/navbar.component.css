@@ -1,0 +1,28 @@
+.d-inline-block {
+	position: absolute !important;
+	right: 2%;
+	
+}
+
+.themecolor,.themecolor:hover,.themecolor:focus,.themecolor:active,.themecolor:visited{
+	color: #ffffff;
+    background-color: #eb384f;
+    border-color: #eb384f;
+	}
+	.gray-bg {
+	    background-color: #f3f3f4;
+	
+	}
+	
+	.navbar-brand themecolor p-2:hover {
+		color: white;
+	}
+	
+	.white-background{
+	    background-color: #ffffff;
+	
+	
+	}
+	nav{
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 5px 0 rgba(0, 0, 0, .12);
+	}
