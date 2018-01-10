@@ -1,2 +1,20 @@
 <app-navbar></app-navbar>
 
+<div class="album text-muted">
+    <div class="container">
+
+      <div class="row">
+
+        <div class="card" *ngFor="let task of filterTask(tasks)">
+          <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{task.imageURL}}" data-holder-rendered="true">
+          <p class="card-text">Event Header - {{task.header}}</p>
+          <p class="card-text">Event Title - {{task.title}}</p>
+          <p class="card-text">Event Date - {{task.date}}</p>
+          <p class="card-text">Event Duration - {{task.duration}}</p>
+          <p class="card-text">Event Type - {{task.itemType}}</p>
+        </div>
+        
+      </div>
+
+    </div>
+  </div>

@@ -19,10 +19,15 @@ progressValue: number;
   }
 
   ngOnInit() {
+
+    if(localStorage.getItem('currentUser')){
+      this.router.navigate(['../dashboard'], {relativeTo: this.route});
+    }else {
     this.form = new FormGroup({
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)]))
     });
+  }
   }
 
   onSubmit() {
