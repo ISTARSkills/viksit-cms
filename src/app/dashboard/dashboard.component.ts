@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
 
 
   filterTask(tasks: Array<Task>){
-    tasks.filter(item => this.pipe.transform(item.date, this.formatdate) === this.pipe.transform(new Date(), this.formatdate));
+    tasks = tasks.filter(item => this.pipe.transform(item.date, this.formatdate) === this.pipe.transform(new Date(), this.formatdate));
     return tasks;
   }
 
