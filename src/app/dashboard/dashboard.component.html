@@ -2,23 +2,59 @@
 <!-- You can now use your library component in app.component.html -->
 
 <div class="jumbotron">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 col-md-12">
-        <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
-          <div ngxSlickItem *ngFor="let task of tasks; index as i" class="slide">
+  <div class=" container ">
 
-            <div class="card" style="width: 20rem;">
-              <img class="card-img-top" src="{{ task.imageURL }}" alt="Card image cap">
-              <div class="card-block m-3">
-                <h4 class="card-title">Card titlele {{i}}</h4>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content
-                  is a little bit longer.</p>
-                <p class="card-text">
-                  <small class="text-muted">Last updated 3 mins ago</small>
+    <div class="row">
+      <div class="col">
+
+        <div class="d-flex justify-content-end">
+          <div class="mr-auto p-2">
+            <label class="sr-only" for="inlineFormInput">Name</label>
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
+              (keyup.enter)="searchTask(box.value)">
+          </div>
+          <div class="p-2 m-r-4">
+            <label class=" sr-only " for="inlineFormInputGroup ">Username</label>
+            <div class="input-group mb-2 mr-sm-2 mb-sm-0 ">
+              <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormInputGroup " name="selectElem
+                    " #selectElem (change)="setTask(selectElem.value) " id="inlineFormCustomSelect ">
+                <option selected>Choose task Type</option>
+                <option value="Lession">Lesson</option>
+                <option value="Course">Course</option>
+                <option value="All task">All</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+  <div class=" container ">
+    <div class="row ">
+      <div class="col-12 col-md-12 ">
+        <ngx-slick class="carousel " #slickModal="slick-modal" [config]="slideConfig " (afterChange)="afterChange($event) ">
+          <div ngxSlickItem *ngFor="let task of tasks; index as i " class="task ">
+
+            <div class="card " style="width: 20rem; ">
+              <div class="card-block m-3 ">
+                <h6 class="card-title ">{{task.title}}</h6>
+              </div>
+              <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap ">
+              <div class="card-block m-3 ">
+                <h6 class="card-title ">Description</h6>
+                <p class="card-text ">{{task.description}}</p>
+                <p class="card-text ">
+                  <small class="text-muted ">Last updated 3 mins ago</small>
                 </p>
               </div>
-              <button type="button" class="btn btn-danger btn-lg btn-block">Block level button</button>
+              <button type="button " class="btn btn-danger btn-lg btn-block ">
+                <span aria-hidden="true" class="presentation_icon"></span>
+                Block level button</button>
 
             </div>
 

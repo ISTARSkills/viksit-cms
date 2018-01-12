@@ -6,13 +6,14 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styles: ['div.carousel-item {width: 20% !important;}']
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   tasks;
   complex_object;
+  storedTasks;
 
   constructor(private auth: AuthService) {
 
@@ -28,35 +29,16 @@ export class DashboardComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-    this.tasks = this.complex_object.tasks
+    this.tasks = this.complex_object.tasks;
+    this.storedTasks = this.tasks;
     console.log(this.tasks)
   }
 
 
 
-  slides = [
-    { img: "http://placehold.it/350x150/000000" },
-    { img: "http://placehold.it/350x150/111111" },
-    { img: "http://placehold.it/350x150/333333" },
-    { img: "http://placehold.it/350x150/666666" },
-    { img: "http://placehold.it/350x150/000000" },
-    { img: "http://placehold.it/350x150/111111" },
-    { img: "http://placehold.it/350x150/333333" },
-    { img: "http://placehold.it/350x150/666666" },
-    { img: "http://placehold.it/350x150/000000" },
-    { img: "http://placehold.it/350x150/111111" },
-    { img: "http://placehold.it/350x150/333333" },
-    { img: "http://placehold.it/350x150/666666" }
-  ];
-  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3 };
 
-  addSlide() {
-    this.slides.push({ img: "http://placehold.it/350x150/777777" })
-  }
+  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, infinite: false };
 
-  removeSlide() {
-    this.slides.length = this.slides.length - 1;
-  }
 
   afterChange(e) {
     console.log('afterChange');
@@ -67,5 +49,46 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  setTask(taskType: string) {
+    this.tasks = this.storedTasks
 
+    switch (taskType) {
+      case "Course":
+        console.log("course " + taskType);
+        this.tasks = this.storedTasks.filter((item: Task) => item.itemType === "COURSE_CREATION_TASK");
+
+
+        // item.taskType === 'COURSE_CREATION_TASK'
+        console.log(this.tasks.length)
+
+        break;
+      case "Lession":
+        console.log("Lession " + taskType);
+        this.tasks = this.storedTasks.filter((item: Task) => item.itemType === "LESSON_CREATION_TASK");
+        console.log(this.tasks.length)
+
+        break;
+      default: console.log("deafult " + taskType);
+        this.tasks = this.storedTasks;
+    }
+  }
+
+
+
+  searchTask(s: string) {
+    this.tasks = this.storedTasks
+
+    if (s.trim() === "") {
+      console.log('its empty');
+      this.tasks = this.storedTasks
+    } else {
+      var re = s.toLowerCase().trim();
+      console.log(re);
+      this.tasks = this.storedTasks.filter((item: Task) => item.title.toLowerCase().trim().indexOf(re) > -1);
+      console.log(this.tasks.length);
+
+    }
+
+
+  }
 }
