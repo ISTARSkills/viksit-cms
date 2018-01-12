@@ -8,18 +8,18 @@ export class AuthService {
 
   public authenticate(email, password) {
     const body = new HttpParams()
-    .set('email', email)
-    .set('password', password);
-    return this.http.post('http://192.168.1.18:8080/istar/rest/auth/login', body, {
+      .set('email', email)
+      .set('password', password);
+    return this.http.post('http://192.168.0.125:8080/istar/rest/auth/login', body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     });
   }
   public login(data) {
-    localStorage.setItem('currentUser',JSON.stringify(data));
+    localStorage.setItem('currentUser', JSON.stringify(data));
   }
-   logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-    }
+  logout() {
+    // remove user from local storage to log user out
+    localStorage.removeItem('currentUser');
+  }
 
 }

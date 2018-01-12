@@ -1,5 +1,5 @@
 import {AuthService} from '../services/auth/auth.service';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit,Input} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -9,12 +9,11 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   logoutString: String;
-  userName: String;
+  @Input() userName: String;
   constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.logoutString = 'click to logout';
-    this.userName = 'Archnae';
   }
 
   public logout() {

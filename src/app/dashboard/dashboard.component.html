@@ -1,20 +1,30 @@
-<app-navbar></app-navbar>
+<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+<!-- You can now use your library component in app.component.html -->
 
-<div class="album text-muted">
-    <div class="container">
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-12">
+        <ngx-slick class="carousel" #slickModal="slick-modal" [config]="slideConfig" (afterChange)="afterChange($event)">
+          <div ngxSlickItem *ngFor="let task of tasks; index as i" class="slide">
 
-      <div class="row">
+            <div class="card" style="width: 20rem;">
+              <img class="card-img-top" src="{{ task.imageURL }}" alt="Card image cap">
+              <div class="card-block m-3">
+                <h4 class="card-title">Card titlele {{i}}</h4>
+                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content
+                  is a little bit longer.</p>
+                <p class="card-text">
+                  <small class="text-muted">Last updated 3 mins ago</small>
+                </p>
+              </div>
+              <button type="button" class="btn btn-danger btn-lg btn-block">Block level button</button>
 
-        <div class="card" *ngFor="let task of filterTask(tasks)">
-          <img data-src="holder.js/100px280/thumb" alt="100%x280" style="height: 280px; width: 100%; display: block;" src="{{task.imageURL}}" data-holder-rendered="true">
-          <p class="card-text">Event Header - {{task.header}}</p>
-          <p class="card-text">Event Title - {{task.title}}</p>
-          <p class="card-text">Event Date - {{task.date}}</p>
-          <p class="card-text">Event Duration - {{task.duration}}</p>
-          <p class="card-text">Event Type - {{task.itemType}}</p>
-        </div>
-        
+            </div>
+
+          </div>
+        </ngx-slick>
       </div>
-
     </div>
   </div>
+</div>
