@@ -10,7 +10,7 @@ export class AuthService {
     const body = new HttpParams()
       .set('email', email)
       .set('password', password);
-    return this.http.post('http://192.168.0.125:8080/istar/rest/auth/login', body, {
+    return this.http.post('http://192.168.0.111:8080/istar/rest/auth/login', body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     });
   }

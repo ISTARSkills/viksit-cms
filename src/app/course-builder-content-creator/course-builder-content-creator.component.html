@@ -1,3 +1,117 @@
-<p>
-  course-builder-content-creator works!
-</p>
+<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+
+<div class="jumbotron">
+
+  <div class="row mb-2">
+    <div class="col-12">
+      <a href="#" class="btn btn-danger float-right mr-2">Save And Exit</a>
+      <a href="#" class="btn btn-danger float-right mr-2">Submit For Review</a>
+    </div>
+  </div>
+
+  <div class="row course">
+
+    <div class="card course_card">
+      <div class="card-header">
+        {{course?.name}}
+        <i ngbPopover="{{course?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
+        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
+          <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Modules</button>
+        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
+          <i class="fa fa-circle mr-2" aria-hidden="true"></i>Comments</button>
+      </div>
+
+
+      <div class="card-body">
+        <div class="row modules m-0 row-eq-height">
+          <div *ngFor="let module of course?.modules; index as j " class="col-3 p-0">
+            <div class="card module_card row-eq-height">
+              <div class="card-header custom-course-header p-0 pt-3 pb-3">
+                <div class="row m-0 row-eq-height">
+                  <div ngbPopover="{{module.name}}" triggers="mouseenter:mouseleave" class="col-10" *ngIf="module.name.length >18"> {{module.name.slice(0,18)}}...</div>
+                  <div ngbPopover="{{module.name}}" triggers="mouseenter:mouseleave" class="col-10" *ngIf="module.name.length <=18"> {{module.name}}</div>
+                  <div class="col-2 text-right">
+                    <i (click)="removeModuleFunction(module)" class="fa fa-times" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
+                <button (click)="addSessionComponent(module)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                  <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Session</button>
+              </div>
+              <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class='custom-accordion'>
+                <ngb-panel *ngFor="let session of module.sessions; index as k ">
+                  <ng-template ngbPanelTitle>
+                    <div class="card">
+                      <div class="card-header">
+                        <div class="row m-0 row-eq-height">
+                          <div class="col-2 text-left">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-8 text-center">
+                            {{session.name}}
+                          </div>
+                          <div class="col-2 text-right">
+                            <i class="fa fa-times" aria-hidden="true"></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card-block">
+                        <div class="row m-0 row-eq-height">
+                          <div class="col-4">9</div>
+                          <div class="col-4">{{session.progress}}</div>
+                          <div class="col-4">
+                            <button type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                              <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Lesson</button>
+                          </div>
+
+                        </div>
+                        <div class="row m-0 row-eq-height">
+                          <b> Description:</b>
+                          <p class="card-text">{{session.description}}</p>
+                        </div>
+
+                      </div>
+                    </div>
+
+
+
+                  </ng-template>
+                  <ng-template ngbPanelContent>
+
+                    <h5 class="text-center">Lessons</h5>
+
+                    <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else elseBlock">
+                      <div class="card m-3" *ngFor="let lesson of session.lessons; index as l ">
+                        <div class="card-header">
+                          <div class="row m-0 row-eq-height">
+                            <div class="col-10"> {{lesson.title}}</div>
+                            <div class="col-2 text-right">
+                              <i class="fa fa-times" aria-hidden="true"></i>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="card-body">
+                          <p class="card-text">{{lesson.description}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <ng-template #elseBlock>
+                      <p class="text-center">No Lesson Present</p>
+                    </ng-template>
+                  </ng-template>
+                </ngb-panel>
+              </ngb-accordion>
+
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

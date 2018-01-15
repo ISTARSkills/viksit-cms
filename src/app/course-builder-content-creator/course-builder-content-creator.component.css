@@ -1,0 +1,31 @@
+.modules{
+   overflow-x: auto;
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+}
+.course_card{
+    width: 100% !important;
+    
+}
+.course_header_buttons{
+    border-radius: 27px;
+     font-size: 12px;
+}
+.custom-course-header{
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+}
+.course_body_buttons{
+     border-radius: 27px;
+      font-size: 8px;
+}
+
+.custom-course-cardblock{
+        flex: 0.1 !important;
+}
+
+.card-header{
+    background-color:#ffffff !important;
+}
