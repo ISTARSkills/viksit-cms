@@ -62,7 +62,7 @@ export class DashboardComponent implements OnInit {
         console.log(this.tasks.length)
 
         break;
-      case "Lession":
+      case "Lesson":
         console.log("Lession " + taskType);
         this.tasks = this.storedTasks.filter((item: Task) => item.itemType === "LESSON_CREATION_TASK");
         console.log(this.tasks.length)

@@ -29,5 +29,8 @@
 }
 .presentation_icon{
     background-image: url("../../assets/image/presentation_icon.png");
+    width: 23px;
+    height: 23px;
+    display: block;
 }
 
