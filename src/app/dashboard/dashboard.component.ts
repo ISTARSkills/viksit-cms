@@ -1,12 +1,13 @@
 import { AuthService } from '../services/auth/auth.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';

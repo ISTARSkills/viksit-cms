@@ -3,12 +3,10 @@
 
 <div class="jumbotron">
   <div class=" container ">
-
     <div class="row">
       <div class="col">
-
         <div class="d-flex justify-content-end">
-          <div class="mr-auto p-2">
+          <div class="mr-auto py-2">
             <label class="sr-only" for="inlineFormInput">Name</label>
             <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
               (keyup.enter)="searchTask(box.value)">
@@ -27,10 +25,6 @@
 
           </div>
         </div>
-
-
-
-
       </div>
     </div>
   </div>
@@ -41,23 +35,24 @@
           <div ngxSlickItem *ngFor="let task of tasks; index as i " class="task ">
 
             <div class="card " style="width: 20rem; ">
-              <div class="card-block m-3 ">
-                <h6 class="card-title ">{{task.title}}</h6>
+
+              <div class="row m-0">
+                <h6 class="card-title col-10 mb-0 py-4 pl-4 pr-0" placement="bottom" ngbTooltip="{{task.title}}">{{(task.title.length >= 31) ? task.title.slice(0,31)+'...': task.title}}</h6>
+                <div class="col-2  text-center my-auto">
+                  <i class="fa fa-info-circle" aria-hidden="true" placement="bottom" ngbPopover="{{task.title}}" triggers="mouseenter:mouseleave"></i>
+                </div>
               </div>
               <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap ">
-              <div class="card-block m-3 ">
-                <h6 class="card-title ">Description</h6>
-                <p class="card-text ">{{task.description}}</p>
-                <p class="card-text ">
-                  <small class="text-muted ">Last updated 3 mins ago</small>
-                </p>
+              <div class="card-block">
+                <h5 class="card-title text-muted">Description</h5>
+                <p class="card-text">{{task.description}}</p>
               </div>
               <button type="button " class="btn btn-danger btn-lg btn-block ">
-                <span aria-hidden="true" class="presentation_icon"></span>
-                Block level button</button>
-
+                <div class="row m-0 custom-button-presentation">
+                  <span aria-hidden="true" class="presentation_icon ml-3 mr-2"></span>
+                  Create Course</div>
+              </button>
             </div>
-
           </div>
         </ngx-slick>
       </div>

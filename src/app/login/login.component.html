@@ -4,17 +4,21 @@
         <div class="row">
 
             <div class="col">
-<div class="showprogress" *ngIf="showLoader"><ngb-progressbar showValue="true" type="success" [value]="progressValue"></ngb-progressbar><br/><br/>
-<p class="text-center " style="    color: #eb384f;"> Loading ...</p>
-</div>
- 
+                <div class="showprogress" *ngIf="showLoader">
+                    <div class="loader mx-auto"></div>
+                    <br/>
+                    <br/>
+                    <p class="text-center " style="    color: #eb384f;"> Loading ...</p>
+                </div>
+
                 <div class="card align-middle" *ngIf="!showLoader">
                     <div class="card-block">
                         <img class="card-img-top " src="../assets/image/talentify_logo.png" alt="Card image cap" />
                         <h2 class="text-center m-4 welcome-text">Welcome</h2>
                         <form [formGroup]="form" (ngSubmit)="onSubmit()">
                             <div class="form-group p-1 m-3" [ngClass]="displayFieldCss('email')">
-                                <input type="email" class="form-control " id="exampleInputEmail1" formControlName="email" name="email" aria-describedby="emailHelp" placeholder="Enter email">
+                                <input type="email" class="form-control " id="exampleInputEmail1" formControlName="email" name="email" aria-describedby="emailHelp"
+                                    placeholder="Enter email">
                                 <app-field-error-display [displayError]="isFieldValid('email')" errorMsg="Please enter a valid email">
                                 </app-field-error-display>
                             </div>
@@ -27,7 +31,7 @@
                                 <button type="submit" class="btn themecolor white-font btn-lg btn-block p-1" [disabled]="!form.valid">Login</button>
                             </div>
                             <p class="m-t text-center p-1 m-2">
-                                <small>ISTAR Skill Development Pvt. Ltd. © 2017</small>
+                                <small>ISTAR Skill Development Pvt. Ltd. ï¿½ 2017</small>
                             </p>
                         </form>
                     </div>
