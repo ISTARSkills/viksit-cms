@@ -35,4 +35,6 @@ import { SlickModule } from 'ngx-slick';
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
+
+
 export class AppModule { }
