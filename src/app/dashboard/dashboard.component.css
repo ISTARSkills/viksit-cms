@@ -22,6 +22,7 @@
      margin-bottom: 40px;
      min-height: 483px;
      max-height: 483px;
+     box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.24);
 }
 
 .m-r-4{
@@ -34,3 +35,20 @@
     display: block;
 }
 
+.custom-button-presentation{
+    font-size: 18px;
+    font-family: avenir-light !important;
+}
+.popover-body{
+    padding: 5px;
+    font-family: avenir-light;
+}
+.popover-header{
+    padding: 5px;
+    font-family: avenir-light;
+    background-color: #f7f7f7;
+    border-top-left-radius: calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);   
+    font-size: 1rem;
+    margin-bottom: 0px;
+}
