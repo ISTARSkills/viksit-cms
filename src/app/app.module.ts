@@ -16,7 +16,20 @@ import { DashboardContentCreatorComponent } from './dashboard-content-creator/da
 import { CourseBuilderContentCreatorComponent } from './course-builder-content-creator/course-builder-content-creator.component';
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
 import { SlickModule } from 'ngx-slick';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: 'http://192.168.1.8:8080/istar/rest/image/upload',
+  method: 'post',
+  maxFilesize: 50,
+  maxFiles: 1,
+  createImageThumbnails: true,
+  acceptedFiles: 'image/*',
+  paramName: 'file'
+};
 
 @NgModule({
   declarations: [
@@ -30,9 +43,12 @@ import { SlickModule } from 'ngx-slick';
     LessonBuilderContentCreatorComponent
   ],
   imports: [
-    BrowserModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot()
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, {
+    provide: DROPZONE_CONFIG,
+    useValue: DEFAULT_DROPZONE_CONFIG
+  }],
   bootstrap: [AppComponent]
 })
 
