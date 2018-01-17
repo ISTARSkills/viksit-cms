@@ -1,3 +1,4 @@
+import { AppConfiguration } from './../../app.constants';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -10,7 +11,7 @@ export class AuthService {
     const body = new HttpParams()
       .set('email', email)
       .set('password', password);
-    return this.http.post('http://192.168.31.73:8080/istar/rest/auth/login', body, {
+    return this.http.post(AppConfiguration.ServerWithApiUrl + 'auth/login', body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     });
   }

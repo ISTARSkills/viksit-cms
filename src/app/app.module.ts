@@ -1,3 +1,4 @@
+import { AppConfiguration } from './app.constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -22,7 +23,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
-  url: 'http://192.168.31.73:8080/istar/rest/image/upload',
+  url: AppConfiguration.ServerWithApiUrl + 'image/upload',
   method: 'post',
   maxFilesize: 50,
   maxFiles: 1,
@@ -45,7 +46,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   imports: [
     BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot()
   ],
-  providers: [AuthService, AuthGuard, {
+  providers: [AuthService, AuthGuard, AppConfiguration, {
     provide: DROPZONE_CONFIG,
     useValue: DEFAULT_DROPZONE_CONFIG
   }],
