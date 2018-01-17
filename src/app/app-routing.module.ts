@@ -1,5 +1,6 @@
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
 import { CourseBuilderContentCreatorComponent } from './course-builder-content-creator/course-builder-content-creator.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';

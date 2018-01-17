@@ -10,7 +10,6 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { Module } from '../pojo/module/module';
-
 @Component({
   selector: 'app-course-builder-content-creator',
   templateUrl: './course-builder-content-creator.component.html',
@@ -29,7 +28,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   desc = '';
   type = '';
   simpleDrop: any = null;
-
+  //dragModuleOperation: boolean = false;
+  //dragSessionOperation: boolean = false;
+  dragOperation = 'module';
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
     this.id = this.route.snapshot.params.id;
     console.log(this.id + ' .......................')
@@ -143,9 +144,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-    console.log('http://192.168.1.7:8080/istar/rest/course/1/course_structure/' + this.id);
     // Make the HTTP request:
-    this.http.get('http://192.168.1.7:8080/istar/rest/course/1/course_structure/' + this.id).subscribe(data => {
+    this.http.get('http://192.168.31.73:8080/istar/rest/course/1/course_structure/' + this.id).subscribe(data => {
       // Read the result field from the JSON response.
       this.course = data['data'];
       console.log(this.course);

@@ -22,7 +22,7 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
-  url: 'http://192.168.1.7:8080/istar/rest/image/upload',
+  url: 'http://192.168.31.73:8080/istar/rest/image/upload',
   method: 'post',
   maxFilesize: 50,
   maxFiles: 1,
