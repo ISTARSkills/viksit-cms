@@ -8,6 +8,7 @@
     width: 100% !important;
     
 }
+
 .course_header_buttons{
     border-radius: 27px;
      font-size: 12px;
@@ -16,6 +17,7 @@
     font-size: 13px;
     font-weight: bold;
     text-align: center;
+     background-color:#ffffff !important;
 }
 .course_body_buttons{
      border-radius: 27px;
@@ -68,3 +70,5 @@ color: #333333;
 .desc-heading-font-fize{
     font-size: 12px;
 }
+
+

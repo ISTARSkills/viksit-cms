@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, ViewEncapsulation
+  Component, OnInit
 } from '@angular/core';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -15,7 +15,7 @@ import { Module } from '../pojo/module/module';
   selector: 'app-course-builder-content-creator',
   templateUrl: './course-builder-content-creator.component.html',
   styleUrls: ['./course-builder-content-creator.component.css'],
-  encapsulation: ViewEncapsulation.None
+
 })
 export class CourseBuilderContentCreatorComponent implements OnInit {
 
@@ -30,7 +30,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   type = '';
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
     this.id = this.route.snapshot.params.id;
-
+    console.log(this.id + ' .......................')
   }
 
   public addModuleComponent = function (course) {
@@ -141,9 +141,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-    console.log('http://192.168.1.8:8080/istar/rest/course/1/course_structure/' + this.id);
+    console.log('http://192.168.1.7:8080/istar/rest/course/1/course_structure/' + this.id);
     // Make the HTTP request:
-    this.http.get('http://192.168.1.8:8080/istar/rest/course/1/course_structure/' + this.id).subscribe(data => {
+    this.http.get('http://192.168.1.7:8080/istar/rest/course/1/course_structure/' + this.id).subscribe(data => {
       // Read the result field from the JSON response.
       this.course = data['data'];
       console.log(this.course);
@@ -152,4 +152,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
   }
+
+
+
 }

@@ -1,0 +1,7 @@
+.custom-accordion>.card>.card-header>a{
+    text-decoration: none !important;
+}
+
+.custom-accordion>.card>.card-header{
+    background-color:#ffffff !important;
+}

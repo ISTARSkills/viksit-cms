@@ -1,13 +1,14 @@
 import { AuthService } from '../services/auth/auth.service';
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';
@@ -16,7 +17,7 @@ export class DashboardComponent implements OnInit {
   complex_object;
   storedTasks;
 
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
 
 
   }
@@ -30,9 +31,9 @@ export class DashboardComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-    this.tasks = this.complex_object.tasks;
-    this.storedTasks = this.tasks;
-    console.log(this.tasks)
+    this.tasks = this.complex_object.tasks.slice(0, 6);
+    this.storedTasks = this.tasks.slice(0, 6);
+    console.log(this.tasks.slice(0, 6))
   }
 
 
@@ -91,5 +92,21 @@ export class DashboardComponent implements OnInit {
     }
 
 
+  }
+
+
+  goToTask(task: Task) {
+    console.log(task.itemType.trim().toLowerCase())
+    switch (task.itemType.trim().toLowerCase()) {
+      case 'lesson_creation_task':
+        this.router.navigate(['../course/' + task.itemId], { relativeTo: this.route });
+
+        break;
+      case 'course_creation_task':
+        this.router.navigate(['../course/' + task.itemId]);
+
+        break;
+
+    }
   }
 }
