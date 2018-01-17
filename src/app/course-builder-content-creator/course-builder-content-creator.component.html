@@ -23,8 +23,8 @@
 
 
       <div class="card-body">
-        <div class="row modules m-0 row-eq-height">
-          <div *ngFor="let module of course?.modules; index as j " class="col-3 p-0 ml-1 mr-1">
+        <div class="row modules m-0 row-eq-height" dnd-sortable-container [sortableData]="course?.modules">
+          <div *ngFor="let module of course?.modules; index as j " dnd-sortable [sortableIndex]="j" class="col-3 p-0 ml-1 mr-1 ">
             <div class="card module_card row-eq-height">
               <div class="card-header custom-course-header p-0 pt-3 pb-3">
                 <div class="row m-0 row-eq-height">
@@ -35,11 +35,11 @@
                   </div>
                 </div>
               </div>
-              <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
+              <div class="card-block custom-course-cardblock mx-auto p-0 pt-1" dnd-sortable-container [sortableData]="course?.modules[j].session">
                 <button (click)="addSessionComponent(module)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
                   <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Session</button>
               </div>
-              <div class="card mb-2" *ngFor="let session of module.sessions; index as k ">
+              <div class="card mb-2" *ngFor="let session of module.sessions; index as k " dnd-sortable [sortableIndex]="k">
                 <div class="card-header abc">
                   <div class="row m-0 row-eq-height">
                     <div (click)="open('Session',session,content)" class="col-2 text-left">

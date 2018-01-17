@@ -28,6 +28,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   title = '';
   desc = '';
   type = '';
+  simpleDrop: any = null;
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
     this.id = this.route.snapshot.params.id;
     console.log(this.id + ' .......................')

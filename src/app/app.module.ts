@@ -19,10 +19,10 @@ import { SlickModule } from 'ngx-slick';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-
+import { DndModule } from 'ng2-dnd';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
-  url: 'http://192.168.1.8:8080/istar/rest/image/upload',
+  url: 'http://192.168.1.7:8080/istar/rest/image/upload',
   method: 'post',
   maxFilesize: 50,
   maxFiles: 1,
@@ -43,7 +43,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     LessonBuilderContentCreatorComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot()
   ],
   providers: [AuthService, AuthGuard, {
     provide: DROPZONE_CONFIG,
