@@ -19,3 +19,12 @@
 .dashboard-carousel .slick-track{
     transform: translate3d(-1087px, 0px, 0px) !important;
 }
+
+.custom-accordion>.card>.card-header>a{
+    text-decoration: none !important;
+    color: #292b2c;
+}
+
+.custom-accordion>.card>.card-header{
+    background-color:#ffffff !important;
+}

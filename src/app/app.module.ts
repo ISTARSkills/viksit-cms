@@ -1,3 +1,4 @@
+import { AppConfiguration } from './app.constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -18,6 +19,21 @@ import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-c
 import { SlickModule } from 'ngx-slick';
 import { DashboardContentAdminComponent } from './dashboard-content-admin/dashboard-content-admin.component';
 
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { DndModule } from 'ng2-dnd';
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: AppConfiguration.ServerWithApiUrl + 'image/upload',
+  method: 'POST',
+  maxFilesize: 50,
+  maxFiles: 1,
+  createImageThumbnails: true,
+  acceptedFiles: 'image/*',
+  paramName: 'file',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+};
 
 @NgModule({
   declarations: [
@@ -32,9 +48,12 @@ import { DashboardContentAdminComponent } from './dashboard-content-admin/dashbo
     DashboardContentAdminComponent
   ],
   imports: [
-    BrowserModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot()
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, AppConfiguration, {
+    provide: DROPZONE_CONFIG,
+    useValue: DEFAULT_DROPZONE_CONFIG
+  }],
   bootstrap: [AppComponent]
 })
 

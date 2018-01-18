@@ -1,3 +1,193 @@
-<p>
-  course-builder-content-creator works!
-</p>
+<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+
+<div class="jumbotron">
+
+  <div class="row mb-2">
+    <div class="col-12">
+      <a href="#" class="btn btn-danger float-right mr-2">Save And Exit</a>
+      <a href="#" class="btn btn-danger float-right mr-2">Submit For Review</a>
+    </div>
+  </div>
+  Sort By:
+  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="dragOperation">
+    <label ngbButtonLabel class="btn btn-danger">
+      <input ngbButton type="radio" value="module"> Module
+    </label>
+    <label ngbButtonLabel class="btn btn-danger">
+      <input ngbButton type="radio" value="session"> Session
+    </label>
+    <label ngbButtonLabel class="btn btn-danger">
+      <input ngbButton type="radio" value="lesson"> Lesson
+    </label>
+  </div>
+
+  <div class="row course">
+
+    <div class="card course_card">
+      <div class="card-header">
+        <span (click)="open('Course',course,content,null,null,null)"> {{course?.name}} </span>
+        <i ngbPopover="{{course?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
+        <button (click)="addModuleComponent(course)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
+          <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Modules</button>
+        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
+          <i class="fa fa-circle mr-2" aria-hidden="true"></i>Comments</button>
+      </div>
+
+
+      <div class="card-body">
+
+
+        <div *ngIf="course?.modules != undefined && course?.modules.length > 0; else moduleElseBlock" class="row modules m-0 row-eq-height"
+          dnd-sortable-container [sortableData]="course?.modules" [dropZones]="['container-dropZone']">
+
+          <div *ngFor="let module of course?.modules; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'module'"
+            class="col-3 p-0 ml-1 mr-1 ">
+            <div dnd-sortable-container [sortableData]="course?.modules[j].sessions" [dropZones]="['widget-dropZone']">
+              <div class="card module_card row-eq-height">
+                <div class="card-header custom-course-header p-0 pt-3 pb-3">
+                  <div class="row m-0 row-eq-height">
+                    <div class="col-10 text-left module-font-fize" (click)="open('Module',module,content,j,null,null)">
+                      {{module.name}}</div>
+                    <div class="col-2 text-right">
+                      <i (click)="removeModuleFunction(module)" class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
+                  <button (click)="addSessionComponent(module)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                    <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Session</button>
+                </div>
+                <div *ngIf=" module.sessions != undefined && module.sessions.length > 0; else sessionElseBlock">
+                  <div class="card mb-2" *ngFor="let session of module.sessions; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'session'"
+                    [dragData]="course?.modules[j].sessions[k]">
+                    <div class="card-header abc">
+                      <div class="row m-0 row-eq-height">
+                        <div (click)="open('Session',session,content,j,k,null)" class="col-2 text-left">
+                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-8 text-center">
+                          <span> {{session.name}}</span>
+                        </div>
+                        <div class="col-2 text-right">
+                          <i (click)="removeSessionsFunction(module,session)" class="fa fa-times" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-block p-0">
+                      <div class="row m-0 row-eq-height">
+                        <div class="col-4">9</div>
+                        <div class="col-4">{{session.progress}}</div>
+                        <div class="col-4">
+                          <button type="button" (click)="addLessonsComponent(module,session)" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                            <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Lesson</button>
+                        </div>
+
+                      </div>
+
+
+
+
+                      <div class="row m-0 row-eq-height">
+
+                        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class='custom-accordion w-100'>
+                          <ngb-panel>
+                            <ng-template ngbPanelTitle>
+
+                              <b class="desc-heading-font-fize m-2"> Description: &nbsp;</b>
+                              <p class="card-text custom-description m-2">{{session.description}}</p>
+
+
+                            </ng-template>
+                            <ng-template ngbPanelContent>
+                              <div dnd-sortable-container [sortableData]="course?.modules[j].sessions[k].lessons" [dropZones]="['lesson-dropZone']">
+
+                                <h5 class="text-center">Lessons</h5>
+
+
+
+
+                                <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else lessonElseBlock">
+
+
+
+
+
+
+                                  <div class="card m-3" [ngClass]="(lesson.status == 'INCOMPLETE')?'top-border-red':'top-border-green'" *ngFor="let lesson of session.lessons; index as l "
+                                    dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'" [dragData]="course?.modules[j].sessions[k].lessons[l]">
+                                    <div class="card-header">
+                                      <div class="row m-0 row-eq-height">
+                                        <div class="col-10 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
+                                        <div class="col-2 text-right">
+                                          <i (click)="removeLessonsFunction(module,session,lesson)" class="fa fa-times" aria-hidden="true"></i>
+                                        </div>
+                                      </div>
+
+                                    </div>
+                                    <div class="card-body m-3">
+                                      <b class="desc-heading-font-fize">Description: &nbsp;</b>
+                                      <p class="card-text custom-description">{{lesson.description}}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <ng-template #lessonElseBlock>
+                                <p class="text-center">No Lesson Present</p>
+                              </ng-template>
+                            </ng-template>
+                          </ngb-panel>
+                        </ngb-accordion>
+
+
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <ng-template #sessionElseBlock>
+                  <p class="text-center">No Session Present</p>
+                </ng-template>
+
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <ng-template #moduleElseBlock>
+          <p class="text-center">No Module Present</p>
+        </ng-template>
+      </div>
+
+    </div>
+  </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title m-auto">{{modalName}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <dropzone *ngIf=" type != 'Session';" [dropzone]=" config " [message]=" 'Click or drag images here to upload' " (error)="onUploadError($event)
+        " (success)="onUploadSuccess($event) "></dropzone>
+
+      <label for="typeahead-format ">name:</label>
+      <input type="text " class="form-control " [(ngModel)]="title " />
+      <label for="typeahead-format ">Description:</label>
+      <textarea type="text " class="form-control " [(ngModel)]="desc "></textarea>
+
+    </div>
+    <div class="modal-footer ">
+      <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
+      <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content) ">Save</button>
+    </div>
+  </ng-template>
+
+
+</div>
