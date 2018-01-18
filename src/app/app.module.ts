@@ -16,6 +16,7 @@ import { DashboardContentCreatorComponent } from './dashboard-content-creator/da
 import { CourseBuilderContentCreatorComponent } from './course-builder-content-creator/course-builder-content-creator.component';
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
 import { SlickModule } from 'ngx-slick';
+import { DashboardContentAdminComponent } from './dashboard-content-admin/dashboard-content-admin.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { SlickModule } from 'ngx-slick';
     NavbarComponent,
     DashboardContentCreatorComponent,
     CourseBuilderContentCreatorComponent,
-    LessonBuilderContentCreatorComponent
+    LessonBuilderContentCreatorComponent,
+    DashboardContentAdminComponent
   ],
   imports: [
     BrowserModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot()

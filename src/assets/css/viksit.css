@@ -1,0 +1,21 @@
+.popover-body{
+    padding: 5px;
+    font-family: avenir-light;
+}
+.popover-header{
+    padding: 5px;
+    font-family: avenir-light;
+    background-color: #f7f7f7;
+    border-top-left-radius: calc(.3rem - 1px);
+    border-top-right-radius: calc(.3rem - 1px);   
+    font-size: 1rem;
+    margin-bottom: 0px;
+}
+
+.dashboard-carousel .slick-next {
+    right: 0px !important;
+}
+
+.dashboard-carousel .slick-track{
+    transform: translate3d(-1087px, 0px, 0px) !important;
+}

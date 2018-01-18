@@ -3,11 +3,12 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';
@@ -15,8 +16,7 @@ export class DashboardComponent implements OnInit {
   tasks;
   complex_object;
   storedTasks;
-
-  constructor(private auth: AuthService) {
+  constructor(private auth: AuthService, private spinnerService: Ng4LoadingSpinnerService) {
 
 
   }
@@ -31,18 +31,25 @@ export class DashboardComponent implements OnInit {
 
     this.complex_object = JSON.parse(local_complex_object);
     this.tasks = this.complex_object.tasks;
-    this.storedTasks = this.tasks;
+    /* if (this.complex_object.tasks.size > 12) {
+      this.tasks = this.complex_object.tasks.slice(0, 12);
+    } else {
+      this.tasks = this.complex_object.tasks;
+    } */
+    this.storedTasks = this.complex_object.tasks;
     console.log(this.tasks)
   }
 
 
 
 
-  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, infinite: false };
+  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, infinite: true, lazyLoad: 'progressives' };
 
 
   afterChange(e) {
-    console.log('afterChange');
+    console.log('afterChange', e);
+    /* //this.tasks = this.storedTasks.slice(e.currentSlide, e.currentSlide + 5);
+    this.tasks = this.storedTasks.slice(e.currentSlide, e.currentSlide + 12); */
   }
 
   filterSlides(slides: Array<any>) {
@@ -52,7 +59,7 @@ export class DashboardComponent implements OnInit {
 
   setTask(taskType: string) {
     this.tasks = this.storedTasks
-
+    this.spinnerService.show();
     switch (taskType) {
       case "Course":
         console.log("course " + taskType);
@@ -72,6 +79,7 @@ export class DashboardComponent implements OnInit {
       default: console.log("deafult " + taskType);
         this.tasks = this.storedTasks;
     }
+    this.spinnerService.hide();
   }
 
 
