@@ -23,6 +23,8 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   url: AppConfiguration.ServerWithApiUrl + 'image/upload',
@@ -48,7 +50,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     DashboardContentAdminComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [AuthService, AuthGuard, AppConfiguration, {
     provide: DROPZONE_CONFIG,
