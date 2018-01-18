@@ -24,12 +24,13 @@ import { DndModule } from 'ng2-dnd';
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
   url: AppConfiguration.ServerWithApiUrl + 'image/upload',
-  method: 'post',
+  method: 'POST',
   maxFilesize: 50,
   maxFiles: 1,
   createImageThumbnails: true,
   acceptedFiles: 'image/*',
-  paramName: 'file'
+  paramName: 'file',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 };
 
 @NgModule({

@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Session } from '../pojo/session/session';
 import { Lesson } from '../pojo/lesson/lesson';
-import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { Module } from '../pojo/module/module';
@@ -19,7 +19,6 @@ import { AppConfiguration } from './../app.constants';
 
 })
 export class CourseBuilderContentCreatorComponent implements OnInit {
-
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   complex_object;
@@ -29,20 +28,21 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   title = '';
   desc = '';
   type = '';
+  modalName = "";
   simpleDrop: any = null;
-  //dragModuleOperation: boolean = false;
-  //dragSessionOperation: boolean = false;
   dragOperation = 'module';
+  module_index;
+  session_index;
+  lesson_index;
+  public activeModal: NgbActiveModal;
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
     this.id = this.route.snapshot.params.id;
-    console.log(this.id + ' .......................')
   }
 
   public addModuleComponent = function (course) {
-    // var index = this.course.indexOf(module);
     var lessons = Array();
     var sessions = Array();
-    var newLesson = new Lesson("New Lesson", "New Lesson Desc", 0, 'INCOMPLETE')
+    var newLesson = new Lesson("New Lesson", "New Lesson Desc", 0, 'INCOMPLETE', "")
     lessons.push(newLesson);
     var newSession = new Session("New Session", "New Session Desc", 0, lessons)
     sessions.push(newSession);
@@ -62,7 +62,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   public addSessionComponent = function (module) {
     var index = this.course.modules.indexOf(module);
     var lessons = Array();
-    var newLesson = new Lesson("New Lesson", "New Lesson Desc", 0, 'INCOMPLETE')
+    var newLesson = new Lesson("New Lesson", "New Lesson Desc", 0, "INCOMPLETE", "")
     lessons.push(newLesson);
     var newSession = new Session("New Session", "NewSession Desc", 0, lessons)
     console.log("newSession " + JSON.stringify(newSession));
@@ -81,7 +81,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   public addLessonsComponent = function (module, session) {
     var moduleIndex = this.course.modules.indexOf(module);
     var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
-    var newLesson = new Lesson("New Lesson", "New Lesson Desc", 0, "INCOMPLETE")
+    var newLesson = new Lesson("New Lesson", "New Lesson Desc", 0, "INCOMPLETE", "")
     console.log("newSession " + JSON.stringify(newLesson));
     this.course.modules[moduleIndex].sessions[sessionIndex].lessons.push(newLesson);
     console.log(this.course);
@@ -96,10 +96,15 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   };
 
 
-  open(type, value, content) {
-    this.type = 'Edit ' + type;
+  open(type, value, content, module_index, session_index, lesson_index) {
+    this.modalName = 'Edit ' + type;
+    this.type = type;
     this.title = value.name;
     this.desc = value.description;
+    this.module_index = module_index;
+    this.session_index = session_index;
+    this.lesson_index = lesson_index;
+    console.log(value);
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -109,13 +114,29 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   save(content) {
 
+    switch (this.type.toLowerCase()) {
+      case 'course':
+        this.course.name = this.title;
+        this.course.description = this.desc;
+        break;
+      case 'module':
+        this.course.modules[this.module_index].name = this.title;
+        this.course.modules[this.module_index].description = this.desc;
+        break;
+      case 'session':
+        this.course.modules[this.module_index].sessions[this.session_index].name = this.title;
+        this.course.modules[this.module_index].sessions[this.session_index].description = this.desc;
+        break;
+      case 'lesson':
+        this.course.modules[this.module_index].sessions[this.lesson_index].lessons[this.lesson_index].name = this.title;
+        this.course.modules[this.module_index].sessions[this.lesson_index].lessons[this.lesson_index].description = this.desc;
+        break;
 
-    this.modalService.open(content).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    }
+    console.log(this.course);
+
   }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -131,6 +152,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     console.log(file);
     console.log(file[0].upload.filename);
     console.log(file[0].type);
+
   }
 
 
