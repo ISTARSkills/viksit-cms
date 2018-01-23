@@ -3,24 +3,28 @@
 <div class="jumbotron">
 
   <div class="row mb-2">
-    <div class="col-12">
-      <a href="#" class="btn btn-danger float-right mr-2">Save And Exit</a>
-      <a href="#" class="btn btn-danger float-right mr-2">Submit For Review</a>
+    <div class="col-6">
+      Sort By:
+      <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="dragOperation">
+        <label ngbButtonLabel class="btn btn-danger">
+          <input ngbButton type="radio" value="module"> Module
+        </label>
+        <label ngbButtonLabel class="btn btn-danger">
+          <input ngbButton type="radio" value="session"> Session
+        </label>
+        <label ngbButtonLabel class="btn btn-danger">
+          <input ngbButton type="radio" value="lesson"> Lesson
+        </label>
+      </div>
     </div>
-  </div>
-  Sort By:
-  <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="dragOperation">
-    <label ngbButtonLabel class="btn btn-danger">
-      <input ngbButton type="radio" value="module"> Module
-    </label>
-    <label ngbButtonLabel class="btn btn-danger">
-      <input ngbButton type="radio" value="session"> Session
-    </label>
-    <label ngbButtonLabel class="btn btn-danger">
-      <input ngbButton type="radio" value="lesson"> Lesson
-    </label>
-  </div>
 
+    <div class="col-6">
+      <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save And Exit</a>
+      <a class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</a>
+    </div>
+
+
+  </div>
   <div class="row course">
 
     <div class="card course_card">
@@ -111,22 +115,23 @@
 
 
 
+                                  <div *ngFor="let lesson of session.lessons; index as l ">
 
-
-                                  <div class="card m-3" [ngClass]="(lesson.status == 'INCOMPLETE')?'top-border-red':'top-border-green'" *ngFor="let lesson of session.lessons; index as l "
-                                    dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'" [dragData]="course?.modules[j].sessions[k].lessons[l]">
-                                    <div class="card-header">
-                                      <div class="row m-0 row-eq-height">
-                                        <div class="col-10 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
-                                        <div class="col-2 text-right">
-                                          <i (click)="removeLessonsFunction(module,session,lesson)" class="fa fa-times" aria-hidden="true"></i>
+                                    <div *ngIf="!lesson.isDeleted" class="card m-3" [ngClass]="(lesson.status == 'INCOMPLETE')?'top-border-red':'top-border-green'"
+                                      dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'" [dragData]="course?.modules[j].sessions[k].lessons[l]">
+                                      <div class="card-header">
+                                        <div class="row m-0 row-eq-height">
+                                          <div class="col-10 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
+                                          <div class="col-2 text-right">
+                                            <i (click)="removeLessonsFunction(module,session,lesson)" class="fa fa-times" aria-hidden="true"></i>
+                                          </div>
                                         </div>
-                                      </div>
 
-                                    </div>
-                                    <div class="card-body m-3">
-                                      <b class="desc-heading-font-fize">Description: &nbsp;</b>
-                                      <p class="card-text custom-description">{{lesson.description}}</p>
+                                      </div>
+                                      <div class="card-body m-3">
+                                        <b class="desc-heading-font-fize">Description: &nbsp;</b>
+                                        <p class="card-text custom-description">{{lesson.description}}</p>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -174,18 +179,27 @@
       </button>
     </div>
     <div class="modal-body">
-      <dropzone *ngIf=" type != 'Session';" [dropzone]=" config " [message]=" 'Click or drag images here to upload' " (error)="onUploadError($event)
-        " (success)="onUploadSuccess($event) "></dropzone>
+
+
+      <div *ngIf=" type != 'Session';" class="dropzone course-modal m-auto" [dropzone]="config" (error)="onUploadError($event)"
+        (success)="onUploadSuccess($event)"></div>
 
       <label for="typeahead-format ">name:</label>
       <input type="text " class="form-control " [(ngModel)]="title " />
       <label for="typeahead-format ">Description:</label>
       <textarea type="text " class="form-control " [(ngModel)]="desc "></textarea>
-
+      <div *ngIf=" type == 'Lesson';">
+        <label for="typeahead-format ">Lesson Type:</label>
+        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectOperation">
+          <option value="PRESENTATION">PRESENTATION</option>
+          <option value="ASSESSMENT">ASSESSMENT</option>
+          <option value="INTERACTIVE">INTERACTIVE</option>
+        </select>
+      </div>
     </div>
     <div class="modal-footer ">
       <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
-      <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content) ">Save</button>
+      <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
     </div>
   </ng-template>
 

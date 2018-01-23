@@ -70,5 +70,7 @@ color: #333333;
 .desc-heading-font-fize{
     font-size: 12px;
 }
+.custom-btn-color{
+color: #fff !important;
 
-
+}

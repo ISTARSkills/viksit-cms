@@ -1,16 +1,17 @@
 export class Lesson {
 
-    title: string;
+    name: string;
     description: string;
-    progress: number;
     status: string;
     imageURL: string;
-
-    constructor(title: string, description: string, progress: number, status: string, imageURL: string) {
-        this.title = title;
+    id: number;
+    type: string;
+    constructor(name: string, description: string, status: string, imageURL: string, id: number, type: string) {
+        this.name = name;
         this.description = description;
-        this.progress = progress;
         this.status = status;
         this.imageURL = imageURL;
+        this.id = id;
+        this.type = type;
     }
 }

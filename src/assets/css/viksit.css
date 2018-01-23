@@ -6,3 +6,28 @@
 .custom-accordion>.card>.card-header{
     background-color:#ffffff !important;
 }
+
+.course-modal>.dz-preview>.dz-image>img{
+display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+
+}
+
+.course-modal>.dz-preview>.dz-image {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+}
+
+.course-modal>.dz-preview {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0px !important;
+}
+.course-modal{
+    padding: 0px !important;
+    height: 25vh !important;
+    width: 41% !important;
+}
