@@ -17,8 +17,15 @@ import { DashboardContentCreatorComponent } from './dashboard-content-creator/da
 import { CourseBuilderContentCreatorComponent } from './course-builder-content-creator/course-builder-content-creator.component';
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
 import { SlickModule } from 'ngx-slick';
-import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DashboardContentAdminComponent } from './dashboard-content-admin/dashboard-content-admin.component';
+
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
+import { Ng2GoogleChartsModule } from 'ng2-google-charts';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+
 
 @NgModule({
   declarations: [
@@ -29,10 +36,11 @@ import { DndModule } from 'ng2-dnd';
     NavbarComponent,
     DashboardContentCreatorComponent,
     CourseBuilderContentCreatorComponent,
-    LessonBuilderContentCreatorComponent
+    LessonBuilderContentCreatorComponent,
+    DashboardContentAdminComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [AuthService, AuthGuard, AppConfiguration],
   bootstrap: [AppComponent]

@@ -39,19 +39,6 @@
     font-size: 18px;
     font-family: avenir-light !important;
 }
-.popover-body{
-    padding: 5px;
-    font-family: avenir-light;
-}
-.popover-header{
-    padding: 5px;
-    font-family: avenir-light;
-    background-color: #f7f7f7;
-    border-top-left-radius: calc(.3rem - 1px);
-    border-top-right-radius: calc(.3rem - 1px);   
-    font-size: 1rem;
-    margin-bottom: 0px;
-}
 
 .h-100{
     height: 100vh !important;

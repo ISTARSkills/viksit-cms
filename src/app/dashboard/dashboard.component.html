@@ -1,17 +1,18 @@
+<ng4-loading-spinner> </ng4-loading-spinner>
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 <!-- You can now use your library component in app.component.html -->
 
 <div class="jumbotron p-0 h-100">
   <div class=" container ">
-    <div class="row">
-      <div class="col">
+    <div class="row m-0">
+      <div class="col pr-0">
         <div class="d-flex justify-content-end">
-          <div class="mr-auto py-2">
+          <div class="mr-auto py-2 pl-2">
             <label class="sr-only" for="inlineFormInput">Name</label>
             <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
               (keyup.enter)="searchTask(box.value)">
           </div>
-          <div class="p-2 m-r-4">
+          <div class="p-2">
             <label class=" sr-only " for="inlineFormInputGroup ">Username</label>
             <div class="input-group mb-2 mr-sm-2 mb-sm-0 ">
               <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormInputGroup " name="selectElem
@@ -31,7 +32,7 @@
   <div class=" container ">
     <div class="row ">
       <div class="col-12 col-md-12 ">
-        <ngx-slick class="carousel " #slickModal="slick-modal" [config]="slideConfig " (afterChange)="afterChange($event) ">
+        <ngx-slick class="carousel dashboard-carousel" #slickModal="slick-modal" [config]="slideConfig " (afterChange)="afterChange($event) ">
           <div ngxSlickItem *ngFor="let task of tasks; index as i " class="task ">
 
             <div class="card " style="width: 20rem; ">
@@ -42,7 +43,7 @@
                   <i class="fa fa-info-circle" aria-hidden="true" placement="bottom" ngbPopover="{{task.title}}" triggers="mouseenter:mouseleave"></i>
                 </div>
               </div>
-              <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap ">
+              <!-- <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap "> -->
               <div class="card-block">
                 <h5 class="card-title text-muted">Description</h5>
                 <p class="card-text">{{task.description}}</p>
@@ -58,4 +59,5 @@
       </div>
     </div>
   </div>
+  <app-dashboard-content-admin></app-dashboard-content-admin>
 </div>

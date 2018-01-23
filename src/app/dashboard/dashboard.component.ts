@@ -3,12 +3,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';
@@ -17,10 +18,7 @@ export class DashboardComponent implements OnInit {
   complex_object;
   storedTasks;
 
-
-
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
-
+  constructor(private auth: AuthService, private spinnerService: Ng4LoadingSpinnerService, private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -41,11 +39,13 @@ export class DashboardComponent implements OnInit {
 
 
 
-  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, infinite: false };
+  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, infinite: true, lazyLoad: 'progressives' };
 
 
   afterChange(e) {
-    console.log('afterChange');
+    console.log('afterChange', e);
+    /* //this.tasks = this.storedTasks.slice(e.currentSlide, e.currentSlide + 5);
+    this.tasks = this.storedTasks.slice(e.currentSlide, e.currentSlide + 12); */
   }
 
   filterSlides(slides: Array<any>) {
@@ -55,7 +55,7 @@ export class DashboardComponent implements OnInit {
 
   setTask(taskType: string) {
     this.tasks = this.storedTasks
-
+    this.spinnerService.show();
     switch (taskType) {
       case "Course":
         console.log("course " + taskType);
@@ -75,6 +75,7 @@ export class DashboardComponent implements OnInit {
       default: console.log("deafult " + taskType);
         this.tasks = this.storedTasks;
     }
+    this.spinnerService.hide();
   }
 
 

@@ -27,6 +27,8 @@
     "jquery": "^3.2.1",
     "ng2-dnd": "^5.0.2",
     "ng4-file-upload": "^1.0.4",
+    "ng2-google-charts": "^3.3.0",
+    "ng4-loading-spinner": "^1.1.1",
     "ngx-dropzone-wrapper": "^5.3.1",
     "ngx-slick": "^0.1.3",
     "npm": "^5.5.1",
