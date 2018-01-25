@@ -34,12 +34,12 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     addRemoveLinks: true,
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
   };
-
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   complex_object;
   id: string;
   course;
+  comments;
   closeResult: string;
   title = '';
   desc = '';
@@ -51,8 +51,14 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   module_index;
   session_index;
   lesson_index;
+  showHide: Boolean;
+  showHide1: Boolean;
+  issuesList;
+  commentValue;
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
     this.id = this.route.snapshot.params.id;
+    this.showHide = false;
+    this.showHide1 = false;
 
   }
 
@@ -206,6 +212,55 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe();
 
+  }
+
+  showComments() {
+    this.showHide = !this.showHide;
+  }
+
+  showBtn = -1;
+
+  showUndoBtn(index, issueId) {
+
+
+    if (issueId != undefined) {
+
+      this.issuesList = [
+        {
+          imageUrl: "http://business.talentify.in:9999/android_images/S.png",
+          actor: "Sumanth H G",
+          comment: "Aliquid qui molestiae. Quia architecto et. Eaque exercitationem reiciendis numquam.",
+          date: "2018-01-24 17:51:25"
+        },
+        {
+          imageUrl: "http://business.talentify.in:9999/android_images/A.png",
+          actor: "Ajith K P",
+          comment: "Nemo nisi quos numquam ab rerum. Dolorem omnis in ut exercitationem ipsum. Assumenda beatae qui ut quas.",
+          date: "2018-01-24 16:51:25"
+        }
+      ]
+    } else {
+      this.issuesList = [];
+    }
+
+
+    this.showBtn = index;
+    this.showHide1 = !this.showHide1;
+  }
+
+  keyDownFunction(event) {
+
+    console.log(this.commentValue);
+    if (event.keyCode == 13) {
+      console.log(event);
+      this.issuesList.push({
+        imageUrl: "http://business.talentify.in:9999/android_images/S.png",
+        actor: "Sumanth H G",
+        comment: this.commentValue,
+        date: new Date()
+      });
+      this.commentValue = null;
+    }
   }
 
 }

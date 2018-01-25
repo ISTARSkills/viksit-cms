@@ -31,9 +31,9 @@ export class DashboardComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-    this.tasks = this.complex_object.tasks.slice(0, 6);
-    this.storedTasks = this.tasks.slice(0, 6);
-    console.log(this.tasks.slice(0, 6))
+    this.tasks = this.complex_object.tasks;
+    this.storedTasks = this.tasks;
+    console.log(this.tasks);
   }
 
 
@@ -102,11 +102,11 @@ export class DashboardComponent implements OnInit {
     console.log(task.itemType.trim().toLowerCase())
     switch (task.itemType.trim().toLowerCase()) {
       case 'lesson_creation_task':
-        this.router.navigate(['../course/' + task.itemId], { relativeTo: this.route });
+        this.router.navigate(['../course/' + task.id], { relativeTo: this.route });
 
         break;
       case 'course_creation_task':
-        this.router.navigate(['../course/' + task.itemId]);
+        this.router.navigate(['../course/' + task.id]);
 
         break;
 
