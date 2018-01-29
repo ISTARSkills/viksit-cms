@@ -1,36 +1,10 @@
-<div class="container">
+<div class="container mb-3">
   <div class="row m-0">
     <div class="col-6 pl-0">
-      <div class="graph-card">
-        <div class="card-block">
-          <h4 class="card-header-box">Some Title</h4>
-          <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormInputGroup1" name="selectElem" #selectElem (change)="setGraph(selectElem.value)">
-            <option selected>Choose task Type</option>
-            <option value="ColumnChart">ColumnChart</option>
-            <option value="PieChart">PieChart</option>
-            <option value="Gauge">Gauge</option>
-            <option value="ScatterChart">ScatterChart</option>
-            <option value="LineChart">LineChart</option>
-          </select>
-          <google-chart #graph1 [data]="columnChartData1"></google-chart>
-        </div>
-      </div>
+      <app-graph [chartType]="graphType" [data]="graphData" [title]="'ABC'"></app-graph>
     </div>
     <div class="col-6 pr-0">
-      <div class="graph-card">
-        <div class="card-block">
-          <h4 class="card-header-box">Some Title</h4>
-          <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormInputGroup2" name="selectElem2" #selectElem2 (change)="setGraph2(selectElem2.value)">
-            <option selected>Choose task Type</option>
-            <option value="ColumnChart">ColumnChart</option>
-            <option value="PieChart">PieChart</option>
-            <option value="Gauge">Gauge</option>
-            <option value="ScatterChart">ScatterChart</option>
-            <option value="LineChart">LineChart</option>
-          </select>
-          <google-chart #graph1 [data]="columnChartData2"></google-chart>
-        </div>
-      </div>
+      <app-graph [chartType]="graphType" [data]="graphData" [title]="'ABC'"></app-graph>
     </div>
   </div>
 </div>
