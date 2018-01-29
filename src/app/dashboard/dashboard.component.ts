@@ -3,7 +3,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -18,7 +17,7 @@ export class DashboardComponent implements OnInit {
   complex_object;
   storedTasks;
 
-  constructor(private auth: AuthService, private spinnerService: Ng4LoadingSpinnerService, private router: Router, private route: ActivatedRoute) {
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
 
   }
 
@@ -55,7 +54,6 @@ export class DashboardComponent implements OnInit {
 
   setTask(taskType: string) {
     this.tasks = this.storedTasks
-    this.spinnerService.show();
     switch (taskType) {
       case "Course":
         console.log("course " + taskType);
@@ -75,7 +73,6 @@ export class DashboardComponent implements OnInit {
       default: console.log("deafult " + taskType);
         this.tasks = this.storedTasks;
     }
-    this.spinnerService.hide();
   }
 
 
