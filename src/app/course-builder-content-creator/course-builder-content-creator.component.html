@@ -352,13 +352,16 @@
     <div class="modal-body">
 
 
-      <div *ngIf=" type != 'Session';" class="dropzone course-modal m-auto" [dropzone]="config" (error)="onUploadError($event)"
-        (success)="onUploadSuccess($event)"></div>
+      <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
+        (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
+        <input type="hidden" name="item_id" [(ngModel)]="item_id">
+        <input type="hidden" name="item_type" [(ngModel)]="item_type">
+      </form>
 
       <label for="typeahead-format ">name:</label>
-      <input type="text " class="form-control " [(ngModel)]="title " />
+      <input type="text " class="form-control " [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
-      <textarea type="text " class="form-control " [(ngModel)]="desc "></textarea>
+      <textarea type="text " class="form-control " [(ngModel)]="desc"></textarea>
       <div *ngIf=" type == 'Lesson';">
         <label for="typeahead-format ">Lesson Type:</label>
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectOperation">

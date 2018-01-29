@@ -1,5 +1,5 @@
 import {
-  Component, OnInit
+  Component, OnInit, ViewChild
 } from '@angular/core';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -22,18 +22,7 @@ import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dr
 export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
-  public config: DropzoneConfigInterface = {
-    url: AppConfiguration.ServerWithApiUrl + 'image/upload',
-    method: 'POST',
-    maxFiles: 1,
-    clickable: true,
-    createImageThumbnails: true,
-    acceptedFiles: 'image/*',
-    errorReset: null,
-    cancelReset: null,
-    addRemoveLinks: true,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-  };
+
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   complex_object;
@@ -44,6 +33,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   title = '';
   desc = '';
   type = '';
+  item_id: number;
+  item_type: string;
   modalName = "";
   simpleDrop: any = null;
   dragOperation = 'module';
@@ -53,8 +44,22 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   lesson_index;
   showHide: Boolean;
   showHide1: Boolean;
+
   issuesList;
   commentValue;
+
+  public config: DropzoneConfigInterface = {
+    url: AppConfiguration.ServerWithApiUrl + 'image/upload',
+    method: 'POST',
+    maxFiles: 1,
+    clickable: true,
+    createImageThumbnails: true,
+    acceptedFiles: 'image/png',
+    errorReset: null,
+    cancelReset: null,
+    addRemoveLinks: true
+  };
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
     this.id = this.route.snapshot.params.id;
     this.showHide = false;
@@ -119,15 +124,18 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   };
 
 
-  open(type, value, content, module_index, session_index, lesson_index) {
+  public open(type, value, content, module_index, session_index, lesson_index) {
     this.modalName = 'Edit ' + type;
     this.type = type;
     this.title = value.name;
+    this.item_id = value.id;
+    this.item_type = type;
     this.desc = value.description;
     this.module_index = module_index;
     this.session_index = session_index;
     this.lesson_index = lesson_index;
-    console.log(value);
+    console.log(this.item_id);
+    console.log(this.item_type);
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -135,7 +143,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     });
   }
 
-  save(content) {
+  public save(content) {
 
     console.log(this.type.toLowerCase());
     switch (this.type.toLowerCase()) {
@@ -263,4 +271,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     }
   }
 
+
+
+
 }
+
