@@ -5,11 +5,12 @@ export class Session {
     description: string;
     progress: number;
     lessons: Array<Lesson>
-
-    constructor(name: string, description: string, progress: number, lessons: Array<Lesson>) {
+    id: number;
+    constructor(name: string, description: string, progress: number, lessons: Array<Lesson>, id: number) {
         this.name = name;
         this.description = description;
         this.progress = progress;
         this.lessons = lessons;
+        this.id = id;
     }
 }

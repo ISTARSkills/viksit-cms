@@ -25,17 +25,6 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { GraphComponent } from './graph/graph.component';
-const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
-  // Change this to your upload POST address:
-  url: AppConfiguration.ServerWithApiUrl + 'image/upload',
-  method: 'POST',
-  maxFilesize: 50,
-  maxFiles: 1,
-  createImageThumbnails: true,
-  acceptedFiles: 'image/*',
-  paramName: 'file',
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-};
 
 @NgModule({
   declarations: [
@@ -53,10 +42,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   imports: [
     BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration, {
-    provide: DROPZONE_CONFIG,
-    useValue: DEFAULT_DROPZONE_CONFIG
-  }],
+  providers: [AuthService, AuthGuard, AppConfiguration],
   bootstrap: [AppComponent]
 })
 
