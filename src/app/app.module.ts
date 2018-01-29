@@ -24,8 +24,7 @@ import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
-
+import { GraphComponent } from './graph/graph.component';
 
 @NgModule({
   declarations: [
@@ -37,10 +36,11 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     DashboardContentCreatorComponent,
     CourseBuilderContentCreatorComponent,
     LessonBuilderContentCreatorComponent,
-    DashboardContentAdminComponent
+    DashboardContentAdminComponent,
+    GraphComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, Ng4LoadingSpinnerModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule
   ],
   providers: [AuthService, AuthGuard, AppConfiguration],
   bootstrap: [AppComponent]

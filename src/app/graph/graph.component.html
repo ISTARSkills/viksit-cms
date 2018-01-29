@@ -1,0 +1,14 @@
+<div class="graph-card">
+  <div class="card-block">
+    <h4 class="card-header-box">{{title}}</h4>
+    <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormInputGroup1" name="selectElem" #selectElem (change)="setGraph(selectElem.value)">
+      <option selected>Choose task Type</option>
+      <option value="ColumnChart">ColumnChart</option>
+      <option value="PieChart">PieChart</option>
+      <option value="Gauge">Gauge</option>
+      <option value="ScatterChart">ScatterChart</option>
+      <option value="LineChart">LineChart</option>
+    </select>
+    <google-chart #graph1 [data]="chartData"></google-chart>
+  </div>
+</div>
