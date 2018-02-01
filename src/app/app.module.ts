@@ -1,3 +1,4 @@
+import { ContextMenuModule } from 'ngx-contextmenu';
 import { AppConfiguration } from './app.constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -25,7 +26,6 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { GraphComponent } from './graph/graph.component';
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +40,7 @@ import { GraphComponent } from './graph/graph.component';
     GraphComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), ContextMenuModule.forRoot(), Ng2GoogleChartsModule
   ],
   providers: [AuthService, AuthGuard, AppConfiguration],
   bootstrap: [AppComponent]

@@ -53,3 +53,8 @@ display: block !important;
     height: 25vh !important;
     width: 41% !important;
 }
+.ngx-contextmenu>ul> li {
+ padding-left: 12px;
+    padding-right: 12px;
+    text-align: center;
+}
