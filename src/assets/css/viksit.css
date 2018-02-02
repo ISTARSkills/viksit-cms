@@ -53,3 +53,29 @@ display: block !important;
     height: 25vh !important;
     width: 41% !important;
 }
+.custom-courses-list > .card > .card-header{
+    background-color: #ffffff !important;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.custom-courses-list > .card > .card-header > a,.custom-courses-list > .card > .card-header > a:focus,.custom-courses-list > .card > .card-header > a:hover{
+    color: #98999b;
+    text-decoration: none;
+}
+
+.custom-courses-list > .card > .card-body {
+    padding: 20px;
+}
+.session-desc-acc > .card {
+    border: none;
+}
+.session-desc-acc > .card > .card-header{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    padding-top: 0px;
+}
+.session-clone-wizard > .wizard-steps{
+    width: 100% !important;
+        display: block !important;
+}

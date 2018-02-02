@@ -1,0 +1,82 @@
+<div class="row course">
+  <div class="card course_card">
+    <div class="card-header">
+      <span>
+        {{data?.name}} </span>
+      <i ngbPopover="{{data?.description}}" triggers="mouseenter:mouseleave" placement="bottom" class="fa fa-info-circle" aria-hidden="true"></i>
+    </div>
+    <div class="card-body">
+      <div *ngIf="data?.modules != undefined && data?.modules.length > 0; else moduleElseBlock" class="row modules m-0 row-eq-height">
+        <div *ngFor="let module of data?.modules; index as j " class="col-3 p-0 ml-1 mr-1 ">
+          <div class="card module_card row-eq-height px-2">
+            <div class="card-header  p-0 pt-3 pb-3">
+              <div class="row m-0 row-eq-height">
+                <div class="col-12 text-center custom-course-header module-font-fize">
+                  {{module.name}}</div>
+              </div>
+            </div>
+            <div *ngIf=" module.sessions != undefined && module.sessions.length > 0; else sessionElseBlock">
+              <div class="card mt-2" *ngFor="let session of module.sessions; index as k ">
+                <div class="card-header session-card-header abc">
+                  <div class="row m-0 row-eq-height">
+                    <div class="col-12 text-center">
+                      <span> {{session.name}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-block p-0">
+                  <div class="row m-0 row-eq-height py-1">
+                    <div class="col-4">9</div>
+                    <div class="col-4">{{session.progress}}</div>
+                    <div class="col-4">
+                    </div>
+                  </div>
+                  <div class="row m-0 row-eq-height">
+
+                    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class='custom-accordion session-desc-acc w-100'>
+                      <ngb-panel>
+                        <ng-template ngbPanelTitle>
+                          <b class="desc-heading-font-fize"> Description: &nbsp;</b>
+                          <p class="card-text custom-description">{{session.description}}</p>
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                          <div>
+                            <h5 class="text-center">Lessons</h5>
+                            <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else lessonElseBlock">
+                              <div *ngFor="let lesson of session.lessons; index as l ">
+                                <div class="card m-3" [ngClass]="(lesson.type == 'PRESENTATION')?'top-border-red':'top-border-green'">
+                                  <div class="card-header">
+                                    <div class="row m-0 row-eq-height">
+                                      <div class="col-10 lesson-header-size "> {{lesson.name}}</div>
+                                    </div>
+                                  </div>
+                                  <div class="card-body m-3">
+                                    <b class="desc-heading-font-fize">Description: &nbsp;</b>
+                                    <p class="card-text custom-description">{{lesson.description}}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <ng-template #lessonElseBlock>
+                            <p class="text-center">No Lesson Present</p>
+                          </ng-template>
+                        </ng-template>
+                      </ngb-panel>
+                    </ngb-accordion>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <ng-template #sessionElseBlock>
+              <p class="text-center">No Session Present</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <ng-template #moduleElseBlock>
+        <p class="text-center">No Module Present</p>
+      </ng-template>
+    </div>
+  </div>
+</div>

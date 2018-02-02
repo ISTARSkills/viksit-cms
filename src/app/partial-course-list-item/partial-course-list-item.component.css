@@ -1,0 +1,139 @@
+.modules{
+   overflow-x: auto;
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+}
+.course_card{
+    width: 100% !important;
+}
+
+.course_header_buttons{
+    border-radius: 27px;
+     font-size: 12px;
+}
+.custom-course-header{
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+     background-color:#ffffff !important;
+}
+.course_body_buttons{
+     border-radius: 27px;
+      font-size: 8px;
+}
+
+.custom-course-cardblock{
+        flex: 0.1 !important;
+}
+
+.card-header{
+    background-color:#ffffff;
+}
+
+
+.top-border-green {
+border-top: 5px solid #7ed321 !important;
+}
+
+.top-border-blue {
+border-top: 5px solid #35bdf0 !important;
+}
+
+.top-border-red {
+border-top: 5px solid #df756a !important;
+}
+
+.lesson-header-size {
+font-family: avenir-light;
+font-size: 16px;
+font-weight: 900;
+letter-spacing: 0.2px;
+text-align: left !important;
+color: #2196f2;
+}
+.custom-description {
+width: auto !important;
+height: auto !important;
+font-family: avenir-light;
+font-size: 14px;
+font-weight: 300;
+letter-spacing: 0.2px;
+text-align: left;
+color: #333333;
+}
+.module-font-fize{
+    font-size: 14px;
+}
+
+.desc-heading-font-fize{
+    font-size: 12px;
+}
+.custom-btn-color{
+color: #fff !important;
+
+}
+.custom-comment-circle{
+    position: absolute;
+    border-radius: 24px;
+    background: #0275d8;
+    color: white;
+        height: 40px;
+    z-index: 999999;
+}
+.no_custom-comment-circle{
+    position: absolute;
+    border-radius: 24px;
+       height: 40px;
+    z-index: 999999;
+}
+
+.custom-chat{
+    width: 270px;
+    z-index: 9999999;
+    height: 60vh;
+    position: absolute;
+    top: 35px;
+    margin: 10px;
+
+}
+.custom-media-body{
+    bottom: 0;
+    position: absolute;
+    width: 94%;
+
+}
+.social-comments_list{
+    min-height: 50vh;
+    max-height: 50vh;
+    overflow-y: auto;
+
+}
+.social-comment{
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.custom-scroll-holder::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #ebeaea;
+}
+
+.custom-scroll-holder::-webkit-scrollbar
+{
+  	border-radius: 100px;
+  	width: 6px;
+	background-color: #ebeaea;
+}
+
+.custom-scroll-holder::-webkit-scrollbar-thumb
+{
+	border-radius: 100px;
+	height: 50px;
+	background-color: #999999;
+}
+.session-card-header{
+    background-color: #fcfcfc;
+    box-shadow: inset 0 -1px 0 0 rgba(0, 0, 0, 0.08);
+}
