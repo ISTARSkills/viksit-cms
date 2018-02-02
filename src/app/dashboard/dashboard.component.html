@@ -50,7 +50,9 @@
               <button type="button " class="btn btn-danger btn-lg btn-block " (click)="goToTask(task)">
                 <div class="row m-0 custom-button-presentation">
                   <span aria-hidden="true" class="presentation_icon ml-3 mr-2"></span>
-                  Create Course</div>
+                  {{(task.itemType === 'LESSON_CREATION_TASK') ? 'Create Lesson': 'Create Course'}}</div>
+
+
               </button>
             </div>
           </div>

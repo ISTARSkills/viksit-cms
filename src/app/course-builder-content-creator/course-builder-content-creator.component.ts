@@ -1,5 +1,5 @@
 import {
-  Component, OnInit
+  Component, OnInit, ViewChild
 } from '@angular/core';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -12,7 +12,8 @@ import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { Module } from '../pojo/module/module';
 import { AppConfiguration } from './../app.constants';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
-
+import { ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu';
+import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 
 @Component({
   selector: 'app-course-builder-content-creator',
@@ -21,19 +22,19 @@ import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dr
 })
 export class CourseBuilderContentCreatorComponent implements OnInit {
 
+  @ViewChild(ContextMenuComponent) public contextMenu: ContextMenuComponent;
+  @ViewChild('popover') public popover: NgbPopover;
 
-  public config: DropzoneConfigInterface = {
-    url: AppConfiguration.ServerWithApiUrl + 'image/upload',
-    method: 'POST',
-    maxFiles: 1,
-    clickable: true,
-    createImageThumbnails: true,
-    acceptedFiles: 'image/*',
-    errorReset: null,
-    cancelReset: null,
-    addRemoveLinks: true,
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-  };
+  public contextMenuActions = [
+    {
+      html: (item) => `Insert Comment`,
+      click: (item) => this.popover.open(),
+      enabled: (item) => true,
+      visible: (item) => item,
+    }
+  ];
+
+
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   complex_object;
@@ -44,6 +45,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   title = '';
   desc = '';
   type = '';
+  item_id: number;
+  item_type: string;
   modalName = "";
   simpleDrop: any = null;
   dragOperation = 'module';
@@ -51,14 +54,23 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   module_index;
   session_index;
   lesson_index;
-  showHide: Boolean;
-  showHide1: Boolean;
-  issuesList;
+  public isCollapsed = true;
+  issuesList = [];
   commentValue;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) {
+  public config: DropzoneConfigInterface = {
+    url: AppConfiguration.ServerWithApiUrl + 'image/upload',
+    method: 'POST',
+    maxFiles: 1,
+    clickable: true,
+    createImageThumbnails: true,
+    acceptedFiles: 'image/png',
+    errorReset: null,
+    cancelReset: null,
+    addRemoveLinks: true
+  };
+
+  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService) {
     this.id = this.route.snapshot.params.id;
-    this.showHide = false;
-    this.showHide1 = false;
 
   }
 
@@ -119,15 +131,18 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   };
 
 
-  open(type, value, content, module_index, session_index, lesson_index) {
+  public open(type, value, content, module_index, session_index, lesson_index) {
     this.modalName = 'Edit ' + type;
     this.type = type;
     this.title = value.name;
+    this.item_id = value.id;
+    this.item_type = type;
     this.desc = value.description;
     this.module_index = module_index;
     this.session_index = session_index;
     this.lesson_index = lesson_index;
-    console.log(value);
+    console.log(this.item_id);
+    console.log(this.item_type);
     this.modalService.open(content).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -135,7 +150,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     });
   }
 
-  save(content) {
+  public save(content) {
 
     console.log(this.type.toLowerCase());
     switch (this.type.toLowerCase()) {
@@ -199,6 +214,13 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       // Read the result field from the JSON response.
       this.course = data['data'];
       console.log(this.course);
+      for (let issue of this.course.issues) {
+        for (let comments of issue.comments) {
+          this.issuesList.push(comments);
+        }
+
+      }
+      console.log(this.issuesList);
     });
 
 
@@ -208,45 +230,12 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   saveEndExitClicked() {
     console.log('save called>>');
     const body = new HttpParams().set('course_object', JSON.stringify(this.course));
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + this.complex_object.id, body, {
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + this.complex_object.id + '/' + this.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe();
+    }).subscribe(res => console.log(res));
 
   }
 
-  showComments() {
-    this.showHide = !this.showHide;
-  }
-
-  showBtn = -1;
-
-  showUndoBtn(index, issueId) {
-
-
-    if (issueId != undefined) {
-
-      this.issuesList = [
-        {
-          imageUrl: "http://business.talentify.in:9999/android_images/S.png",
-          actor: "Sumanth H G",
-          comment: "Aliquid qui molestiae. Quia architecto et. Eaque exercitationem reiciendis numquam.",
-          date: "2018-01-24 17:51:25"
-        },
-        {
-          imageUrl: "http://business.talentify.in:9999/android_images/A.png",
-          actor: "Ajith K P",
-          comment: "Nemo nisi quos numquam ab rerum. Dolorem omnis in ut exercitationem ipsum. Assumenda beatae qui ut quas.",
-          date: "2018-01-24 16:51:25"
-        }
-      ]
-    } else {
-      this.issuesList = [];
-    }
-
-
-    this.showBtn = index;
-    this.showHide1 = !this.showHide1;
-  }
 
   keyDownFunction(event) {
 
@@ -254,13 +243,24 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     if (event.keyCode == 13) {
       console.log(event);
       this.issuesList.push({
-        imageUrl: "http://business.talentify.in:9999/android_images/S.png",
-        actor: "Sumanth H G",
+        imageURL: this.complex_object.studentProfile.profileImage,
+        name: this.complex_object.studentProfile.firstName,
         comment: this.commentValue,
         date: new Date()
       });
       this.commentValue = null;
     }
+
+    console.log(this.complex_object.studentProfile.profileImage);
+    console.log(this.complex_object.studentProfile.firstName);
+  }
+
+  offset(el) {
+    var rect = el.getBoundingClientRect(),
+      scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
   }
 
 }
+

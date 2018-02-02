@@ -2,6 +2,8 @@
 
 <div class="jumbotron">
 
+
+
   <div class="row mb-2">
     <div class="col-6">
       Sort By:
@@ -19,7 +21,7 @@
     </div>
 
     <div class="col-6">
-      <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save And Exit</a>
+      <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
       <a class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</a>
     </div>
 
@@ -29,55 +31,53 @@
 
     <div class="card course_card">
       <div class="card-header">
-        <div class='pull-left' *ngIf="showHide">
-          <button [ngClass]="(course?.issues != undefined )?'custom-comment-circle':'no_custom-comment-circle'" class="btn btn-sm btn-outline-primary"
-            (click)=showUndoBtn(course?.id,course?.issues)>C-1</button>
-          <div [attr.id]="'undoBtn'+course?.id" *ngIf="showBtn===course?.id && showHide1">
-            <div class="card custom-chat">
-              <div class="card-body m-2">
-                <div class="social-comments_list custom-scroll-holder" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                  <h6>Issuse List
-                  </h6>
-                  <div class="social-comment  p-1 mb-1" *ngFor="let issue of issuesList; index as i">
-                    <a href="" class="pull-left">
-                      <img style=" width: 25px;height: 25px;" alt="image" src="{{issue.imageUrl}}">
-                    </a>
-                    <div class="media-body">
-                      <b>
-                        {{issue.actor}} :
-                      </b>
-                      <p class='m-0'> {{issue.comment}} </p>
-
-                      <p class="text-right m-0">
-                        <small class="text-muted">{{issue.date | date: 'dd/MM/yyyy hh:mm'}}</small>
-                      </p>
-                    </div>
-                  </div>
-                  <div *ngIf="issuesList == null || issuesList.length == 0">
-                    <div class="social-comment  p-1 mb-1">
-                      No Issue Present.
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div class="media-body custom-media-body">
-                  <hr/>
-                  <textarea [(ngModel)]="commentValue" (keydown)="keyDownFunction($event)" class="form-control" placeholder="Write comment..."></textarea>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </div>
-        <span (click)="open('Course',course,content,null,null,null)">
+        <span [contextMenu]="myContextMenu" [contextMenuSubject]="course" (click)="open('Course',course,content,null,null,null)">
           {{course?.name}} </span>
         <i ngbPopover="{{course?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
         <button (click)="addModuleComponent(course)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
           <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Modules</button>
-        <button (click)="showComments()" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
+        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
           <i class="fa fa-circle mr-2" aria-hidden="true"></i>Comments</button>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed">
+          <div class="card custom-chat">
+            <div class="card-body m-2">
+
+
+
+              <div class="social-comments_list custom-scroll-holder" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                <h6>Issuse List </h6>
+                <div class="social-comment  p-1 mb-1" *ngFor="let issue of issuesList; index as i">
+                  <a href="" class="pull-left">
+                    <img style=" width: 25px;height: 25px;" alt="image" src="{{issue.imageURL}}">
+                  </a>
+                  <div class="media-body">
+                    <b>
+                      {{issue.name}} :
+                    </b>
+                    <p class='m-0'> {{issue.comment}} </p>
+
+                    <p class="text-right m-0">
+                      <small class="text-muted">{{issue.date | date: 'dd/MM/yyyy hh:mm'}}</small>
+                    </p>
+                  </div>
+                </div>
+                <div *ngIf="issuesList == null || issuesList.length == 0">
+                  <div class="social-comment  p-1 mb-1">
+                    No Issue Present.
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="media-body custom-media-body">
+                <textarea [(ngModel)]="commentValue" (keydown)="keyDownFunction($event)" class="form-control" placeholder="Write comment..."></textarea>
+              </div>
+
+            </div>
+          </div>
+        </div>
       </div>
 
 
@@ -90,51 +90,9 @@
           <div *ngFor="let module of course?.modules; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'module'"
             class="col-3 p-0 ml-1 mr-1 ">
             <div dnd-sortable-container [sortableData]="course?.modules[j].sessions" [dropZones]="['widget-dropZone']">
-              <div class="card module_card row-eq-height">
+              <div class="card module_card row-eq-height" [contextMenu]="myContextMenu" [contextMenuSubject]="module">
 
                 <div class="card-header  p-0 pt-3 pb-3">
-                  <div class='pull-left' *ngIf="showHide">
-                    <button [ngClass]="(module?.issues != undefined )?'custom-comment-circle':'no_custom-comment-circle'" class="btn btn-sm btn-outline-primary"
-                      (click)=showUndoBtn(module?.id,module?.issues)>M-{{j}}</button>
-                    <div [attr.id]="'undoBtn'+module?.id" *ngIf="showBtn===module?.id && showHide1">
-                      <div class="card custom-chat">
-                        <div class="card-body m-2">
-                          <div class="social-comments_list custom-scroll-holder" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                            <h6>Issuse List
-                            </h6>
-                            <div class="social-comment  p-1 mb-1" *ngFor="let issue of issuesList; index as i">
-                              <a href="" class="pull-left">
-                                <img style=" width: 25px;height: 25px;" alt="image" src="{{issue.imageUrl}}">
-                              </a>
-                              <div class="media-body">
-                                <b>
-                                  {{issue.actor}} :
-                                </b>
-                                <p class='m-0'> {{issue.comment}} </p>
-
-                                <p class="text-right m-0">
-                                  <small class="text-muted">{{issue.date | date: 'dd/MM/yyyy hh:mm'}}</small>
-                                </p>
-                              </div>
-                            </div>
-                            <div *ngIf="issuesList == null || issuesList.length == 0">
-                              <div class="social-comment  p-1 mb-1">
-                                No Issue Present.
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                          <div class="media-body custom-media-body">
-                            <hr/>
-                            <textarea [(ngModel)]="commentValue" (keydown)="keyDownFunction($event)" class="form-control" placeholder="Write comment..."></textarea>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <div class="row m-0 row-eq-height">
                     <div class="col-10 text-left custom-course-header module-font-fize" (click)="open('Module',module,content,j,null,null)">
                       {{module.name}}</div>
@@ -151,48 +109,7 @@
                   <div class="card mt-2" *ngFor="let session of module.sessions; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'session'"
                     [dragData]="course?.modules[j].sessions[k]">
                     <div class="card-header abc">
-                      <div class='pull-left' *ngIf="showHide">
-                        <button [ngClass]="(session?.issues != undefined )?'custom-comment-circle':'no_custom-comment-circle'" class="btn btn-sm btn-outline-primary"
-                          (click)=showUndoBtn(session?.id,session?.issues)>S-{{k+1}}</button>
-                        <div [attr.id]="'undoBtn'+module?.id" *ngIf="showBtn===session?.id && showHide1">
-                          <div class="card custom-chat">
-                            <div class="card-body m-2">
-                              <div class="social-comments_list custom-scroll-holder" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                                <h6>Issuse List
-                                </h6>
-                                <div class="social-comment  p-1 mb-1" *ngFor="let issue of issuesList; index as i">
-                                  <a href="" class="pull-left">
-                                    <img style=" width: 25px;height: 25px;" alt="image" src="{{issue.imageUrl}}">
-                                  </a>
-                                  <div class="media-body">
-                                    <b>
-                                      {{issue.actor}} :
-                                    </b>
-                                    <p class='m-0'> {{issue.comment}} </p>
 
-                                    <p class="text-right m-0">
-                                      <small class="text-muted">{{issue.date | date: 'dd/MM/yyyy hh:mm'}}</small>
-                                    </p>
-                                  </div>
-                                </div>
-                                <div *ngIf="issuesList == null || issuesList.length == 0">
-                                  <div class="social-comment  p-1 mb-1">
-                                    No Issue Present.
-                                  </div>
-
-                                </div>
-
-                              </div>
-
-                              <div class="media-body custom-media-body">
-                                <hr/>
-                                <textarea [(ngModel)]="commentValue" (keydown)="keyDownFunction($event)" class="form-control" placeholder="Write comment..."></textarea>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                       <div class="row m-0 row-eq-height">
                         <div (click)="open('Session',session,content,j,k,null)" class="col-2 text-left">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -248,49 +165,7 @@
                                     <div *ngIf="!lesson.isDeleted" class="card m-3" [ngClass]="(lesson.status == 'INCOMPLETE')?'top-border-red':'top-border-green'"
                                       dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'" [dragData]="course?.modules[j].sessions[k].lessons[l]">
                                       <div class="card-header">
-                                        <div class='pull-left' *ngIf="showHide">
-                                          <button [ngClass]="(lesson?.issues != undefined )?'custom-comment-circle':'no_custom-comment-circle'" class="btn btn-sm btn-outline-primary"
-                                            (click)=showUndoBtn(lesson?.id,lesson?.issues)>L-{{l+1}}
-                                          </button>
-                                          <div [attr.id]="'undoBtn'+lesson?.id" *ngIf="showBtn===lesson?.id && showHide1">
-                                            <div class="card custom-chat">
-                                              <div class="card-body m-2">
-                                                <div class="social-comments_list custom-scroll-holder" #scrollMe [scrollTop]="scrollMe.scrollHeight">
-                                                  <h6>Issuse List
-                                                  </h6>
-                                                  <div class="social-comment  p-1 mb-1" *ngFor="let issue of issuesList; index as i">
-                                                    <a href="" class="pull-left">
-                                                      <img style=" width: 25px;height: 25px;" alt="image" src="{{issue.imageUrl}}">
-                                                    </a>
-                                                    <div class="media-body">
-                                                      <b>
-                                                        {{issue.actor}} :
-                                                      </b>
-                                                      <p class='m-0'> {{issue.comment}} </p>
 
-                                                      <p class="text-right m-0">
-                                                        <small class="text-muted">{{issue.date | date: 'dd/MM/yyyy hh:mm'}}</small>
-                                                      </p>
-                                                    </div>
-                                                  </div>
-                                                  <div *ngIf="issuesList == null || issuesList.length == 0">
-                                                    <div class="social-comment  p-1 mb-1">
-                                                      No Issue Present.
-                                                    </div>
-
-                                                  </div>
-
-                                                </div>
-
-                                                <div class="media-body custom-media-body">
-                                                  <hr/>
-                                                  <textarea [(ngModel)]="commentValue" (keydown)="keyDownFunction($event)" class="form-control" placeholder="Write comment..."></textarea>
-                                                </div>
-
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
                                         <div class="row m-0 row-eq-height">
                                           <div class="col-10 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
                                           <div class="col-2 text-right">
@@ -352,13 +227,16 @@
     <div class="modal-body">
 
 
-      <div *ngIf=" type != 'Session';" class="dropzone course-modal m-auto" [dropzone]="config" (error)="onUploadError($event)"
-        (success)="onUploadSuccess($event)"></div>
+      <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
+        (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
+        <input type="hidden" name="item_id" [(ngModel)]="item_id">
+        <input type="hidden" name="item_type" [(ngModel)]="item_type">
+      </form>
 
       <label for="typeahead-format ">name:</label>
-      <input type="text " class="form-control " [(ngModel)]="title " />
+      <input type="text " class="form-control " [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
-      <textarea type="text " class="form-control " [(ngModel)]="desc "></textarea>
+      <textarea type="text " class="form-control " [(ngModel)]="desc"></textarea>
       <div *ngIf=" type == 'Lesson';">
         <label for="typeahead-format ">Lesson Type:</label>
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectOperation">
@@ -374,5 +252,11 @@
     </div>
   </ng-template>
 
+  <context-menu #myContextMenu>
+    <ng-template *ngFor="let action of contextMenuActions" contextMenuItem let-item [visible]="action.visible" [enabled]="action.enabled"
+      (execute)="action.click($event.item)">
+      {{ action.html(item) }}
+    </ng-template>
+  </context-menu>
 
 </div>

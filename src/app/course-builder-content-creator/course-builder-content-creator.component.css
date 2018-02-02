@@ -90,19 +90,20 @@ color: #fff !important;
 }
 
 .custom-chat{
-    width: 270px;
+    width: 310px;
     z-index: 9999999;
     height: 60vh;
     position: absolute;
     top: 35px;
     margin: 10px;
+    right: 0;
 
 }
 .custom-media-body{
     bottom: 0;
     position: absolute;
     width: 94%;
-
+margin-bottom: 5px;
 }
 .social-comments_list{
     min-height: 50vh;
@@ -134,3 +135,4 @@ color: #fff !important;
 	height: 50px;
 	background-color: #999999;
 }
+

@@ -6,13 +6,18 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./dashboard-content-admin.component.css']
 })
 export class DashboardContentAdminComponent implements OnInit {
-  graphType = 'ColumnChart';
+  graphType = 'LineChart';
   columnChartData1;
   columnChartData2;
-  graphData = [['Chart thing', 'Chart amount'],
-  ['Lorem ipsum', 60],
-  ['Dolor sit', 22],
-  ['Sit amet', 18]];
+  graphData = [
+
+    ['Time', 'Course 1', 'Course 2', 'Course 3', 'Course 4'],
+    ['2018-03-11', 60, 55, 35, 0],
+    ['2018-04-13', 30, 50, 10, 0],
+    ['2018-05-14', 50, 20, 16, 0],
+    ['2018-06-16', 55, 9, 30, 0],
+
+  ];
 
   constructor() { }
 

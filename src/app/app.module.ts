@@ -1,3 +1,4 @@
+import { ContextMenuModule } from 'ngx-contextmenu';
 import { AppConfiguration } from './app.constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -29,7 +30,6 @@ import { CoursesComponent } from './courses/courses.component';
 import { PartialCourseListItemComponent } from './partial-course-list-item/partial-course-list-item.component';
 import { PartialCloneModalComponent } from './partial-clone-modal/partial-clone-modal.component';
 import { ArchwizardModule } from 'ng2-archwizard';
-import { CloneModuleWizardComponent } from './partial-clone-modal/wizards/clone-module-wizard/clone-module-wizard.component';
 
 @NgModule({
   declarations: [
@@ -45,11 +45,10 @@ import { CloneModuleWizardComponent } from './partial-clone-modal/wizards/clone-
     GraphComponent,
     CoursesComponent,
     PartialCourseListItemComponent,
-    PartialCloneModalComponent,
-    CloneModuleWizardComponent
+    PartialCloneModalComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot()
   ],
   providers: [AuthService, AuthGuard, AppConfiguration],
   bootstrap: [AppComponent]
