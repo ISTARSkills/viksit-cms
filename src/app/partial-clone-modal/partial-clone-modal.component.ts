@@ -13,7 +13,14 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/catch';
-
+import { WizardComponent } from 'ng2-archwizard';
+import { Course } from '../pojo/course';
+import { Lesson } from '../pojo/lesson/lesson';
+import { Session } from '../pojo/session/session';
+import { Module } from '../pojo/module/module';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
+import { AppConfiguration } from '../app.constants';
+import { CoursesComponent } from '../courses/courses.component';
 @Component({
   selector: 'app-partial-clone-modal',
   templateUrl: './partial-clone-modal.component.html',
@@ -31,6 +38,8 @@ export class PartialCloneModalComponent implements OnInit {
   moduleCloneCourse = null;
   sessionSelectModel = null;
   sessionModuleSelectionModel = null;
+  newSessionNameModel = "";
+  sessionsNewModuleModel = "";
   selectedExistingOrNewModel = 'EXISTING';
   showExisting: boolean;
   moduleFiltered = [];
@@ -40,7 +49,15 @@ export class PartialCloneModalComponent implements OnInit {
   sessionFailed = false;
   lessonFailed = false;
   progress = 50;
-  constructor() { }
+  isOn = true;
+  isDisabled = false;
+  progressWidth1 = 0;
+  progressWidth2 = 0;
+  currentprogress = 0;
+  createCourseClone;
+  @ViewChild(WizardComponent)
+  public wizard: WizardComponent;
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     for (let module of this.selectedCourseModal.modules) {
@@ -195,12 +212,72 @@ export class PartialCloneModalComponent implements OnInit {
   }
 
   enterSecondStep($event) {
-    console.log($event)
-    if ($event === 0) {
-      this.progress = this.progress + 50;
+
+    if (this.wizard != undefined) {
+      console.log(this.wizard.model.currentStepIndex);
+      this.currentprogress = this.wizard.model.currentStepIndex;
+      if (this.wizard.model.currentStepIndex == 0) {
+        this.progressWidth1 = 0;
+        this.progressWidth2 = 0;
+        this.isOn = true;
+      }
+      if (this.wizard.model.currentStepIndex == 1) {
+        this.progressWidth1 = 33;
+        this.progressWidth2 = 0;
+        this.isOn = true;
+        this.isDisabled = true;
+      } if (this.wizard.model.currentStepIndex == 2) {
+        this.progressWidth2 = 34;
+        this.isOn = true;
+        this.isDisabled = true;
+      }
+
     } else {
-      this.progress = this.progress - 50;
+      console.log(this.wizard);
+      this.progressWidth1 = 0;
+      this.progressWidth2 = 0;
+      this.currentprogress = 0;
+      this.isOn = true;
     }
+
+
+    /*  if ($event === 0) {
+       this.progress = this.progress + 50;
+     } else {
+       this.progress = this.progress - 50;
+     }
+  */
+  }
+
+  cloneData() {
+
+    console.log(this.selectedCourseModal);
+    console.log(this.createCourseClone);
+
+    var modules = Array();
+    for (let module of this.selectedCourseModal.modules) {
+
+      var sessions = Array();
+      for (let session of module.sessions) {
+        var lessons = Array();
+        for (let lesson of session.lessons) {
+          var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
+          lessons.push(newLesson);
+        }
+        var newSession = new Session(session.name, session.description, 0, lessons, null);
+        sessions.push(newSession);
+      }
+      var newModule = new Module(module.name, module.description, 0, sessions, module.imageUrl, module.status, null)
+      modules.push(newModule);
+    }
+    var clonedObject = new Course(this.createCourseClone, null, "", this.selectedCourseModal.description, "", "", modules);
+    this.courses.push(clonedObject);
+    /* const body = new HttpParams().set('course_object', JSON.stringify(clonedObject));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + CoursesComponent().complex_object.id + '/' + this.id, body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => console.log(res));
+ */
+
 
   }
 }
