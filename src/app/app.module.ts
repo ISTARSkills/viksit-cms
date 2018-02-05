@@ -3,7 +3,6 @@ import { AppConfiguration } from './app.constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { AuthGuard } from './auth-guard.service';
@@ -19,7 +18,6 @@ import { CourseBuilderContentCreatorComponent } from './course-builder-content-c
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
 import { SlickModule } from 'ngx-slick';
 import { DashboardContentAdminComponent } from './dashboard-content-admin/dashboard-content-admin.component';
-
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
@@ -30,6 +28,8 @@ import { CoursesComponent } from './courses/courses.component';
 import { PartialCourseListItemComponent } from './partial-course-list-item/partial-course-list-item.component';
 import { PartialCloneModalComponent } from './partial-clone-modal/partial-clone-modal.component';
 import { ArchwizardModule } from 'ng2-archwizard';
+import { CreateCourseTaskComponent } from './create-course-task/create-course-task.component';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { LessonWizardComponent } from './partial-clone-modal/wizards/lesson-wizard/lesson-wizard.component';
 import { SessionWizardComponent } from './partial-clone-modal/wizards/session-wizard/session-wizard.component';
 import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wizard/module-wizard.component';
@@ -42,19 +42,20 @@ import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wiza
     DashboardComponent,
     NavbarComponent,
     DashboardContentCreatorComponent,
-    CourseBuilderContentCreatorComponent,
     LessonBuilderContentCreatorComponent,
     DashboardContentAdminComponent,
     GraphComponent,
     CoursesComponent,
     PartialCourseListItemComponent,
     PartialCloneModalComponent,
+    CreateCourseTaskComponent,
+    CourseBuilderContentCreatorComponent,
     LessonWizardComponent,
     SessionWizardComponent,
     ModuleWizardComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot()
   ],
   providers: [AuthService, AuthGuard, AppConfiguration],
   bootstrap: [AppComponent]
