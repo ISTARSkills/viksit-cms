@@ -30,6 +30,9 @@ import { PartialCloneModalComponent } from './partial-clone-modal/partial-clone-
 import { ArchwizardModule } from 'ng2-archwizard';
 import { CreateCourseTaskComponent } from './create-course-task/create-course-task.component';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { LessonWizardComponent } from './partial-clone-modal/wizards/lesson-wizard/lesson-wizard.component';
+import { SessionWizardComponent } from './partial-clone-modal/wizards/session-wizard/session-wizard.component';
+import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wizard/module-wizard.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
     PartialCourseListItemComponent,
     PartialCloneModalComponent,
     CreateCourseTaskComponent,
-    CourseBuilderContentCreatorComponent
+    CourseBuilderContentCreatorComponent,
+    LessonWizardComponent,
+    SessionWizardComponent,
+    ModuleWizardComponent
   ],
   imports: [
     BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot()
