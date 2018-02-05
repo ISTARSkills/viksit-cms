@@ -1,11 +1,12 @@
 import {
-  Component, OnInit, ViewChild
+  Component, OnInit, ViewChild, Input
 } from '@angular/core';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { Session } from '../pojo/session/session';
 import { Lesson } from '../pojo/lesson/lesson';
+import { Course } from '../pojo/course';
 import { NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
@@ -18,29 +19,28 @@ import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 @Component({
   selector: 'app-course-builder-content-creator',
   templateUrl: './course-builder-content-creator.component.html',
-  styleUrls: ['./course-builder-content-creator.component.css']
+  styleUrls: ['./course-builder-content-creator.component.css'],
 })
 export class CourseBuilderContentCreatorComponent implements OnInit {
 
   @ViewChild(ContextMenuComponent) public contextMenu: ContextMenuComponent;
-  @ViewChild('popover') public popover: NgbPopover;
 
   public contextMenuActions = [
     {
       html: (item) => `Insert Comment`,
-      click: (item) => this.popover.open(),
+      click: (item) => alert('clicked'),
       enabled: (item) => true,
       visible: (item) => item,
     }
   ];
-
-
+  @Input() newCourse;
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   complex_object;
   id: string;
   course;
   comments;
+  navbarIsVisible = false;
   closeResult: string;
   title = '';
   desc = '';
@@ -57,6 +57,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   public isCollapsed = true;
   issuesList = [];
   commentValue;
+  submitandreviewIsVisible = true;
   public config: DropzoneConfigInterface = {
     url: AppConfiguration.ServerWithApiUrl + 'image/upload',
     method: 'POST',
@@ -74,6 +75,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   }
 
+
   public addModuleComponent = function (course) {
     var lessons = Array();
     var sessions = Array();
@@ -83,7 +85,10 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     sessions.push(newSession);
     var newModule = new Module("New Module", "New Module Desc", 0, sessions, "", "INCOMPLETE", null)
     console.log("newModule " + JSON.stringify(newModule));
-    this.course.modules.push(newModule);
+
+    if (this.course.modules != undefined) {
+      this.course.modules.push(newModule);
+    }
     console.log(this.course);
   };
 
@@ -203,25 +208,39 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     console.log(file[0].type);
   }
   ngOnInit() {
+
+
+    if (this.newCourse != undefined) {
+      console.log("newCourse >>> " + this.newCourse.name);
+      this.course = this.newCourse;
+      this.submitandreviewIsVisible = false;
+    }
+    console.log("id >>> " + this.id);
     const now = Date.now() - 1;
     const myFormattedDate = this.pipe.transform(now, this.formatdate);
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
 
-    // Make the HTTP request:
-    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
-      // Read the result field from the JSON response.
-      this.course = data['data'];
-      console.log(this.course);
-      for (let issue of this.course.issues) {
-        for (let comments of issue.comments) {
-          this.issuesList.push(comments);
-        }
+    if (this.id != undefined) {
+      this.navbarIsVisible = true;
+      // Make the HTTP request:
+      this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
+        // Read the result field from the JSON response.
+        this.course = data['data'];
+        console.log(this.course);
+        for (let issue of this.course.issues) {
+          for (let comments of issue.comments) {
+            this.issuesList.push(comments);
+          }
 
-      }
-      console.log(this.issuesList);
-    });
+        }
+        console.log(this.issuesList);
+      });
+
+    }
+
+
 
 
 

@@ -1,0 +1,142 @@
+<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+<div class="jumbotron">
+  <div class="row m-0 mb-3">
+    <wizard class="col-12 session-clone-wizard bg-white pb-3" [disableNavigationBar]=true [navBarLocation]="top" [defaultStepIndex]="0">
+
+      <div class="card mt-3">
+        <div class="row">
+          <div class="col-12">
+            <div class="progress">
+              <div class="progress-bar " [ngClass]="{'bg-warning': isOn && currentprogress === 0, 'bg-success': isDisabled && currentprogress != 0}"
+                role="progressbar" style="width: 33%; height: 5px" aria-valuenow="33" aria-valuemin="0" aria-valuemax="33"></div>
+              <div class="progress-bar bg-success " [ngClass]="{'bg-warning': isOn && currentprogress === 1, 'bg-success': isDisabled && currentprogress != 1}"
+                [style.width.%]="progressWidth1" role="progressbar" style="height: 5px" aria-valuenow="33" aria-valuemin="0"
+                aria-valuemax="66">
+              </div>
+              <div class="progress-bar " role="progressbar" [ngClass]="{'bg-warning': isOn && currentprogress === 2, 'bg-success': isDisabled && currentprogress != 2}"
+                [style.width.%]="progressWidth2" style="height: 5px" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="card-block">
+          <wizard-step (stepEnter)="enterSecondStep($event)">
+            <h4> Course Details</h4>
+
+            <div class="row m-3">
+
+              <div class="col-6">
+                <div class="form-group row">
+                  <label for="exampleInputEmail1">Course Name</label>
+                  <input type="text" [(ngModel)]="newCourse.name" class="form-control" id="exampleInputEmail1" on aria-describedby="emailHelp"
+                    placeholder="course name...">
+                </div>
+                <div class="form-group row">
+                  <label for="exampleSelect1">Context</label>
+                  <select class="form-control" id="exampleSelect1">
+                    <option>IT/ITES</option>
+                  </select>
+                </div>
+                <div class="form-group row">
+                  <label for="exampleTextarea">Course Description</label>
+                  <textarea class="form-control" [(ngModel)]="newCourse.description" id="exampleTextarea" placeholder="course descripton..."
+                    rows="3"></textarea>
+                </div>
+
+
+                <fieldset class="form-group">
+                  <legend>Select</legend>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked> Foundation
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2"> Desired
+                    </label>
+                  </div>
+                </fieldset>
+
+              </div>
+              <div class="col-6">
+                <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
+                  (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
+                  <input type="hidden" name="item_id" [(ngModel)]="item_id">
+                  <input type="hidden" name="item_type" [(ngModel)]="item_type">
+                </form>
+
+              </div>
+            </div>
+
+
+            <button type="button" [disabled]="!isValidForm()" class="btn btn-danger float-right" nextStep>Next Step</button>
+          </wizard-step>
+          <wizard-step (stepEnter)="enterSecondStep($event)">
+            <h4> Course Builder</h4>
+
+            <app-course-builder-content-creator *ngIf="isInclude2ndStep" [newCourse]="newCourse"></app-course-builder-content-creator>
+            <button type="button" class="btn btn-danger" previousStep>Previous</button>
+            <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+          </wizard-step>
+          <wizard-step (stepEnter)="enterSecondStep($event)">
+            <h4>Assign User</h4>
+            <div class="row m-3">
+
+              <div class="col-6 m-auto">
+                <div class="card">
+                  <div class="card-block">
+
+                    <div class="form-group row">
+                      <label for="exampleSelect1">Assignee</label>
+                      <select class="form-control" id="exampleSelect1">
+                        <option>IT/ITES</option>
+                      </select>
+                    </div>
+
+                    <fieldset class="form-group form-check-inline">
+                      <legend>Select</legend>
+                      <div class="form-check-inline ">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optionsRadios1" id="optionsRadios3" value="option1" checked> Can Edit
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optionsRadios1" id="optionsRadios4" value="option2"> Only View
+                        </label>
+                      </div>
+                    </fieldset>
+
+                    <form>
+                      <div class="input-group">
+                        <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="model"
+                          [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" />
+
+                        <span class="input-group-btn">
+                          <div class="row m-0">
+                            <button type="button" class="btn btn-default" (click)="dp.clearDate()">
+                              <i class="fas fa-times"></i>
+                            </button>
+                            <button type="button" class="btn btn-default" (click)="dp.toggleCalendar()">
+                              <i class="far fa-calendar-alt"></i>
+                            </button>
+                          </div>
+                        </span>
+                      </div>
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn-danger" previousStep>Previous Step</button>
+            <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
+          </wizard-step>
+        </div>
+      </div>
+    </wizard>
+  </div>
+
+</div>

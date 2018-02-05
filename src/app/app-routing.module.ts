@@ -7,13 +7,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
 import { CoursesComponent } from './courses/courses.component';
+import { CreateCourseTaskComponent } from './create-course-task/create-course-task.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', canActivate: [AuthGuard] },
 { path: 'login', component: LoginComponent },
 { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 { path: 'course/:id', component: CourseBuilderContentCreatorComponent, canActivate: [AuthGuard] },
-{ path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] }
+{ path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
+{ path: 'create_course_task', component: CreateCourseTaskComponent, canActivate: [AuthGuard] }
 ];
 @NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule] })
 export class AppRoutingModule { }

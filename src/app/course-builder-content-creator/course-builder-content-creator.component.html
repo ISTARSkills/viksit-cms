@@ -1,4 +1,4 @@
-<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+<app-navbar *ngIf="navbarIsVisible" [userName]="complex_object.studentProfile.firstName"></app-navbar>
 
 <div class="jumbotron">
 
@@ -21,8 +21,8 @@
     </div>
 
     <div class="col-6">
-      <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
-      <a class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</a>
+      <a *ngIf="submitandreviewIsVisible" (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
+      <a *ngIf="submitandreviewIsVisible" class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</a>
     </div>
 
 
