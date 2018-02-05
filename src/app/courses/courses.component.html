@@ -51,6 +51,6 @@
 
   <ng-template #content let-c="close" let-d="dismiss">
     <app-partial-clone-modal [cValue]="this.c" [dValue]="this.d" [selectedModal]="selectedModal" [selectedCourseModal]="selectedCourseModal"
-      [courses]="courses"></app-partial-clone-modal>
+      [courses]="courses" (coursesChange)="updateCourseStructure($event)"></app-partial-clone-modal>
   </ng-template>
 </div>

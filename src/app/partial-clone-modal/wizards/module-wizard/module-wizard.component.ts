@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { WizardComponent } from 'ng2-archwizard';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -13,6 +13,12 @@ import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/catch';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Lesson } from '../../../pojo/lesson/lesson';
+import { Session } from '../../../pojo/session/session';
+import { Module } from '../../../pojo/module/module';
+import { Course } from '../../../pojo/course';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
+import { AppConfiguration } from '../../../app.constants';
 
 @Component({
   selector: 'app-module-wizard',
@@ -35,13 +41,18 @@ export class ModuleWizardComponent implements OnInit {
   courseList = [];
   selectedExistingOrNewModel = 'EXISTING';
   modulesNewCourseModel = "";
+  newModuleNameModel = "";
+  complex_object;
   @Input() courses;
+  @Output() coursesChange = new EventEmitter<any>();
   @Input() selectedCourseModal;
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    const local_complex_object = localStorage.getItem('currentUser')
+    this.complex_object = JSON.parse(local_complex_object);
     for (let module of this.selectedCourseModal.modules) {
       this.moduleList.push({ id: module.id, name: module.name });
     }
@@ -163,13 +174,57 @@ export class ModuleWizardComponent implements OnInit {
       this.currentprogress = 0;
       this.isOn = true;
     }
-
-
-    /*  if ($event === 0) {
-       this.progress = this.progress + 50;
-     } else {
-       this.progress = this.progress - 50;
-     }
-  */
   }
+
+  submitModuleClone() {
+    var clonedObject;
+    console.log(this.selectedCourseModal);
+    var modules = Array();
+    for (let module of this.selectedCourseModal.modules) {
+      if (module.id == this.moduleSelectModel.id) {
+        var sessions = Array();
+        for (let session of module.sessions) {
+          var lessons = Array();
+          for (let lesson of session.lessons) {
+            var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
+            lessons.push(newLesson);
+          }
+          var newSession = new Session(session.name, session.description, 0, lessons, null);
+          sessions.push(newSession);
+        }
+        var newModule = new Module(this.newModuleNameModel, module.description, 0, sessions, module.imageUrl, module.status, null)
+        modules.push(newModule);
+      }
+    }
+
+    if (this.showExisting) {
+      for (let course of this.courses) {
+        if (course.id == this.courseSelectModel.id) {
+          for (let new_module of modules) {
+            course.modules.push(new_module);
+          }
+          console.log(course);
+          clonedObject = course;
+          break;
+        }
+      }
+    } else {
+      var newCourse = new Course(this.modulesNewCourseModel, null, "", "NA", "IT/ITES", "", modules);
+      clonedObject = newCourse;
+    }
+
+    var assignee_object = {
+      "userAssingedTo": [this.complex_object.id],
+      "dueDate": "08/03/2018"
+    };
+    const body = new HttpParams().set('course_object', JSON.stringify(clonedObject)).set('assignee_object', JSON.stringify(assignee_object));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => {
+      console.log(res['data']);
+      this.courses = res['data'];
+      this.coursesChange.emit(this.courses);
+    });
+  }
+
 }

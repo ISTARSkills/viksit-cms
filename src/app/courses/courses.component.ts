@@ -14,7 +14,7 @@ import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng
 })
 export class CoursesComponent implements OnInit {
   complex_object;
-  courses;
+  courses: any;
   storedCourses;
   closeResult: string;
   selectedModal;
@@ -72,7 +72,7 @@ export class CoursesComponent implements OnInit {
       this.courses = this.storedCourses;
     } else {
       var re = s.toLowerCase().trim();
-      this.courses = this.courses.filter((item: any) => {
+      this.courses = this.storedCourses.filter((item: any) => {
         if (item.name.toLowerCase().trim().indexOf(re) > -1) {
           return true;
         } else {
@@ -100,6 +100,10 @@ export class CoursesComponent implements OnInit {
       console.log(this.courses.length + '   ' + this.storedCourses.length)
     }
   }
-
+  updateCourseStructure(updatedCourses) {
+    console.log('getting callback at parent -------')
+    this.courses = updatedCourses;
+    this.storedCourses = updatedCourses;
+  }
 
 }

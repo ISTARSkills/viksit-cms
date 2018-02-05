@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
 import { AppConfiguration } from '../app.constants';
@@ -18,11 +18,16 @@ export class PartialCloneModalComponent implements OnInit {
   @Input() selectedModal;
   @Input() selectedCourseModal;
   @Input() courses;
+  @Output() coursesChange = new EventEmitter<any>();
   createCourseClone;
+  complex_object;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
-
+    const local_complex_object = localStorage.getItem('currentUser')
+    this.complex_object = JSON.parse(local_complex_object);
+    console.log('from main')
+    console.log(this.courses.length);
   }
 
   cloneData() {
@@ -31,7 +36,6 @@ export class PartialCloneModalComponent implements OnInit {
 
     var modules = Array();
     for (let module of this.selectedCourseModal.modules) {
-
       var sessions = Array();
       for (let session of module.sessions) {
         var lessons = Array();
@@ -42,17 +46,31 @@ export class PartialCloneModalComponent implements OnInit {
         var newSession = new Session(session.name, session.description, 0, lessons, null);
         sessions.push(newSession);
       }
-      var newModule = new Module(module.name, module.description, 0, sessions, module.imageUrl, module.status, null)
+      var newModule = new Module(module.name, module.description, 0, sessions, module.imageUrl, module.status, null);
       modules.push(newModule);
     }
-    var clonedObject = new Course(this.createCourseClone, null, "", this.selectedCourseModal.description, "", "", modules);
-    this.courses.push(clonedObject);
-    /* const body = new HttpParams().set('course_object', JSON.stringify(clonedObject));
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + CoursesComponent().complex_object.id + '/' + this.id, body, {
+    var newCourse = new Course(this.createCourseClone, null, "", "NA", "IT/ITES", "", modules);
+    var assignee_object = {
+      "userAssingedTo": [this.complex_object.id],
+      "dueDate": "08/03/2018"
+    };
+    console.log("Course Size before request--> " + this.courses.length)
+    const body = new HttpParams().set('course_object', JSON.stringify(newCourse)).set('assignee_object', JSON.stringify(assignee_object));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => console.log(res));
- */
+    }).subscribe(res => {
+      console.log(res['data']);
+      this.courses = null;
+      this.courses = res['data'];
+      this.coursesChange.emit(this.courses);
+      console.log("response");
+      console.log(this.courses);
+    });
+  }
 
-
+  updateCourseStructure(updatedCourse) {
+    console.log('called for callback in wizard');
+    console.log(updatedCourse);
+    this.coursesChange.emit(updatedCourse);
   }
 }
