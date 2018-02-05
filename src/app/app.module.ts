@@ -30,6 +30,9 @@ import { CoursesComponent } from './courses/courses.component';
 import { PartialCourseListItemComponent } from './partial-course-list-item/partial-course-list-item.component';
 import { PartialCloneModalComponent } from './partial-clone-modal/partial-clone-modal.component';
 import { ArchwizardModule } from 'ng2-archwizard';
+import { LessonWizardComponent } from './partial-clone-modal/wizards/lesson-wizard/lesson-wizard.component';
+import { SessionWizardComponent } from './partial-clone-modal/wizards/session-wizard/session-wizard.component';
+import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wizard/module-wizard.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { ArchwizardModule } from 'ng2-archwizard';
     GraphComponent,
     CoursesComponent,
     PartialCourseListItemComponent,
-    PartialCloneModalComponent
+    PartialCloneModalComponent,
+    LessonWizardComponent,
+    SessionWizardComponent,
+    ModuleWizardComponent
   ],
   imports: [
     BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot()

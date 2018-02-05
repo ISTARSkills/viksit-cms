@@ -1,0 +1,94 @@
+<wizard class="session-clone-wizard" [disableNavigationBar]=true [navBarLocation]="top" [defaultStepIndex]="0">
+  <div class="row">
+    <div class="col-12">
+      <div class="progress">
+        <div class="progress-bar " [ngClass]="{'bg-warning': isOn && currentprogress === 0, 'bg-success': isDisabled && currentprogress != 0}"
+          role="progressbar" style="width: 33%; height: 5px" aria-valuenow="33" aria-valuemin="0" aria-valuemax="33"></div>
+        <div class="progress-bar bg-success " [ngClass]="{'bg-warning': isOn && currentprogress === 1, 'bg-success': isDisabled && currentprogress != 1}"
+          [style.width.%]="progressWidth1" role="progressbar" style="height: 5px" aria-valuenow="33" aria-valuemin="0" aria-valuemax="66">
+        </div>
+        <div class="progress-bar " role="progressbar" [ngClass]="{'bg-warning': isOn && currentprogress === 2, 'bg-success': isDisabled && currentprogress != 2}"
+          [style.width.%]="progressWidth2" style="height: 5px" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mt-3">
+    <div class="card-block">
+      <wizard-step (stepEnter)="enterSecondStep($event)">
+        <h3 class="col-6 p-0 my-auto">Module Details</h3>
+        <div class="form-group row">
+          <label for="clone_module_selected" class="col-4 col-form-label">Select Source Module</label>
+          <div class="col-8">
+            <ng-template #moduleTemplate let-r="result" let-t="term">
+              {{r.id+' - '+r.name}}
+            </ng-template>
+            <input id="typeahead-focus-module" type="text" class="form-control" [(ngModel)]="moduleSelectModel" [ngbTypeahead]="moduleSearch"
+              (focus)="moduleSelectclick$.next($event.target.value)" (click)="moduleSelectclick$.next($event.target.value)"
+              #moduleSelectionInstance="ngbTypeahead" [class.is-invalid]="moduleFailed" placeholder="Select module" [inputFormatter]="moduleFormatter"
+              [resultTemplate]="moduleTemplate" />
+            <div class="invalid-feedback text-danger" *ngIf="sessionFailed">No module Found for requested string.</div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="module_name" class="col-4 col-form-label">Module Name
+          </label>
+          <div class="col-8">
+            <input class="form-control" type="text" value="" [(ngModel)]="newModuleNameModel" placeholder="Enter the module name to be clone"
+              id="module_name">
+          </div>
+        </div>
+        <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+      </wizard-step>
+      <wizard-step (stepEnter)="enterSecondStep($event)">
+        <h3 class="col-6 p-0 my-auto">Course Selection</h3>
+        <div class="text-center">
+          <div class="btn-group btn-group-toggle" ngbRadioGroup name="courseSelection" [(ngModel)]="selectedExistingOrNewModel" (ngModelChange)="onFilterChange($event)">
+            <label ngbButtonLabel class="btn-danger">
+              <input ngbButton type="radio" value="EXISTING"> Existing
+            </label>
+            <label ngbButtonLabel class="btn-danger">
+              <input ngbButton type="radio" value="NEW"> New
+            </label>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="showExisting">
+          <label class="col-4 col-form-label">Select Destination Course</label>
+          <div class="col-8">
+            <ng-template #courseTemplate let-r="result" let-t="term">
+              {{r.id+' - '+r.name}}
+            </ng-template>
+            <input id="typeahead-focus-clone-course" type="text" class="form-control" [(ngModel)]="courseSelectModel" [ngbTypeahead]="courseSearch"
+              (focus)="courseSelectfocus$.next($event.target.value)" (click)="courseSelectclick$.next($event.target.value)"
+              #moduleCourseSelectioninstance="ngbTypeahead" [inputFormatter]="courseFormatter" [resultTemplate]="courseTemplate"
+              placeholder="Select course" [class.is-invalid]="courseFailed" />
+            <div class="invalid-feedback text-danger" *ngIf="courseFailed">No Course Found for requested string.</div>
+          </div>
+        </div>
+        <div class="form-group row" *ngIf="!showExisting">
+          <label for="new_course_name" class="col-4 col-form-label">Course Name
+          </label>
+          <div class="col-8">
+            <input class="form-control" type="text" value="" [(ngModel)]="modulesNewCourseModel" placeholder="Enter the course name to be clone"
+              id="new_course_name">
+          </div>
+        </div>
+        <button type="button" class="btn btn-danger" previousStep>Previous</button>
+        <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+      </wizard-step>
+      <wizard-step (stepEnter)="enterSecondStep($event)">
+        <h4 class="p-0">Review Module Clone</h4>
+        <h6 class=" text-primary">Selected module - {{moduleSelectModel != null ? moduleSelectModel.name : 'No Module selected' }}</h6>
+        <nav class="breadcrumb">
+          <h6 class="breadcrumb-item active">{{ courseSelectModel != null && courseSelectModel !='' ? courseSelectModel.name : (modulesNewCourseModel !=null
+            && modulesNewCourseModel != '' ? modulesNewCourseModel : 'No Course selected') }}</h6>
+          <h6 class="breadcrumb-item text-primary">{{newModuleNameModel != null && newModuleNameModel.trim() != '' ? newModuleNameModel : 'New Course Name not defined'
+            }}
+          </h6>
+        </nav>
+        <button type="button" class="btn btn-danger" previousStep>Previous</button>
+        <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
+      </wizard-step>
+    </div>
+  </div>
+</wizard>
