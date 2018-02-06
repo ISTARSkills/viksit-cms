@@ -75,8 +75,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-
-
   searchTask(s: string) {
     this.tasks = this.storedTasks
 

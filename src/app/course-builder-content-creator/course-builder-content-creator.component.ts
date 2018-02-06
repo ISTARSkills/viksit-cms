@@ -221,6 +221,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
+  
 
     if (this.id != undefined) {
       this.navbarIsVisible = true;
@@ -282,4 +283,3 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   }
 
 }
-

@@ -8,11 +8,10 @@
         <div class="d-flex justify-content-end">
           <div class="mr-auto py-2 pl-2">
             <label class="sr-only" for="inlineFormInput">Name</label>
-            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
-              (keyup.enter)="searchTask(box.value)">
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter" (keyup.enter)="searchTask(box.value)">
           </div>
           <div class="p-2">
-            <label class=" sr-only " for="inlineFormInputGroup ">Username</label>
+            <!-- <label class=" sr-only " for="inlineFormInputGroup ">Username</label> -->
             <div class="input-group mb-2 mr-sm-2 mb-sm-0 ">
               <select class="custom-select mb-2 mr-sm-2 mb-sm-0 " id="inlineFormInputGroup " name="selectElem
                     " #selectElem (change)="setTask(selectElem.value) " id="inlineFormCustomSelect ">
@@ -21,6 +20,17 @@
                 <option value="Course">Course</option>
                 <option value="All task">All</option>
               </select>
+            </div>
+
+          </div>
+          <div class="p-2">
+
+            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+              <button class="btn btn-outline-danger" ngbDropdownToggle>Create New task</button>
+              <div class="dropdown-menu" ngbDropdownMenu>
+                <a href="/create_course_task" class="dropdown-item">Course Task</a>
+
+              </div>
             </div>
 
           </div>
