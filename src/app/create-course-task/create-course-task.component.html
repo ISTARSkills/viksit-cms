@@ -90,11 +90,16 @@
 
                     <div class="form-group row">
                       <label for="exampleSelect1">Assignee</label>
-                      <select class="form-control" id="exampleSelect1">
-                        <option>IT/ITES</option>
-                      </select>
+                      <ng-template #userTemplate let-r="result" let-t="term">
+                        {{r.id+' - '+r.email}}
+                      </ng-template>
+                      <input id="user-typeahead-focus" type="text" class="form-control" [(ngModel)]="selectedUser" [ngbTypeahead]="userSearch"
+                        (focus)="userSelectfocus$.next($event.target.value)" (click)="userSelectclick$.next($event.target.value)"
+                        #userSelectionInstance="ngbTypeahead" [class.is-invalid]="userFailed" placeholder="Select user" [inputFormatter]="userFormatter"
+                        [resultTemplate]="userTemplate" />
+                    <div class="invalid-feedback text-danger" *ngIf="userFailed">No user Selected.</div>
+                    
                     </div>
-
                     <fieldset class="form-group form-check-inline">
                       <legend>Select</legend>
                       <div class="form-check-inline ">
