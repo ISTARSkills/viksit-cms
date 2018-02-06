@@ -9,6 +9,7 @@ import { AuthGuard } from './auth-guard.service';
 import { CoursesComponent } from './courses/courses.component';
 import { CreateCourseTaskComponent } from './create-course-task/create-course-task.component';
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
+import { ContentAdminReviewTaskComponent } from './content-admin-review-task/content-admin-review-task.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -18,6 +19,7 @@ const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', can
 { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
 { path: 'create_course_task', component: CreateCourseTaskComponent, canActivate: [AuthGuard] },
 { path: 'lesson_builder', component: LessonBuilderContentCreatorComponent, canActivate: [AuthGuard] }
+{ path: 'review_task', component: ContentAdminReviewTaskComponent, canActivate: [AuthGuard] }
 
 ];
 @NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule] })

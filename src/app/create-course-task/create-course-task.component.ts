@@ -6,9 +6,9 @@ import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
 import { Course } from '../pojo/course';
 import { Module } from '../pojo/module/module';
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
-import {NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
@@ -56,7 +56,7 @@ export class CreateCourseTaskComponent implements OnInit {
   };
 
   // Initialized to specific date (09.10.2018)
-  model: any = { date: { year: 2018, month: 10, day: 9 } };
+  model: any = { date: { year: new Date().getFullYear(), month: new Date().getMonth(), day: new Date().getDay() } };
 
 
   constructor(private http: HttpClient) { }
@@ -73,7 +73,7 @@ export class CreateCourseTaskComponent implements OnInit {
       .merge(this.userSelectfocus$)
       .merge(this.userSelectclick$.filter(() => !this.userSelectionInstance.isPopupOpen()))
       .map(term => (term === '' ? this.users : this.users.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)));
-    userFormatter = (x: { email: string, id: number }) => x.id + ' ' + x.email;
+  userFormatter = (x: { email: string, id: number }) => x.id + ' ' + x.email;
 
 
   ngOnInit() {
@@ -145,23 +145,23 @@ export class CreateCourseTaskComponent implements OnInit {
 
 
 
-  finishFunction(){
+  finishFunction() {
 
-console.log(this.newCourse);
-console.log(this.selectedUser);
-console.log(this.model.formatted);
+    console.log(this.newCourse);
+    console.log(this.selectedUser);
+    console.log(this.model.formatted);
 
 
-var assignee_object = {
-  "userAssingedTo": [this.selectedUser.id],
-  "dueDate": this.model.formatted
-};
-const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse)).set('assignee_object', JSON.stringify(assignee_object));
-this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/create_course_task/' + this.complex_object.id, body, {
-  headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-}).subscribe(res => {
-  console.log(res['data']);
-});
+    var assignee_object = {
+      "userAssingedTo": [this.selectedUser.id],
+      "dueDate": this.model.formatted
+    };
+    const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse)).set('assignee_object', JSON.stringify(assignee_object));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/create_course_task/' + this.complex_object.id, body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => {
+      console.log(res['data']);
+    });
 
 
 

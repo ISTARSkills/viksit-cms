@@ -33,6 +33,7 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { LessonWizardComponent } from './partial-clone-modal/wizards/lesson-wizard/lesson-wizard.component';
 import { SessionWizardComponent } from './partial-clone-modal/wizards/session-wizard/session-wizard.component';
 import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wizard/module-wizard.component';
+import { ContentAdminReviewTaskComponent } from './content-admin-review-task/content-admin-review-task.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wiza
     CourseBuilderContentCreatorComponent,
     LessonWizardComponent,
     SessionWizardComponent,
-    ModuleWizardComponent
+    ModuleWizardComponent,
+    ContentAdminReviewTaskComponent
   ],
   imports: [
     BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot()
