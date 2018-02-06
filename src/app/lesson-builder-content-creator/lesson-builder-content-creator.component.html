@@ -1,11 +1,9 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 
 <div class="jumbotron">
-
-
-
   <div class="row mb-2">
     <div class="col-6">
+      <h4> Lesson Builder </h4>
       <!-- Sort By:
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="dragOperation">
         <label ngbButtonLabel class="btn btn-danger">
@@ -21,11 +19,8 @@
     <div class="col-6">
       <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
     </div>
-
-
   </div>
   <div class="row course">
-
     <div class="card course_card">
       <div class="card-header">
         <span (click)="open()">
@@ -38,9 +33,6 @@
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
           <div class="card custom-chat">
             <div class="card-body m-2">
-
-
-
               <div class="social-comments_list custom-scroll-holder" #scrollMe [scrollTop]="scrollMe.scrollHeight">
                 <h6>Issuse List </h6>
                 <div class="social-comment  p-1 mb-1" *ngFor="let issue of issuesList; index as i">
@@ -62,11 +54,8 @@
                   <div class="social-comment  p-1 mb-1">
                     No Issue Present.
                   </div>
-
                 </div>
-
               </div>
-
               <div class="media-body custom-media-body">
                 <textarea [(ngModel)]="commentValue" (keydown)="keyDownFunction($event)" class="form-control" placeholder="Write comment..."></textarea>
               </div>
@@ -75,13 +64,8 @@
           </div>
         </div>
       </div>
-
-
       <div class="card-body">
-
-
-        <div *ngIf="lesson?.stages != undefined && lesson?.stages.length > 0; else moduleElseBlock" class="row modules m-0 row-eq-height" dnd-sortable-container [sortableData]="lesson?.stages" [dropZones]="['container-dropZone']">
-
+        <div *ngIf="lesson?.stages != undefined && lesson?.stages.length > 0; else stageElseBlock" class="row modules m-0 row-eq-height" dnd-sortable-container [sortableData]="lesson?.stages" [dropZones]="['container-dropZone']">
           <div *ngFor="let stage of lesson?.stages; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'stage'" class="col-3 p-0 ml-1 mr-1 ">
             <div dnd-sortable-container [sortableData]="lesson?.stages[j].slides" [dropZones]="['widget-dropZone']">
               <div class="card module_card row-eq-height mb-1">
@@ -99,7 +83,7 @@
                   <button (click)="addSlideComponent(stage)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
                     <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Slide</button>
                 </div>
-                <div *ngIf=" stage.slides != undefined && stage.slides.length > 0; else sessionElseBlock">
+                <div *ngIf=" stage.slides != undefined && stage.slides.length > 0; else slideElseBlock">
                   <div class="card mt-2" *ngFor="let slide of stage.slides; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'slide'" [dragData]="lesson?.stages[j].slides[k]">
                     <div class="card-header abc">
 
@@ -139,7 +123,7 @@
                     </div>
                   </div>
                 </div>
-                <ng-template #sessionElseBlock>
+                <ng-template #slideElseBlock>
                   <p class="text-center">No Slides Present</p>
                 </ng-template>
 
@@ -151,7 +135,7 @@
 
         </div>
 
-        <ng-template #moduleElseBlock>
+        <ng-template #stageElseBlock>
           <p class="text-center">No Stages Present</p>
         </ng-template>
       </div>

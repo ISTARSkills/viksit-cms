@@ -2,7 +2,7 @@
 <!-- You can now use your library component in app.component.html -->
 
 <div class="jumbotron p-0 h-100">
-  <div class=" container ">
+  <div class=" container pt-3">
     <div class="row m-0">
       <div class="col pr-0">
         <div class="d-flex justify-content-end">
@@ -25,7 +25,7 @@
           </div>
           <div class="p-2">
 
-            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+            <div *ngIf="complex_object.studentProfile.userType =='CONTENT_ADMIN'" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
               <button class="btn btn-outline-danger" ngbDropdownToggle>Create New task</button>
               <div class="dropdown-menu" ngbDropdownMenu>
                 <a href="/create_course_task" class="dropdown-item">Course Task</a>
@@ -39,12 +39,12 @@
     </div>
   </div>
   <div class=" container ">
-    <div class="row ">
-      <div class="col-12 col-md-12 ">
+    <div class="row align-items-center">
+      <div *ngIf="tasks != null && tasks != undefined && tasks.length > 0; else taskElseBlock" class="col-12 col-md-12 ">
         <ngx-slick class="carousel dashboard-carousel" #slickModal="slick-modal" [config]="slideConfig " (afterChange)="afterChange($event) ">
           <div ngxSlickItem *ngFor="let task of tasks; index as i " class="task ">
 
-            <div class="card " style="width: 20rem; ">
+            <div class="card custom-card " style="width: 20rem; ">
 
               <div class="row m-0">
                 <h6 class="card-title col-10 mb-0 py-4 pl-4 pr-0" placement="bottom" ngbTooltip="{{task.title}}">{{(task.title.length >= 31) ? task.title.slice(0,31)+'...': task.title}}</h6>
@@ -68,7 +68,23 @@
           </div>
         </ngx-slick>
       </div>
+      <ng-template #taskElseBlock>
+        <div class='card custom-cards_css mx-auto mb-4'>
+          <div class='row mx-auto'>
+            <h4 class=' text-muted text-center mx-auto custom-font-family-tag m-3'>
+  											You don't have any tasks lined up for today.</h4>
+          </div>
+          <div class='row mx-auto my-auto'>
+            <img class='card-img-top custom-notask-imgtag mx-auto' src='../../assets/image/zzz_graphic.png' alt=''></div>
+          <div class='row mx-auto'>
+            <h4 class=' text-muted text-center mx-auto custom-font-family-tag'>
+  											Get out and have some fun.</h4>
+          </div>
+
+        </div>
+
+      </ng-template>
     </div>
   </div>
-  <app-dashboard-content-admin></app-dashboard-content-admin>
+  <app-dashboard-content-admin *ngIf="complex_object.studentProfile.userType =='CONTENT_ADMIN'"></app-dashboard-content-admin>
 </div>

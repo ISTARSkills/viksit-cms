@@ -19,7 +19,6 @@ public isCollapsed = true;
 
     this.complex_object = JSON.parse(local_complex_object);
   console.log(">>>> "+ this.complex_object.studentProfile.firstName);
-// this.lesson = new Lesson("Java Intro", "Java is a programming language created by James Gosling from Sun Microsystems (Sun) in 1991", "INCOMPLETED", "", null, "PRESENTATION");
 
 this.lesson = {
   id: null,
