@@ -1,3 +1,6 @@
+body,input{
+font-family: avenir-light !important;
+}
 .popover-body{
     padding: 5px;
     font-family: avenir-light;

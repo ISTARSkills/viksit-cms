@@ -18,7 +18,7 @@ const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', can
 { path: 'course/:id', component: CourseBuilderContentCreatorComponent, canActivate: [AuthGuard] },
 { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
 { path: 'create_course_task', component: CreateCourseTaskComponent, canActivate: [AuthGuard] },
-{ path: 'lesson_builder', component: LessonBuilderContentCreatorComponent, canActivate: [AuthGuard] }
+{ path: 'lesson_builder', component: LessonBuilderContentCreatorComponent, canActivate: [AuthGuard] },
 { path: 'review_task', component: ContentAdminReviewTaskComponent, canActivate: [AuthGuard] }
 
 ];

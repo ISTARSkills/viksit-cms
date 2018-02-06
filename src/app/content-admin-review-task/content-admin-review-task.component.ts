@@ -3,6 +3,14 @@ import { WizardComponent } from 'ng2-archwizard';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppConfiguration } from '../app.constants';
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
+import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 
 @Component({
   selector: 'app-content-admin-review-task',
@@ -20,8 +28,13 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   issuesList: any;
   isInclude2ndStep = false;
   newCourse;
+  users = [];
+  selectedUser = null;
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
+  @ViewChild('userSelectionInstance') userSelectionInstance: NgbTypeahead;
+  userSelectfocus$ = new Subject<string>();
+  userSelectclick$ = new Subject<string>();
   constructor(private http: HttpClient) { }
   myOptions: INgxMyDpOptions = {
     // other options...
@@ -51,8 +64,21 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       console.log(this.newCourse);
       this.isInclude2ndStep = true;
     });
+
+    this.http.get(AppConfiguration.ServerWithApiUrl + 'user/user_bytype/CONTENT_CREATOR').subscribe(data => {
+      // Read the result field from the JSON response.
+      this.users = data['data'];
+      console.log(this.users);
+    });
   }
 
+  userSearch = (text$: Observable<string>) =>
+    text$
+      .debounceTime(200).distinctUntilChanged()
+      .merge(this.userSelectfocus$)
+      .merge(this.userSelectclick$.filter(() => !this.userSelectionInstance.isPopupOpen()))
+      .map(term => (term === '' ? this.users : this.users.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)));
+  userFormatter = (x: { email: string, id: number }) => x.id + ' ' + x.email;
 
   enterSecondStep($event) {
 
