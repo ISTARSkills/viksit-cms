@@ -40,6 +40,9 @@ export class LessonWizardComponent implements OnInit {
   lessonList = [];
   courseList = [];
   moduleList = [];
+  isValid = true;
+  checkValid = true;
+  disableOnFinish = false;
   selectedExistingOrNewModel = 'EXISTING';
   lessonsNewSessionModel = "";
   newLessonNameModel = "";
@@ -155,7 +158,7 @@ export class LessonWizardComponent implements OnInit {
   }
 
   onCourseChange(courseSelected: any) {
-    console.log('course sekected ' + this.courseSelectModel.name + ' jjjj ' + courseSelected.name);
+    //console.log('course sekected ' + this.courseSelectModel.name + ' jjjj ' + courseSelected.name);
     this.moduleSelectModel = null;
     if (courseSelected == "") {
       this.moduleFiltered = [];
@@ -172,7 +175,7 @@ export class LessonWizardComponent implements OnInit {
   }
 
   onModuleChange(moduleSelected: any) {
-    console.log(this.courseSelectModel.name + '  --  ' + this.moduleSelectModel.name);
+    //console.log(this.courseSelectModel.name + '  --  ' + this.moduleSelectModel.name);
     this.sessionSelectModel = null;
     if (moduleSelected == "") {
       this.sessionFiltered = [];
@@ -192,8 +195,8 @@ export class LessonWizardComponent implements OnInit {
   }
 
   searchFilterValidation(term: string, value: any, type) {
-    console.log(term);
-    console.log(type);
+    //console.log(term);
+    //console.log(type);
     this.checkFlag(type, true);
     term = term.trim();
     if (term === '') {
@@ -201,7 +204,7 @@ export class LessonWizardComponent implements OnInit {
       return of(value);
     }
     value = value.filter(v => (v.name.toLowerCase().indexOf(term.toLowerCase()) > -1 || v.id == term || ((v.id + ' ' + v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1)));
-    console.log(value);
+    //console.log(value);
     if (value.length != 0) {
       this.checkFlag(type, false);
       return of(value);
@@ -229,7 +232,7 @@ export class LessonWizardComponent implements OnInit {
   enterSecondStep($event) {
 
     if (this.wizard != undefined) {
-      console.log(this.wizard.model.currentStepIndex);
+      //console.log(this.wizard.model.currentStepIndex);
       this.currentprogress = this.wizard.model.currentStepIndex;
       if (this.wizard.model.currentStepIndex == 0) {
         this.progressWidth1 = 0;
@@ -248,7 +251,7 @@ export class LessonWizardComponent implements OnInit {
       }
 
     } else {
-      console.log(this.wizard);
+      //console.log(this.wizard);
       this.progressWidth1 = 0;
       this.progressWidth2 = 0;
       this.currentprogress = 0;
@@ -258,7 +261,7 @@ export class LessonWizardComponent implements OnInit {
 
   submitLessonClone() {
     var clonedObject;
-    console.log(this.selectedCourseModal);
+    //console.log(this.selectedCourseModal);
     var lessons = Array();
     for (let module of this.selectedCourseModal.modules) {
       for (let session of module.sessions) {
@@ -273,7 +276,7 @@ export class LessonWizardComponent implements OnInit {
 
     for (let course of this.courses) {
       if (course.id == this.courseSelectModel.id) {
-        console.log(course);
+        //console.log(course);
         for (let module of course.modules) {
           if (module.id == this.moduleSelectModel.id) {
             if (this.showExisting) {
@@ -282,7 +285,7 @@ export class LessonWizardComponent implements OnInit {
                   for (let new_lesson of lessons) {
                     session.lessons.push(new_lesson);
                   }
-                  console.log(course);
+                  //console.log(course);
                   clonedObject = course;
                   break;
                 }
@@ -291,7 +294,7 @@ export class LessonWizardComponent implements OnInit {
               var newSession = new Session(this.lessonsNewSessionModel, "NA", 0, lessons, null);
               module.sessions.push(newSession);
               clonedObject = course;
-              console.log(course);
+              //console.log(course);
               break;
             }
           }
@@ -304,13 +307,35 @@ export class LessonWizardComponent implements OnInit {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": "08/03/2018"
     };
+    this.disableOnFinish = true;
     const body = new HttpParams().set('course_object', JSON.stringify(clonedObject)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      console.log(res['data']);
+      //console.log(res['data']);
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
+    }, error => {
+      this.disableOnFinish = false;
     });
   }
+  isValidForm() {
+    this.isValid = false;
+    if (this.lessonSelectModel != null && this.newLessonNameModel != undefined && this.newLessonNameModel.trim() != '' && this.newLessonNameModel.trim().length > 3) {
+      this.isValid = true;
+    }
+    return this.isValid;
+  }
+  isValid2() {
+    this.checkValid = false;
+    if ((this.courseSelectModel != null && this.courseSelectModel != '' && this.moduleSelectModel != null
+      && this.moduleSelectModel != '' && this.sessionSelectModel != null && this.sessionSelectModel != '') ||
+      (this.courseSelectModel != null && this.courseSelectModel != '' && this.moduleSelectModel != null
+        && this.moduleSelectModel != '' && this.lessonsNewSessionModel != null && this.lessonsNewSessionModel.trim() != ''
+        && this.lessonsNewSessionModel.trim().length > 3)) {
+      this.checkValid = true;
+    }
+    return this.checkValid;
+  }
+}
 }

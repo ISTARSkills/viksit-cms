@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { AppConfiguration } from '../app.constants';
@@ -19,10 +19,12 @@ export class CoursesComponent implements OnInit {
   closeResult: string;
   selectedModal;
   selectedCourseModal;
+  currentModalInstance: any;
   options: NgbModalOptions = {
     size: 'lg',
     windowClass: 'animated bounceInUp',
   };
+
   constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
@@ -31,16 +33,17 @@ export class CoursesComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/get_all_course_structure/' + this.complex_object.id).subscribe(data => {
       // Read the result field from the JSON response.
-      console.log('---> ' + data['data'][0]);
+      //console.log('---> ' + data['data'][0]);
       this.courses = data['data'];
       this.storedCourses = data['data'];
     });
   }
   open(content, s: string, course: any) {
-    console.log('Called' + s);
+    //console.log('Called' + s);
     this.selectedModal = s;
     this.selectedCourseModal = course;
-    this.modalService.open(content, this.options).result.then((result) => {
+    this.currentModalInstance = this.modalService.open(content, this.options);
+    this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
@@ -65,10 +68,10 @@ export class CoursesComponent implements OnInit {
 
   }
   searchTask(s: string) {
-    console.log('---> ' + s);
+    //console.log('---> ' + s);
     this.courses = this.storedCourses;
     if (s.trim() == "") {
-      console.log('its empty');
+      //console.log('its empty');
       this.courses = this.storedCourses;
     } else {
       var re = s.toLowerCase().trim();
@@ -97,11 +100,12 @@ export class CoursesComponent implements OnInit {
           }
         }
       });
-      console.log(this.courses.length + '   ' + this.storedCourses.length)
+      //console.log(this.courses.length + '   ' + this.storedCourses.length)
     }
   }
   updateCourseStructure(updatedCourses) {
-    console.log('getting callback at parent -------')
+    //console.log('getting callback at parent -------')
+    this.currentModalInstance.close();
     this.courses = updatedCourses;
     this.storedCourses = updatedCourses;
   }
