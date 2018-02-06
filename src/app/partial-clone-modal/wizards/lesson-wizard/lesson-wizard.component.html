@@ -38,7 +38,7 @@
               id="lesson_name">
           </div>
         </div>
-        <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+        <button type="button" class="btn btn-danger float-right" nextStep [disabled]="!isValidForm()">Next Step</button>
       </wizard-step>
       <wizard-step (stepEnter)="enterSecondStep($event)">
         <h3 class="col-6 p-0 my-auto">Session Selection</h3>
@@ -100,7 +100,7 @@
           </div>
         </div>
         <button type="button" class="btn btn-danger" previousStep>Previous</button>
-        <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+        <button type="button" class="btn btn-danger float-right" nextStep [disabled]="!isValid2()">Next Step</button>
       </wizard-step>
       <wizard-step (stepEnter)="enterSecondStep($event)">
         <h4 class="p-0">Review Lesson Clone</h4>
@@ -115,7 +115,7 @@
           </h6>
         </nav>
         <button type="button" class="btn btn-danger" previousStep>Previous</button>
-        <button type="button" class="btn btn-danger float-right" (click)="submitLessonClone()">Finish</button>
+        <button type="button" class="btn btn-danger float-right" (click)="submitLessonClone()" [disabled]="disableOnFinish">Finish</button>
       </wizard-step>
     </div>
   </div>

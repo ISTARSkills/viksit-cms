@@ -21,18 +21,19 @@ export class PartialCloneModalComponent implements OnInit {
   @Output() coursesChange = new EventEmitter<any>();
   createCourseClone;
   complex_object;
+  disableOnFinish = false;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
-    console.log('from main')
-    console.log(this.courses.length);
+    //console.log('from main')
+    //console.log(this.courses.length);
   }
 
   cloneData() {
-    console.log(this.selectedCourseModal);
-    console.log(this.createCourseClone);
+    //console.log(this.selectedCourseModal);
+    //console.log(this.createCourseClone);
 
     var modules = Array();
     for (let module of this.selectedCourseModal.modules) {
@@ -54,23 +55,36 @@ export class PartialCloneModalComponent implements OnInit {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": "08/03/2018"
     };
-    console.log("Course Size before request--> " + this.courses.length)
+    //console.log("Course Size before request--> " + this.courses.length)
+    this.disableOnFinish = true;
     const body = new HttpParams().set('course_object', JSON.stringify(newCourse)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      console.log(res['data']);
+      //console.log(res['data']);
       this.courses = null;
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
-      console.log("response");
-      console.log(this.courses);
+      //console.log("response");
+      //console.log(this.courses);
+    }, error => {
+      this.disableOnFinish = false;
     });
   }
 
   updateCourseStructure(updatedCourse) {
-    console.log('called for callback in wizard');
-    console.log(updatedCourse);
+    //console.log('called for callback in wizard');
+    //console.log(updatedCourse);
     this.coursesChange.emit(updatedCourse);
+  }
+
+  isValidForm() {
+    var isValid = false
+    if (this.createCourseClone != null && this.createCourseClone.trim() != '' && this.createCourseClone.trim().length > 3) {
+      isValid = true;
+    } else {
+      isValid = false;
+    }
+    return isValid;
   }
 }

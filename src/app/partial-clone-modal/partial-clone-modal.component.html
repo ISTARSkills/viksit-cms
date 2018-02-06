@@ -26,5 +26,5 @@
 </div>
 <div class="modal-footer" *ngIf="selectedModal == 'course'">
   <button type="button" class="btn btn-danger" (click)="cValue('Close click')">Cancel</button>
-  <button type="button" class="btn btn-danger" id="save_session_edit" (click)="cloneData()">Finish</button>
+  <button type="button" class="btn btn-danger" id="save_session_edit" [disabled]="!isValidForm() || !disableOnFinish" (click)="cloneData()">Finish</button>
 </div>

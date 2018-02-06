@@ -39,6 +39,9 @@ export class SessionWizardComponent implements OnInit {
   moduleFiltered = [];
   courseList = [];
   sessionList = [];
+  isValid = true;
+  checkValid = true;
+  disableOnFinish = false;
   selectedExistingOrNewModel = 'EXISTING';
   sessionsNewModuleModel = "";
   newSessionNameModel = "";
@@ -133,7 +136,7 @@ export class SessionWizardComponent implements OnInit {
   }
 
   onCourseChange(courseSelected: any) {
-    console.log('course sekected ' + this.courseSelectModel.name + ' jjjj ' + courseSelected.name);
+    //console.log('course sekected ' + this.courseSelectModel.name + ' jjjj ' + courseSelected.name);
     this.moduleSelectModel = null;
     if (courseSelected == "") {
       this.moduleFiltered = [];
@@ -150,8 +153,8 @@ export class SessionWizardComponent implements OnInit {
   }
 
   searchFilterValidation(term: string, value: any, type) {
-    console.log(term);
-    console.log(type);
+    //console.log(term);
+    //console.log(type);
     this.checkFlag(type, true);
     term = term.trim();
     if (term === '') {
@@ -159,7 +162,7 @@ export class SessionWizardComponent implements OnInit {
       return of(value);
     }
     value = value.filter(v => (v.name.toLowerCase().indexOf(term.toLowerCase()) > -1 || v.id == term || ((v.id + ' ' + v.name.toLowerCase()).indexOf(term.toLowerCase()) > -1)));
-    console.log(value);
+    //console.log(value);
     if (value.length != 0) {
       this.checkFlag(type, false);
       return of(value);
@@ -187,7 +190,7 @@ export class SessionWizardComponent implements OnInit {
   enterSecondStep($event) {
 
     if (this.wizard != undefined) {
-      console.log(this.wizard.model.currentStepIndex);
+      //console.log(this.wizard.model.currentStepIndex);
       this.currentprogress = this.wizard.model.currentStepIndex;
       if (this.wizard.model.currentStepIndex == 0) {
         this.progressWidth1 = 0;
@@ -206,7 +209,7 @@ export class SessionWizardComponent implements OnInit {
       }
 
     } else {
-      console.log(this.wizard);
+      //console.log(this.wizard);
       this.progressWidth1 = 0;
       this.progressWidth2 = 0;
       this.currentprogress = 0;
@@ -224,7 +227,7 @@ export class SessionWizardComponent implements OnInit {
 
   submitSessionClone() {
     var clonedObject;
-    console.log(this.selectedCourseModal);
+    //console.log(this.selectedCourseModal);
     var sessions = Array();
     for (let module of this.selectedCourseModal.modules) {
       for (let session of module.sessions) {
@@ -247,7 +250,7 @@ export class SessionWizardComponent implements OnInit {
               for (let new_session of sessions) {
                 module.sessions.push(new_session);
               }
-              console.log(course);
+              //console.log(course);
               clonedObject = course;
               break;
             }
@@ -264,14 +267,31 @@ export class SessionWizardComponent implements OnInit {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": "08/03/2018"
     };
+    this.disableOnFinish = true;
     const body = new HttpParams().set('course_object', JSON.stringify(clonedObject)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      console.log(res['data']);
+      //console.log(res['data']);
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
+    }, error => {
+      this.disableOnFinish = false;
     });
-
+  }
+  isValidForm() {
+    this.isValid = false;
+    if (this.sessionSelectModel != null && this.newSessionNameModel != undefined && this.newSessionNameModel.trim() != '' && this.newSessionNameModel.trim().length > 3) {
+      this.isValid = true;
+    }
+    return this.isValid;
+  }
+  isValid2() {
+    this.checkValid = false;
+    if ((this.courseSelectModel != null && this.courseSelectModel != '' && this.moduleSelectModel != null && this.moduleSelectModel != '')
+      || (this.courseSelectModel != null && this.courseSelectModel != '' && this.sessionsNewModuleModel != null && this.sessionsNewModuleModel.trim() != '' && this.sessionsNewModuleModel.trim().length > 3)) {
+      this.checkValid = true;
+    }
+    return this.checkValid;
   }
 }
