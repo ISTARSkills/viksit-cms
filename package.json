@@ -12,7 +12,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^5.2.2",
+    "@angular/animations": "^5.2.4",
     "@angular/cdk": "^2.0.0-beta.12",
     "@angular/common": "^5.2.2",
     "@angular/compiler": "^5.2.2",
@@ -30,6 +30,7 @@
     "ng2-dnd": "^5.0.2",
     "ng2-google-charts": "^3.3.0",
     "ng4-file-upload": "^1.0.4",
+    "ngx-color-picker": "^5.3.1",
     "ngx-contextmenu": "^4.1.2",
     "ngx-dropzone-wrapper": "^5.3.1",
     "ngx-mydatepicker": "^2.4.3",

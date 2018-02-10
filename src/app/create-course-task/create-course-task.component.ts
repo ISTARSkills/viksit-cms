@@ -31,6 +31,8 @@ export class CreateCourseTaskComponent implements OnInit {
   progressWidth2 = 0;
   isInclude2ndStep = false;
   users = [];
+  item_id;
+  item_type = "COURSE_CREATION_TASK";
   selectedUser = null;
   @ViewChild('userSelectionInstance') userSelectionInstance: NgbTypeahead;
   userSelectfocus$ = new Subject<string>();
@@ -76,6 +78,22 @@ export class CreateCourseTaskComponent implements OnInit {
   userFormatter = (x: { email: string, id: number }) => x.id + ' ' + x.email;
 
 
+  onUploadSuccess(file) {
+
+    console.log(file);
+    console.log(file[0].upload.filename);
+    console.log(file[0].type);
+
+  }
+
+
+  onUploadError(file) {
+
+    console.log(file);
+    console.log(file[0].upload.filename);
+    console.log(file[0].type);
+  }
+
   ngOnInit() {
 
     var modules = Array();
@@ -89,10 +107,6 @@ export class CreateCourseTaskComponent implements OnInit {
       // Read the result field from the JSON response.
       this.users = data['data'];
       console.log(this.users);
-
-
-
-
     });
   }
 

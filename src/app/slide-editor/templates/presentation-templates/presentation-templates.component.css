@@ -1,0 +1,119 @@
+.custom_mobile-preview{
+    position: absolute;
+    top: 71px;
+    left: 53px;
+    width: 59%;
+    height: 65vh;
+    border-radius: 0;
+
+}
+
+@keyframes FadeInUp {
+    0% 
+    {
+        opacity: 0;
+        top: -3rem;
+    }
+    100% 
+    {
+        opacity: 1 !important;
+    }
+ }
+ @keyframes FadeInLeft {
+    0% 
+    {
+        opacity: 0;
+        left: -3rem;
+    }
+    100% 
+    {
+        opacity: 1 !important;
+    }
+ }
+  
+  @keyframes FadeIn {
+    0% 
+    {
+        opacity: 0;
+    }
+    45% {
+        opacity: 0.4;
+      }
+    55% {
+        opacity: 0.5;
+      }
+      65% {
+        opacity: 0.6;
+      }
+    75% {
+        opacity: 0.7;
+      }
+      85% {
+        opacity: 0.8;
+      }
+      95% {
+        opacity: 0.9;
+      }
+    
+    100% 
+    {
+        opacity: 1 !important;
+    }
+ }
+
+ @keyframes FadeInRight {
+    0% 
+    {
+        opacity: 0;
+        right: -3rem;
+    }
+    100% 
+    {
+        opacity: 1 !important;
+    }
+ }
+
+ 
+ @keyframes FadeInDown {
+    0% 
+    {
+        opacity: 0;
+        bottom: -3rem;
+    }
+    100% 
+    {
+        opacity: 1 !important;
+    }
+ }
+  
+  .title-text {
+    font-size: 24px;
+    color: rgb(3, 3, 3);
+    position: absolute;
+  }
+ 
+   .paragraph-text{
+    white-space: pre-line;
+    font-size: 14px; 
+    bottom: 5rem;
+    color: rgb(3, 3, 3);
+    position: absolute;
+  } 
+
+  .fadeinbottom{
+    position: absolute;
+    left: 1.5rem;
+    bottom: 5rem;
+    animation-name: FadeInDown;
+    animation-fill-mode: both;
+    animation-delay: 4s;
+    animation-duration: 5s;
+  }
+
+  .fadein{
+    position: absolute;
+    left: 2.5rem;
+    top: 5rem;
+    animation-name: FadeIn;
+    animation-fill-mode: both;
+  }

@@ -34,7 +34,11 @@ import { LessonWizardComponent } from './partial-clone-modal/wizards/lesson-wiza
 import { SessionWizardComponent } from './partial-clone-modal/wizards/session-wizard/session-wizard.component';
 import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wizard/module-wizard.component';
 import { ContentAdminReviewTaskComponent } from './content-admin-review-task/content-admin-review-task.component';
-
+import { CourseBuilderServiceService } from './services/course_builder/course-builder-service.service';
+import { SlideEditorComponent } from './slide-editor/slide-editor.component';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PresentationTemplatesComponent } from './slide-editor/templates/presentation-templates/presentation-templates.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,12 +58,14 @@ import { ContentAdminReviewTaskComponent } from './content-admin-review-task/con
     LessonWizardComponent,
     SessionWizardComponent,
     ModuleWizardComponent,
-    ContentAdminReviewTaskComponent
+    ContentAdminReviewTaskComponent,
+    SlideEditorComponent,
+    PresentationTemplatesComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), ColorPickerModule, BrowserAnimationsModule, BrowserModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration],
+  providers: [AuthService, AuthGuard, AppConfiguration, CourseBuilderServiceService],
   bootstrap: [AppComponent]
 })
 

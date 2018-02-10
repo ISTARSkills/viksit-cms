@@ -338,4 +338,3 @@ export class LessonWizardComponent implements OnInit {
     return this.checkValid;
   }
 }
-}

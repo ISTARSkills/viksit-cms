@@ -1,0 +1,103 @@
+<div class="row m-3" [ngSwitch]="switchexpression">
+  <ng-container *ngSwitchCase="'Title_Paragraph'">
+    <div class="col-8">
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-5">
+              <h6>Background Color</h6>
+              <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+              />
+            </div>
+            <div class="col-5">
+              <h6>Background Image</h6>
+              <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+            </div>
+            <div class="col-2">
+              <button (click)="animateMe()" type="button" style="border-radius: 25px;" class="btn btn-outline-danger">Play</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <label>Tile Text</label>
+              <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+              <div class="row ">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Title Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.title.fragmentOrder">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Title Transaction Style</label>
+                    <select class="form-control" [(ngModel)]="slide.title.transactionType">
+                      <option selected value='fadeinbottom'>fadein from bottom</option>
+                      <option value='fadein'>fadein</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label>Title Transaction Duration</label>
+                  <input type="number" value="5" [(ngModel)]="slide.title.transactionDuration" class="form-control" aria-describedby="" placeholder="Enter Title Duration..">
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Pharagraph Text</label>
+              <textarea class="form-control" [(ngModel)]="slide.paragraph.text" id="exampleTextarea" placeholder="course descripton..."
+                rows="3"></textarea>
+              <div class="row ">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Pharagraph Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.paragraph.fragmentOrder">
+                      <option value='1'>1</option>
+                      <option selected value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Pharagraph Transaction Style</label>
+                    <select class="form-control" [(ngModel)]="slide.paragraph.transactionType">
+                      <option selected value='fadeinbottom'>fadein from bottom</option>
+                      <option value='fadein'>fadein</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label>Pharagraph Transaction Duration</label>
+                  <input type="number" [(ngModel)]="slide.paragraph.transactionDuration" class="form-control" aria-describedby="" value="5"
+                    placeholder="Enter Pharagraph Duration..">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4">
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block">
+          <div [@flyInOut]="state" #titleview class="title-text">{{slide.title.text}}</div>
+          <div [@FadeInDown]="state" #paragraphview class="paragraph-text">
+            {{slide.paragraph.text}}
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
