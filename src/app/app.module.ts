@@ -36,7 +36,12 @@ import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wiza
 import { ContentAdminReviewTaskComponent } from './content-admin-review-task/content-admin-review-task.component';
 import { DatePipe } from '@angular/common';
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { CourseBuilderServiceService } from './services/course_builder/course-builder-service.service';
+import { SlideEditorComponent } from './slide-editor/slide-editor.component';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PresentationTemplatesComponent } from './slide-editor/templates/presentation-templates/presentation-templates.component';
+import { LessonBuilderServiceService } from './services/lesson_bulider/lesson-builder-service.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,12 +61,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LessonWizardComponent,
     SessionWizardComponent,
     ModuleWizardComponent,
-    ContentAdminReviewTaskComponent
+    ContentAdminReviewTaskComponent,
+    SlideEditorComponent,
+    PresentationTemplatesComponent
+
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), NgSelectModule
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), NgSelectModule, ColorPickerModule, BrowserAnimationsModule, BrowserModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration, DatePipe],
+  providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService],
   bootstrap: [AppComponent]
 })
 

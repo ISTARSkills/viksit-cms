@@ -15,7 +15,7 @@ import { AppConfiguration } from './../app.constants';
 import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
 import { ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
-
+import { CourseBuilderServiceService } from '../services/course_builder/course-builder-service.service';
 @Component({
   selector: 'app-course-builder-content-creator',
   templateUrl: './course-builder-content-creator.component.html',
@@ -38,7 +38,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   pipe = new DatePipe('en-US');
   complex_object;
   id: string;
-  course;
+  course: Course;
   comments;
   navbarIsVisible = false;
   closeResult: string;
@@ -70,7 +70,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     addRemoveLinks: true
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService) {
+  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService) {
     this.id = this.route.snapshot.params.id;
 
   }
@@ -134,6 +134,10 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.course.modules[moduleIndex].sessions[sessionIndex].lessons.splice(lessonIndex, 1);
     console.log(this.course);
   };
+
+  public moveToLessonsFunction = function (module, session, lesson) {
+
+  }
 
 
   public open(type, value, content, module_index, session_index, lesson_index) {
@@ -221,10 +225,16 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-  
+
 
     if (this.id != undefined) {
       this.navbarIsVisible = true;
+
+      // this.course = this.courseBuilderServive.getCourseStructure(this.id);
+
+      // console.log("this is in component");
+      // console.log(this.course);
+
       // Make the HTTP request:
       this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
         // Read the result field from the JSON response.

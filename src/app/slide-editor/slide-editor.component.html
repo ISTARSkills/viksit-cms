@@ -1,0 +1,80 @@
+<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+
+<div class="jumbotron">
+  <div class="row ">
+    <h4 class="ml-3">Slide Builder</h4>
+    <wizard class="col-12 session-clone-wizard bg-white pb-3" [disableNavigationBar]=true [navBarLocation]="top" [defaultStepIndex]="0">
+
+      <div class="card mt-3">
+        <div class="row">
+          <div class="col-12">
+            <div class="progress">
+              <div class="progress-bar " [ngClass]="{'bg-warning': isOn && currentprogress === 0, 'bg-success': isDisabled && currentprogress != 0}"
+                role="progressbar" style="width: 33%; height: 5px" aria-valuenow="33" aria-valuemin="0" aria-valuemax="33"></div>
+              <div class="progress-bar bg-success " [ngClass]="{'bg-warning': isOn && currentprogress === 1, 'bg-success': isDisabled && currentprogress != 1}"
+                [style.width.%]="progressWidth1" role="progressbar" style="height: 5px" aria-valuenow="33" aria-valuemin="0"
+                aria-valuemax="66">
+              </div>
+              <div class="progress-bar " role="progressbar" [ngClass]="{'bg-warning': isOn && currentprogress === 2, 'bg-success': isDisabled && currentprogress != 2}"
+                [style.width.%]="progressWidth2" style="height: 5px" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="card-block">
+          <wizard-step (stepEnter)="enterSecondStep($event)">
+
+
+            <div class="row m-3">
+              <div class="col-6">
+                <h4>Choose Template</h4>
+              </div>
+              <div class="col-6">
+                <div class="form-group">
+                  <label for="exampleSelect1">Choose Template Type</label>
+                  <select [(ngModel)]="selectedType" class="form-control" (change)="onChangeTemplateType($event)">
+                    <option selected value="PRESENTATION">PRESENTATION</option>
+                    <option value="ASSESSMENT">ASSESSMENT</option>
+                    <option value="INTERACTIVE">INTERACTIVE</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="row m-3" *ngIf="templateList != null && templateList.length != 0">
+              <div class="col-3 mb-2" *ngFor="let template of templateList; index as i ">
+                <div class="card" (click)="isClassVisible(i,template)" [ngClass]="{'my-class': i === highlightedDiv && isVisible === true}">
+                  <h5 class="card-header">{{template}}</h5>
+                  <div class="card-body">
+                    <h5 class="card-title">Special title treatment</h5>
+                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <button type="button" [disabled]="!isVisible" class="btn btn-danger float-right" nextStep>Next Step</button>
+          </wizard-step>
+          <wizard-step (stepEnter)="enterSecondStep($event)">
+            <h4>Slide Editor</h4>
+
+            <app-presentation-templates (ngModelChange)="slideChange.emit($event)" *ngIf="isInclude2ndStep" [switchexpression]="switchexpression"
+              [slide]="slide"></app-presentation-templates>
+
+            <button type="button" class="btn btn-danger" previousStep>Previous</button>
+            <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+          </wizard-step>
+          <wizard-step (stepEnter)="enterSecondStep($event)">
+            <h4>Preview</h4>
+            {{lesson | json}}
+            <button type="button" class="btn btn-danger" previousStep>Previous Step</button>
+            <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
+          </wizard-step>
+        </div>
+      </div>
+    </wizard>
+
+  </div>
+</div>

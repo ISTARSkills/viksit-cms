@@ -1,4 +1,5 @@
 import { Module } from "./module/module";
+import { Issue } from "./issue/issue";
 
 export class Course {
     name: string;
@@ -8,6 +9,8 @@ export class Course {
     category: string;
     status: string;
     modules: Array<Module>
+    issues: Array<Issue>
+
 
     constructor(name: string, id: number, imageURL: string, description: string, category: string, status: string, modules: Array<Module>) {
         this.name = name;
@@ -18,5 +21,4 @@ export class Course {
         this.status = status;
         this.modules = modules;
     }
-
 }

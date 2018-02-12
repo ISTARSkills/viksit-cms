@@ -96,12 +96,12 @@ export class DashboardComponent implements OnInit {
   goToTask(task: Task) {
     console.log(task.itemType.trim().toLowerCase())
     switch (task.itemType.trim().toLowerCase()) {
-      case 'lesson_creation_task':
+      case 'course_creation_task':
         this.router.navigate(['../course/' + task.id], { relativeTo: this.route });
 
         break;
-      case 'course_creation_task':
-        this.router.navigate(['../course/' + task.id]);
+      case 'lesson_creation_task':
+        this.router.navigate(['../lesson_builder/' + task.itemId], { relativeTo: this.route });
 
         break;
 
