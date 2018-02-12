@@ -11,11 +11,14 @@ import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { DatePipe } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-content-admin-review-task',
   templateUrl: './content-admin-review-task.component.html',
-  styleUrls: ['./content-admin-review-task.component.css']
+  styleUrls: ['./content-admin-review-task.component.css'],
+  providers: [DatePipe]
 })
 export class ContentAdminReviewTaskComponent implements OnInit {
   progress = 50;
@@ -29,20 +32,22 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   isInclude2ndStep = false;
   newCourse;
   users = [];
-  selectedUser = null;
+  lessonList = [];
+  selectedUser: any;
+  courseDueDate;
+  courseAssignee;
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
-  @ViewChild('userSelectionInstance') userSelectionInstance: NgbTypeahead;
-  userSelectfocus$ = new Subject<string>();
-  userSelectclick$ = new Subject<string>();
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
   myOptions: INgxMyDpOptions = {
     // other options...
-    dateFormat: 'dd/mm/yyyy',
+    dateFormat: 'dd-mm-yyyy',
   };
 
+
   // Initialized to specific date (09.10.2018)
-  model: any = { date: { year: new Date().getFullYear(), month: new Date().getMonth(), day: new Date().getDay() } };
+  dateFormatted: Date;
+  model: any;
 
   // optional date changed callback
   onDateChanged(event: IMyDateModel): void {
@@ -55,30 +60,34 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/16542645').subscribe(data => {
       // Read the result field from the JSON response.
       this.newCourse = data['data'];
+      this.courseDueDate = this.newCourse.dueDate;
+      this.dateFormatted = new Date(this.courseDueDate);
+      this.model = {
+        date: {
+          year: this.dateFormatted.getFullYear(),
+          month: this.dateFormatted.getMonth(),
+          day: this.dateFormatted.getDate()
+        }
+      }
+      this.courseAssignee = this.newCourse.assignee;
       for (let issue of this.newCourse.issues) {
         for (let comments of issue.comments) {
           this.issuesList.push(comments);
         }
-
       }
       console.log(this.newCourse);
+      this.lessonUpdateList();
+
       this.isInclude2ndStep = true;
     });
 
     this.http.get(AppConfiguration.ServerWithApiUrl + 'user/user_bytype/CONTENT_CREATOR').subscribe(data => {
       // Read the result field from the JSON response.
       this.users = data['data'];
-      console.log(this.users);
+      this.getCourseAssignee();
     });
-  }
 
-  userSearch = (text$: Observable<string>) =>
-    text$
-      .debounceTime(200).distinctUntilChanged()
-      .merge(this.userSelectfocus$)
-      .merge(this.userSelectclick$.filter(() => !this.userSelectionInstance.isPopupOpen()))
-      .map(term => (term === '' ? this.users : this.users.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)));
-  userFormatter = (x: { email: string, id: number }) => x.id + ' ' + x.email;
+  }
 
   enterSecondStep($event) {
 
@@ -91,10 +100,12 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         this.isOn = true;
       }
       if (this.wizard.model.currentStepIndex == 1) {
+        this.lessonUpdateList();
         this.progressWidth1 = 33;
         this.progressWidth2 = 0;
         this.isOn = true;
         this.isDisabled = true;
+        console.log(this.newCourse)
       } if (this.wizard.model.currentStepIndex == 2) {
         this.progressWidth2 = 34;
         this.isOn = true;
@@ -107,6 +118,69 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       this.progressWidth2 = 0;
       this.currentprogress = 0;
       this.isOn = true;
+    }
+  }
+  lessonUpdateList() {
+    this.lessonList = [];
+    for (let module of this.newCourse.modules) {
+      for (let session of module.sessions) {
+        for (let lesson of session.lessons) {
+          this.lessonList.push(lesson);
+        }
+      }
+    }
+  }
+  getUsername(userId) {
+    for (let user of this.users) {
+      if (user.id == userId) {
+        return user.email;
+      }
+    }
+  }
+  getColor(dueDate) {
+    if (dueDate <= new Date()) {
+      return "red";
+    } else {
+      return "green";
+    }
+  }
+  getCourseAssignee() {
+    for (let user of this.users) {
+      if (user.id == this.courseAssignee) {
+        this.selectedUser = user.id;
+      }
+    }
+  }
+  getStatus(lesson) {
+    if (lesson.dueDate <= new Date()) {
+      return "#c9302c";
+    } else {
+      return "#5cb85c";
+    }
+  }
+  completeReview() {
+    console.log(this.newCourse);
+    const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/16542645', body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => {
+      //console.log(res['data']);
+      this.newCourse = res['data'];
+      this.router.navigate(['../dashboard'], { relativeTo: this.route });
+    }, error => {
+      console.log('Some thing went wrong on submitting')
+    });
+  }
+  onChangeAssignee(lesson) {
+    console.log(lesson);
+    for (let module of this.newCourse.modules) {
+      for (let session of module.sessions) {
+        for (let mainLesson of session.lessons) {
+          if (mainLesson.id == lesson.id) {
+            mainLesson.status = "ASSIGNED";
+          }
+        }
+      }
     }
   }
 }

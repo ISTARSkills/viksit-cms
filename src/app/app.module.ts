@@ -34,6 +34,8 @@ import { LessonWizardComponent } from './partial-clone-modal/wizards/lesson-wiza
 import { SessionWizardComponent } from './partial-clone-modal/wizards/session-wizard/session-wizard.component';
 import { ModuleWizardComponent } from './partial-clone-modal/wizards/module-wizard/module-wizard.component';
 import { ContentAdminReviewTaskComponent } from './content-admin-review-task/content-admin-review-task.component';
+import { DatePipe } from '@angular/common';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -57,9 +59,9 @@ import { ContentAdminReviewTaskComponent } from './content-admin-review-task/con
     ContentAdminReviewTaskComponent
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot()
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), NgSelectModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration],
+  providers: [AuthService, AuthGuard, AppConfiguration, DatePipe],
   bootstrap: [AppComponent]
 })
 
