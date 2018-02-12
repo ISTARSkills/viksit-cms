@@ -1,5 +1,5 @@
 <div class="row m-3" [ngSwitch]="switchexpression">
-  <ng-container *ngSwitchCase="'Title_Paragraph'">
+  <ng-container *ngSwitchCase="'ONLY_TITLE_PARAGRAPH_NEW'">
     <div class="col-8">
       <div class="card">
         <div class="card-block">
@@ -31,7 +31,7 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>Title Fragment Order</label>
-                    <select class="form-control" [(ngModel)]="slide.title.fragmentOrder">
+                    <select class="form-control" [(ngModel)]="slide.title.fragment_order">
                       <option selected value='1'>1</option>
                       <option value='2'>2</option>
                     </select>
@@ -40,15 +40,17 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>Title Transaction Style</label>
-                    <select class="form-control" [(ngModel)]="slide.title.transactionType">
+                    <select class="form-control" [(ngModel)]="slide.title.transition_type">
                       <option selected value='fadeinbottom'>fadein from bottom</option>
                       <option value='fadein'>fadein</option>
+                      <option value='FlipOutY'>FlipOutY</option>
+                      <option value='FadeInLeft'>FadeInLeft</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-4">
                   <label>Title Transaction Duration</label>
-                  <input type="number" value="5" [(ngModel)]="slide.title.transactionDuration" class="form-control" aria-describedby="" placeholder="Enter Title Duration..">
+                  <input type="number" value="5" [(ngModel)]="slide.title.fragment_duration" class="form-control" aria-describedby="" placeholder="Enter Title Duration..">
                 </div>
               </div>
             </div>
@@ -60,7 +62,7 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>Pharagraph Fragment Order</label>
-                    <select class="form-control" [(ngModel)]="slide.paragraph.fragmentOrder">
+                    <select class="form-control" [(ngModel)]="slide.paragraph.fragment_order">
                       <option value='1'>1</option>
                       <option selected value='2'>2</option>
                     </select>
@@ -69,16 +71,18 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>Pharagraph Transaction Style</label>
-                    <select class="form-control" [(ngModel)]="slide.paragraph.transactionType">
+                    <select class="form-control" [(ngModel)]="slide.paragraph.transition_type">
                       <option selected value='fadeinbottom'>fadein from bottom</option>
                       <option value='fadein'>fadein</option>
+                      <option value='FlipOutY'>FlipOutY</option>
+                      <option value='FadeInLeft'>FadeInLeft</option>
+
                     </select>
                   </div>
                 </div>
                 <div class="col-4">
                   <label>Pharagraph Transaction Duration</label>
-                  <input type="number" [(ngModel)]="slide.paragraph.transactionDuration" class="form-control" aria-describedby="" value="5"
-                    placeholder="Enter Pharagraph Duration..">
+                  <input type="number" [(ngModel)]="slide.paragraph.fragment_duration" class="form-control" aria-describedby="" value="5" placeholder="Enter Pharagraph Duration..">
                 </div>
               </div>
             </div>
@@ -91,7 +95,7 @@
       <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
       <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
         <div class="card-block">
-          <div [@flyInOut]="state" #titleview class="title-text">{{slide.title.text}}</div>
+          <div [@flyInOut]="state" #titleview class="title-text text-center">{{slide.title.text}}</div>
           <div [@FadeInDown]="state" #paragraphview class="paragraph-text">
             {{slide.paragraph.text}}
 

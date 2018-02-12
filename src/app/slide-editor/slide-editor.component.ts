@@ -7,6 +7,9 @@ import { WizardComponent } from 'ng2-archwizard';
 import { Title } from '../pojo/slide/title';
 import { Paragraph } from '../pojo/slide/paragraph';
 import { Slide } from '../pojo/slide/slide';
+import { LessonBuilderServiceService } from '../services/lesson_bulider/lesson-builder-service.service';
+import { ParamMap, Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-slide-editor',
   templateUrl: './slide-editor.component.html',
@@ -31,28 +34,68 @@ export class SlideEditorComponent implements OnInit {
   templateList = [];
   isInclude2ndStep = false;
   selectedType = "PRESENTATION"
-  newTitle: Title;
-  newParagraph: Paragraph;
   slide: Slide;
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
+  slides: any;
+  index;
+  lesson;
+  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+    this.index = this.route.snapshot.params.id;
+  }
 
   ngOnInit() {
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
 
     this.templateTypePreviewList = [
-      { presentation: ["Title_Paragraph", "Title", "Title_Paragraph_Image"] },
+      { presentation: ["ONLY_TITLE_PARAGRAPH_NEW", "Title", "Title_Paragraph_Image"] },
       { interactive: [] },
       { assessment: [] }]
 
-    this.newTitle = new Title("", 1, "", 5)
-    this.newParagraph = new Paragraph("", 2, "", 5)
-    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.switchexpression, null, 0);
+    // this.lessonBuilderService.getSlide(this.id).subscribe(data => {
+    //   this.slide = data;
 
-    for (let list of this.templateTypePreviewList[0].presentation) {
-      this.templateList.push(list)
-      console.log(list);
-    }
+    //   console.log(this.slide.type);
+    //   var count = 0;
+    //   for (let list of this.templateTypePreviewList[0].presentation) {
+
+    //     if (this.slide.type === list) {
+    //       this.isClassVisible(count, this.slide.type)
+    //     }
+    //     count++;
+    //     this.templateList.push(list)
+    //     console.log(list);
+    //   }
+
+    // });
+
+    this.lessonBuilderService.getAllSlide().subscribe(data => {
+      this.lesson = data;
+      this.slides = [];
+      for (let stage of this.lesson.stages) {
+        for (let slide of stage.slides) {
+          console.log(slide);
+          this.slides.push(slide);
+        }
+      }
+
+
+
+      // this.slides = data;
+      this.slide = this.slides[this.index];
+
+      console.log(this.slide.type);
+      var count = 0;
+      for (let list of this.templateTypePreviewList[0].presentation) {
+
+        if (this.slide.type === list) {
+          this.isClassVisible(count, this.slide.type)
+        }
+        count++;
+        this.templateList.push(list)
+      }
+
+
+    });
 
   }
 
@@ -92,15 +135,21 @@ export class SlideEditorComponent implements OnInit {
   }
 
 
+
   public getFragmentCount(type) {
 
     switch (type) {
-      case 'Title_Paragraph':
+      case 'ONLY_TITLE_PARAGRAPH_NEW':
         return 2;
       default:
         return 0;
     }
 
+  }
+
+  finishFunction() {
+
+this.lesson
   }
 
   enterSecondStep($event) {
@@ -120,6 +169,13 @@ export class SlideEditorComponent implements OnInit {
         this.isOn = true;
         this.isDisabled = true;
       } if (this.wizard.model.currentStepIndex == 2) {
+
+        //this.slideChange.emit(this.slide);
+        // this.lessonBuilderService.getAllSlide().subscribe(data => {
+        //   this.slides = data;
+
+        // });
+
         this.progressWidth2 = 34;
         this.isOn = true;
         this.isDisabled = true;

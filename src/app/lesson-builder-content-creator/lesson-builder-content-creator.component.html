@@ -28,7 +28,8 @@
         <i ngbPopover="{{lesson?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
         <button (click)="addStageComponent(lesson)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
           <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Stage</button>
-        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
           <i class="fa fa-circle mr-2" aria-hidden="true"></i>Comments</button>
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
           <div class="card custom-chat">
@@ -65,8 +66,10 @@
         </div>
       </div>
       <div class="card-body">
-        <div *ngIf="lesson?.stages != undefined && lesson?.stages.length > 0; else stageElseBlock" class="row modules m-0 row-eq-height" dnd-sortable-container [sortableData]="lesson?.stages" [dropZones]="['container-dropZone']">
-          <div *ngFor="let stage of lesson?.stages; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'stage'" class="col-3 p-0 ml-1 mr-1 ">
+        <div *ngIf="lesson?.stages != undefined && lesson?.stages.length > 0; else stageElseBlock" class="row modules m-0 row-eq-height"
+          dnd-sortable-container [sortableData]="lesson?.stages" [dropZones]="['container-dropZone']">
+          <div *ngFor="let stage of lesson?.stages; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'stage'"
+            class="col-3 p-0 ml-1 mr-1 ">
             <div dnd-sortable-container [sortableData]="lesson?.stages[j].slides" [dropZones]="['widget-dropZone']">
               <div class="card module_card row-eq-height mb-1">
 
@@ -84,15 +87,22 @@
                     <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Slide</button>
                 </div>
                 <div *ngIf=" stage.slides != undefined && stage.slides.length > 0; else slideElseBlock">
-                  <div class="card mt-2" *ngFor="let slide of stage.slides; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'slide'" [dragData]="lesson?.stages[j].slides[k]">
+                  <div class="card mt-2" *ngFor="let slide of stage.slides; index as k;" dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'slide'"
+                    [dragData]="lesson?.stages[j].slides[k]">
                     <div class="card-header abc">
 
                       <div class="row m-0 row-eq-height">
-                        <div (click)="open()" class="col-2 text-left">
+                        <!-- <div (click)="open()" class="col-2 text-left">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                        </div> -->
+                        <div class="col-2 ">
+                          <a href="/slide_editor/{{j}}">
+                            <i class="fas fa-edit"></i>
+                          </a>
+
                         </div>
                         <div class="col-8 text-center">
-                          <span> {{slide.name}}</span>
+                          <span style="font-size: 14px;"> {{slide.type}}</span>
                         </div>
                         <div class="col-2 text-right">
                           <i (click)="removeSlideFunction(stage,slide)" class="fa fa-times" aria-hidden="true"></i>
@@ -105,17 +115,20 @@
 
                       </div>
                       <div class="row m-0 row-eq-height">
-                        <div class="col-12"><b>Description:</b> {{slide.description}}</div>
+                        <div class="col-12">
+                          <b>Description:</b> {{slide.description}}</div>
 
                       </div>
                       <div class="row m-0 row-eq-height">
 
-                        <div class="col-12"><b>From:</b> {{slide.from}}</div>
+                        <div class="col-12">
+                          <b>From:</b> {{slide.from}}</div>
 
                       </div>
                       <div class="row m-0 row-eq-height">
 
-                        <div class="col-12"><b>To:</b> {{slide.to}}</div>
+                        <div class="col-12">
+                          <b>To:</b> {{slide.to}}</div>
                       </div>
 
 

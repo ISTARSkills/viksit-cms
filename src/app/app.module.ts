@@ -39,6 +39,7 @@ import { SlideEditorComponent } from './slide-editor/slide-editor.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PresentationTemplatesComponent } from './slide-editor/templates/presentation-templates/presentation-templates.component';
+import { LessonBuilderServiceService } from './services/lesson_bulider/lesson-builder-service.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,11 +62,12 @@ import { PresentationTemplatesComponent } from './slide-editor/templates/present
     ContentAdminReviewTaskComponent,
     SlideEditorComponent,
     PresentationTemplatesComponent
+
   ],
   imports: [
     BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), ColorPickerModule, BrowserAnimationsModule, BrowserModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration, CourseBuilderServiceService],
+  providers: [AuthService, AuthGuard, AppConfiguration, CourseBuilderServiceService, LessonBuilderServiceService],
   bootstrap: [AppComponent]
 })
 

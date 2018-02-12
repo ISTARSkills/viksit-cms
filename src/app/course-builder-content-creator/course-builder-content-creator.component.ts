@@ -135,6 +135,10 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     console.log(this.course);
   };
 
+  public moveToLessonsFunction = function (module, session, lesson) {
+
+  }
+
 
   public open(type, value, content, module_index, session_index, lesson_index) {
     this.modalName = 'Edit ' + type;
@@ -226,24 +230,24 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     if (this.id != undefined) {
       this.navbarIsVisible = true;
 
-      this.course = this.courseBuilderServive.getCourseStructure(this.id);
+      // this.course = this.courseBuilderServive.getCourseStructure(this.id);
 
-      console.log("this is in component");
-      console.log(this.course);
+      // console.log("this is in component");
+      // console.log(this.course);
 
-      // // Make the HTTP request:
-      // this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
-      //   // Read the result field from the JSON response.
-      //   this.course = data['data'];
-      //   console.log(this.course);
-      //   for (let issue of this.course.issues) {
-      //     for (let comments of issue.comments) {
-      //       this.issuesList.push(comments);
-      //     }
+      // Make the HTTP request:
+      this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
+        // Read the result field from the JSON response.
+        this.course = data['data'];
+        console.log(this.course);
+        for (let issue of this.course.issues) {
+          for (let comments of issue.comments) {
+            this.issuesList.push(comments);
+          }
 
-      //   }
-      //   console.log(this.issuesList);
-      // });
+        }
+        console.log(this.issuesList);
+      });
 
     }
 

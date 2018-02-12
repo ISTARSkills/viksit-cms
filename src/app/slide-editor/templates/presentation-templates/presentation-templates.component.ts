@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { trigger, transition, style, animate, query, stagger, keyframes, state, page } from '@angular/animations';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import { trigger, transition, style, animate, query, stagger, keyframes, state } from '@angular/animations';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { AppConfiguration } from '../../../app.constants';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -52,6 +52,8 @@ import { Paragraph } from '../../../pojo/slide/paragraph';
 export class PresentationTemplatesComponent implements OnInit {
   @Input() switchexpression;
   @Input() slide;
+  @Output() updatedslide;
+  @Output() slideChange: EventEmitter<Slide> = new EventEmitter<Slide>();
   @ViewChild('paragraphview') paragraphview;
   @ViewChild('titleview') titleview;
   item_id;
@@ -60,18 +62,8 @@ export class PresentationTemplatesComponent implements OnInit {
   public color: string = '#7e7970';
   public bgcolor: string = '#FFFFFF';
   //public tempImg: SafeStyle;
-  public title: string = ""
-  public paragraph: string = ""
   public bgImage: string = "";
-  public flyInOut1 = "flyInOut"
-  title_fragment_order = 1;
-  paragraph_fragment_order = 2;
-  paragraph_transaction_style = "fadeinbottom";
-  title_transaction_style = "fadein";
-  paragraph_transaction_duration = 5;
-  title_transaction_duration = 5;
-  duration = '5s';
-  delay = '0s';
+
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   animateMe() {

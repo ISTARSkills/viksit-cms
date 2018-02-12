@@ -164,10 +164,16 @@
 
                                     <div *ngIf="!lesson.isDeleted" class="card m-3" [ngClass]="(lesson.status == 'INCOMPLETE')?'top-border-red':'top-border-green'"
                                       dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'" [dragData]="course?.modules[j].sessions[k].lessons[l]">
-                                      <div class="card-header">
+                                      <div class="card-header pl-0 pr-0">
 
                                         <div class="row m-0 row-eq-height">
-                                          <div class="col-10 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
+                                          <div class="col-2 ">
+                                            <a href="/lesson_builder/{{lesson.id != null ? lesson.id : 0}}">
+                                              <i class="fas fa-edit"></i>
+                                            </a>
+
+                                          </div>
+                                          <div class="col-8 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
                                           <div class="col-2 text-right">
                                             <i (click)="removeLessonsFunction(module,session,lesson)" class="fa fa-times" aria-hidden="true"></i>
                                           </div>

@@ -1,14 +1,14 @@
 export class Title {
 
     text: string;
-    fragmentOrder: number;
-    transactionType: string;
-    transactionDuration: number;
-    constructor(text: string, fragmentOrder: number, transactionType: string, transactionDuration: number) {
+    fragment_order: number;
+    transition_type: string;
+    fragment_duration: number;
+    constructor(text: string, fragment_order: number, transition_type: string, fragment_duration: number) {
         this.text = text;
-        this.fragmentOrder = fragmentOrder;
-        this.transactionType = transactionType;
-        this.transactionDuration = transactionDuration;
+        this.fragment_order = fragment_order;
+        this.transition_type = transition_type;
+        this.fragment_duration = fragment_duration;
 
 
     }

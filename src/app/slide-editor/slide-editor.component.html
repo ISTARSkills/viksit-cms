@@ -41,7 +41,6 @@
                 </div>
               </div>
 
-
             </div>
             <div class="row m-3" *ngIf="templateList != null && templateList.length != 0">
               <div class="col-3 mb-2" *ngFor="let template of templateList; index as i ">
@@ -61,14 +60,15 @@
           <wizard-step (stepEnter)="enterSecondStep($event)">
             <h4>Slide Editor</h4>
 
-            <app-presentation-templates *ngIf="isInclude2ndStep" [switchexpression]="switchexpression" [slide]="slide"></app-presentation-templates>
+            <app-presentation-templates (ngModelChange)="slideChange.emit($event)" *ngIf="isInclude2ndStep" [switchexpression]="switchexpression"
+              [slide]="slide"></app-presentation-templates>
 
             <button type="button" class="btn btn-danger" previousStep>Previous</button>
             <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
           </wizard-step>
           <wizard-step (stepEnter)="enterSecondStep($event)">
             <h4>Preview</h4>
-            {{slide | json}}
+            {{lesson | json}}
             <button type="button" class="btn btn-danger" previousStep>Previous Step</button>
             <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
           </wizard-step>
