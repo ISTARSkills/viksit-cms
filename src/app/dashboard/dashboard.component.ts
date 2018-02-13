@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SlickModule } from 'ngx-slick';
 
 @Component({
   selector: 'app-dashboard',

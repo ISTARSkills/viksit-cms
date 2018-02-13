@@ -33,6 +33,7 @@ export class CreateCourseTaskComponent implements OnInit {
   progressWidth2 = 0;
   isInclude2ndStep = false;
   users = [];
+  courseImage = "";
   item_id;
   item_type = "COURSE_CREATION_TASK";
   selectedUser = null;
@@ -82,10 +83,12 @@ export class CreateCourseTaskComponent implements OnInit {
 
   onUploadSuccess(file) {
 
-    console.log(file);
+    // console.log(file);
     console.log(file[0].upload.filename);
     console.log(file[0].type);
+    this.courseImage = file[0].xhr.response
 
+    this.newCourse.imageURL = this.courseImage;
   }
 
 

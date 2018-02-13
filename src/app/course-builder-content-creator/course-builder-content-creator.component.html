@@ -34,7 +34,7 @@
         <span [contextMenu]="myContextMenu" [contextMenuSubject]="course" (click)="open('Course',course,content,null,null,null)">
           {{course?.name}} </span>
         <i ngbPopover="{{course?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
-        <button (click)="addModuleComponent(course)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
+        <button (click)="addModuleComponent(course,content)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
           <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Modules</button>
         <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
-                  <button (click)="addSessionComponent(module)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                  <button (click)="addSessionComponent(module,content)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
                     <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Session</button>
                 </div>
                 <div *ngIf=" module.sessions != undefined && module.sessions.length > 0; else sessionElseBlock">
@@ -112,7 +112,7 @@
 
                       <div class="row m-0 row-eq-height">
                         <div (click)="open('Session',session,content,j,k,null)" class="col-2 text-left">
-                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                          <i class="fas fa-edit"></i>
                         </div>
                         <div class="col-8 text-center">
                           <span> {{session.name}}</span>
@@ -127,7 +127,7 @@
                         <div class="col-4">9</div>
                         <div class="col-4">{{session.progress}}</div>
                         <div class="col-4">
-                          <button type="button" (click)="addLessonsComponent(module,session)" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                          <button type="button" (click)="addLessonsComponent(module,session,content)" class="btn btn-outline-info course_body_buttons float-right mr-2">
                             <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Lesson</button>
                         </div>
 
@@ -240,12 +240,12 @@
       </form>
 
       <label for="typeahead-format ">name:</label>
-      <input type="text " class="form-control " [(ngModel)]="title" />
+      <input type="text " class="form-control"  [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
-      <textarea type="text " class="form-control " [(ngModel)]="desc"></textarea>
+      <textarea type="text " class="form-control"  [(ngModel)]="desc"></textarea>
       <div *ngIf=" type == 'Lesson';">
         <label for="typeahead-format ">Lesson Type:</label>
-        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectOperation">
+        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectlessonType">
           <option value="PRESENTATION">PRESENTATION</option>
           <option value="ASSESSMENT">ASSESSMENT</option>
           <option value="INTERACTIVE">INTERACTIVE</option>
@@ -254,7 +254,7 @@
     </div>
     <div class="modal-footer ">
       <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
-      <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
+      <button type="button " [disabled]="!isValidForm()" data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
     </div>
   </ng-template>
 
