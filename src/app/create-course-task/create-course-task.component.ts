@@ -14,6 +14,8 @@ import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
+import { Router, ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-create-course-task',
   templateUrl: './create-course-task.component.html',
@@ -61,7 +63,7 @@ export class CreateCourseTaskComponent implements OnInit {
   model: any = { date: { year: new Date().getFullYear(), month: new Date().getMonth(), day: new Date().getDay() } };
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
 
   // optional date changed callback
   onDateChanged(event: IMyDateModel): void {
@@ -175,6 +177,8 @@ export class CreateCourseTaskComponent implements OnInit {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
       console.log(res['data']);
+
+      this.router.navigate(['../dashboard'], { relativeTo: this.route });
     });
 
 
