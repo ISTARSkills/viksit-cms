@@ -8,7 +8,7 @@
      border-radius: 25px 25px;
      left: 10%;
      right: 10%;
-     width: 80%;
+     width: 65%;
 }
  .selecttask{
      margin-left: auto;
@@ -19,7 +19,7 @@
      min-width: 28%;
 }
  .custom-card{
-     margin-bottom: 40px;
+     margin: 25px;
      min-height: 483px;
      max-height: 483px;
      box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.24);
@@ -51,4 +51,11 @@
 	background-color: #ffffff;
 	box-shadow: 0 6px 6px 0 rgba(0, 0, 0, 0.24), 0 0 6px 0
 		rgba(0, 0, 0, 0.12);
+}
+.swiper-button-prev{
+    background-image: url("../../assets/image/prev.png");
+}
+
+.swiper-button-next{
+    background-image: url("../../assets/image/prev.png");
 }

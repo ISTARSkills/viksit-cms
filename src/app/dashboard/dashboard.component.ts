@@ -4,19 +4,34 @@ import { DatePipe } from '@angular/common'
 import { Task } from '../pojo/complex/task';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
-import { SlickModule } from 'ngx-slick';
+import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
+
+
 export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   tasks;
   complex_object;
   storedTasks;
+  public config: SwiperConfigInterface = {
+    direction: 'horizontal',
+    slidesPerView: 3,
+    observer: true,
+    keyboard: true,
+    mousewheel: true,
+    scrollbar: false,
+    navigation: true,
+    pagination: false
+  };
+
 
   constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
 
@@ -34,23 +49,6 @@ export class DashboardComponent implements OnInit {
     this.tasks = this.complex_object.tasks;
     this.storedTasks = this.tasks;
     console.log(this.tasks);
-  }
-
-
-
-
-  slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, infinite: true, lazyLoad: 'progressives' };
-
-
-  afterChange(e) {
-    console.log('afterChange', e);
-    /* //this.tasks = this.storedTasks.slice(e.currentSlide, e.currentSlide + 5);
-    this.tasks = this.storedTasks.slice(e.currentSlide, e.currentSlide + 12); */
-  }
-
-  filterSlides(slides: Array<any>) {
-    return slides.slice(0, 7);
-
   }
 
   setTask(taskType: string) {

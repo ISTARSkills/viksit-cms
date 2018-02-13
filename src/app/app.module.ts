@@ -42,6 +42,8 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PresentationTemplatesComponent } from './slide-editor/templates/presentation-templates/presentation-templates.component';
 import { LessonBuilderServiceService } from './services/lesson_bulider/lesson-builder-service.service';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +69,7 @@ import { LessonBuilderServiceService } from './services/lesson_bulider/lesson-bu
 
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), NgSelectModule, ColorPickerModule, BrowserAnimationsModule, BrowserModule
+    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), NgSelectModule, ColorPickerModule, BrowserAnimationsModule, BrowserModule, SwiperModule
   ],
   providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService],
   bootstrap: [AppComponent]

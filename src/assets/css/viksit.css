@@ -87,3 +87,18 @@ display: block !important;
     padding-right: 12px;
     text-align: center;
 }
+
+.swiper-button-prev{
+    background-image: url("../../assets/image/prev.png") !important;
+    width: 35px !important;
+    background-size: 35px 40px !important;
+    left: 0px !important;
+}
+
+.swiper-button-next{
+    background-image: url("../../assets/image/prev.png") !important;
+    transform: rotate(180deg);
+    width: 35px !important;
+    background-size: 35px 40px !important;
+    right: 0px !important;
+}

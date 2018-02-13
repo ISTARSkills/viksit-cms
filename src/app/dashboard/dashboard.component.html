@@ -8,7 +8,8 @@
         <div class="d-flex justify-content-end">
           <div class="mr-auto py-2 pl-2">
             <label class="sr-only" for="inlineFormInput">Name</label>
-            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter" (keyup.enter)="searchTask(box.value)">
+            <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
+              (keyup.enter)="searchTask(box.value)">
           </div>
           <div class="p-2">
             <!-- <label class=" sr-only " for="inlineFormInputGroup ">Username</label> -->
@@ -41,44 +42,50 @@
   <div class=" container ">
     <div class="row align-items-center">
       <div *ngIf="tasks != null && tasks != undefined && tasks.length > 0; else taskElseBlock" class="col-12 col-md-12 ">
-        <ngx-slick class="carousel dashboard-carousel" #slickModal="slick-modal" [config]="slideConfig " (afterChange)="afterChange($event) ">
-          <div ngxSlickItem *ngFor="let task of tasks; index as i " class="task ">
 
-            <div class="card custom-card " style="width: 20rem; ">
+        <div style="width: 100%;">
+          <swiper class="swiper-container" [config]="config">
+            <div *ngFor="let task of tasks; index as i " class="swiper-slide task">
+              <div class="card custom-card " style="width: 20rem; ">
 
-              <div class="row m-0">
-                <h6 class="card-title col-10 mb-0 py-4 pl-4 pr-0" placement="bottom" ngbTooltip="{{task.title}}">{{(task.title.length >= 31) ? task.title.slice(0,31)+'...': task.title}}</h6>
-                <div class="col-2  text-center my-auto">
-                  <i class="fa fa-info-circle" aria-hidden="true" placement="bottom" ngbPopover="{{task.title}}" triggers="mouseenter:mouseleave"></i>
+                <div class="row m-0">
+                  <div class="col-10  text-center my-auto p-0">
+                    <h6 class="card-title mt-3" placement="bottom" ngbTooltip="{{task.title}}">{{(task.title.length >= 31) ? task.title.slice(0,31)+'...': task.title}}</h6>
+                  </div>
+                  <div class="col-2  text-center my-auto p-0">
+                    <i class="fa fa-info-circle" aria-hidden="true" placement="bottom" ngbPopover="{{task.title}}" triggers="mouseenter:mouseleave"></i>
+                  </div>
                 </div>
-              </div>
-              <!-- <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap "> -->
-              <div class="card-block">
-                <h5 class="card-title text-muted">Description</h5>
-                <p class="card-text">{{task.description}}</p>
-              </div>
-              <button type="button " class="btn btn-danger btn-lg btn-block " (click)="goToTask(task)">
-                <div class="row m-0 custom-button-presentation">
-                  <span aria-hidden="true" class="presentation_icon ml-3 mr-2"></span>
-                  {{(task.itemType === 'LESSON_CREATION_TASK') ? 'Create Lesson': 'Create Course'}}</div>
+                <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap ">
+                <div class="card-block">
+                  <h5 class="card-title text-muted">Description</h5>
+                  <p class="card-text">{{task.description}}</p>
+                </div>
+                <button type="button " class="btn btn-danger btn-lg btn-block " (click)="goToTask(task)">
+                  <div class="row m-0 custom-button-presentation">
+                    <span aria-hidden="true" class="presentation_icon ml-3 mr-2"></span>
+                    {{(task.itemType === 'LESSON_CREATION_TASK') ? 'Create Lesson': 'Create Course'}}</div>
 
 
-              </button>
+                </button>
+              </div>
             </div>
-          </div>
-        </ngx-slick>
+          </swiper>
+        </div>
+
       </div>
       <ng-template #taskElseBlock>
         <div class='card custom-cards_css mx-auto mb-4'>
           <div class='row mx-auto'>
             <h4 class=' text-muted text-center mx-auto custom-font-family-tag m-3'>
-  											You don't have any tasks lined up for today.</h4>
+              You don't have any tasks lined up for today.</h4>
           </div>
           <div class='row mx-auto my-auto'>
-            <img class='card-img-top custom-notask-imgtag mx-auto' src='../../assets/image/zzz_graphic.png' alt=''></div>
+            <img class='card-img-top custom-notask-imgtag mx-auto' src='../../assets/image/zzz_graphic.png' alt=''>
+          </div>
           <div class='row mx-auto'>
             <h4 class=' text-muted text-center mx-auto custom-font-family-tag'>
-  											Get out and have some fun.</h4>
+              Get out and have some fun.</h4>
           </div>
 
         </div>
