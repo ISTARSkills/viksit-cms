@@ -235,7 +235,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
         if (this.idNew) {
           var newLesson = new Lesson(this.title, this.desc, "INCOMPLETE", this.lessonImage, null, this.selectlessonType)
-          this.course.modules[this.module_index].sessions[this.module_index].lessons.push(newLesson);
+          this.course.modules[this.module_index].sessions[this.session_index].lessons.push(newLesson);
         } else {
           this.course.modules[this.module_index].sessions[this.session_index].lessons[this.lesson_index].name = this.title;
           this.course.modules[this.module_index].sessions[this.session_index].lessons[this.lesson_index].description = this.desc;
@@ -262,7 +262,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   }
   onUploadSuccess(file) {
 
-   // console.log(file);
+    // console.log(file);
     console.log(file[0].upload.filename);
     console.log(file[0].type);
     console.log(file[0].xhr.response);
@@ -336,7 +336,10 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     const body = new HttpParams().set('course_object', JSON.stringify(this.course));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + this.complex_object.id + '/' + this.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => console.log(res));
+    }).subscribe(res => {
+      console.log(res)
+      this.course = res['data'];
+    });
 
   }
 
