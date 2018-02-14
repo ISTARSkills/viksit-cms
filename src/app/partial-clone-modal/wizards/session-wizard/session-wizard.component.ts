@@ -41,7 +41,7 @@ export class SessionWizardComponent implements OnInit {
   sessionList = [];
   isValid = true;
   checkValid = true;
-  disableOnFinish = false;
+  disableOnFinish = true;
   selectedExistingOrNewModel = 'EXISTING';
   sessionsNewModuleModel = "";
   newSessionNameModel = "";
@@ -267,7 +267,7 @@ export class SessionWizardComponent implements OnInit {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": "08/03/2018"
     };
-    this.disableOnFinish = true;
+    this.disableOnFinish = false;
     const body = new HttpParams().set('course_object', JSON.stringify(clonedObject)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
@@ -276,7 +276,7 @@ export class SessionWizardComponent implements OnInit {
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
     }, error => {
-      this.disableOnFinish = false;
+      this.disableOnFinish = true;
     });
   }
   isValidForm() {

@@ -21,7 +21,7 @@ export class PartialCloneModalComponent implements OnInit {
   @Output() coursesChange = new EventEmitter<any>();
   createCourseClone;
   complex_object;
-  disableOnFinish = false;
+  disableOnFinish = true;
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class PartialCloneModalComponent implements OnInit {
       "dueDate": "08/03/2018"
     };
     //console.log("Course Size before request--> " + this.courses.length)
-    this.disableOnFinish = true;
+    this.disableOnFinish = false;
     const body = new HttpParams().set('course_object', JSON.stringify(newCourse)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
@@ -68,7 +68,7 @@ export class PartialCloneModalComponent implements OnInit {
       //console.log("response");
       //console.log(this.courses);
     }, error => {
-      this.disableOnFinish = false;
+      this.disableOnFinish = true;
     });
   }
 
@@ -79,7 +79,7 @@ export class PartialCloneModalComponent implements OnInit {
   }
 
   isValidForm() {
-    var isValid = false
+    var isValid = false;
     if (this.createCourseClone != null && this.createCourseClone.trim() != '' && this.createCourseClone.trim().length > 3) {
       isValid = true;
     } else {
