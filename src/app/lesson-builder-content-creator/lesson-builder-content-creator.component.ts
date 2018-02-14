@@ -76,9 +76,9 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   public save(content) {
 
-    this.newTitle = new Title("", 1, "", 5)
-    this.newParagraph = new Paragraph("", 2, "", 5)
-    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType));
+    this.newTitle = new Title("", 1, "", 500)
+    this.newParagraph = new Paragraph("", 2, "", 500)
+    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length);
     this.lesson.stages[this.stageindex].slides.push(this.slide);
     console.log(this.lesson)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
