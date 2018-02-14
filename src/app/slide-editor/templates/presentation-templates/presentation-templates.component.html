@@ -41,16 +41,16 @@
                   <div class="form-group">
                     <label>Title Transaction Style</label>
                     <select class="form-control" [(ngModel)]="slide.title.transition_type">
-                      <option selected value='fadeinbottom'>fadein from bottom</option>
-                      <option value='fadein'>fadein</option>
-                      <option value='FlipOutY'>FlipOutY</option>
-                      <option value='FadeInLeft'>FadeInLeft</option>
+                      <option selected value='fadeInDown'>fadeInDown</option>
+                      <option value='fadeInRight'>fadeInRight</option>
+                      <option value='fadeIn'>fadeIn</option>
+                      <option value='fadeInLeft'>fadeInLeft</option>
                     </select>
                   </div>
                 </div>
                 <div class="col-4">
                   <label>Title Transaction Duration</label>
-                  <input type="number" value="5" [(ngModel)]="slide.title.fragment_duration" class="form-control" aria-describedby="" placeholder="Enter Title Duration..">
+                  <input type="number" value="500" [(ngModel)]="slide.title.fragment_duration" class="form-control" aria-describedby="" placeholder="Enter Title Duration..">
                 </div>
               </div>
             </div>
@@ -72,17 +72,18 @@
                   <div class="form-group">
                     <label>Pharagraph Transaction Style</label>
                     <select class="form-control" [(ngModel)]="slide.paragraph.transition_type">
-                      <option selected value='fadeinbottom'>fadein from bottom</option>
-                      <option value='fadein'>fadein</option>
-                      <option value='FlipOutY'>FlipOutY</option>
-                      <option value='FadeInLeft'>FadeInLeft</option>
+                      <option selected value='fadeInDown'>fadeInDown</option>
+                      <option value='fadeInRight'>fadeInRight</option>
+                      <option value='fadeIn'>fadeIn</option>
+                      <option value='fadeInLeft'>fadeInLeft</option>
 
                     </select>
                   </div>
                 </div>
                 <div class="col-4">
                   <label>Pharagraph Transaction Duration</label>
-                  <input type="number" [(ngModel)]="slide.paragraph.fragment_duration" class="form-control" aria-describedby="" value="5" placeholder="Enter Pharagraph Duration..">
+                  <input type="number" [(ngModel)]="slide.paragraph.fragment_duration" class="form-control" aria-describedby="" value="500"
+                    placeholder="Enter Pharagraph Duration..">
                 </div>
               </div>
             </div>
@@ -95,8 +96,9 @@
       <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
       <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
         <div class="card-block">
-          <div [@flyInOut]="state" #titleview class="title-text text-center">{{slide.title.text}}</div>
-          <div [@FadeInDown]="state" #paragraphview class="paragraph-text">
+          <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="slide.title.fragment_duration" #titleview class="title-text text-center animated">{{slide.title.text}}</div>
+          <div [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration" #paragraphview
+            class="paragraph-text animated">
             {{slide.paragraph.text}}
 
           </div>

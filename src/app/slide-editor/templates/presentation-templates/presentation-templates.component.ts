@@ -11,43 +11,7 @@ import { Paragraph } from '../../../pojo/slide/paragraph';
 @Component({
   selector: 'app-presentation-templates',
   templateUrl: './presentation-templates.component.html',
-  styleUrls: ['./presentation-templates.component.css'],
-  animations: [
-    trigger('flyInOut', [
-      state('in', style({ transform: 'translateX(0)' })),
-      transition('* => in', [
-        animate(3000, keyframes([
-          style({ opacity: 0, transform: 'translateX(-100%)', offset: 0 }),
-          style({ opacity: 0.1, transform: 'translateX(15px)', offset: 0.3 }),
-          style({ opacity: 1, transform: 'translateX(0)', offset: 1.0 })
-        ]))
-      ]),
-      transition('* => void', [
-        animate(3000, keyframes([
-          style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
-          style({ opacity: 1, transform: 'translateX(-15px)', offset: 0.7 }),
-          style({ opacity: 0, transform: 'translateX(100%)', offset: 1.0 })
-        ]))
-      ])
-    ]),
-    trigger('FadeInDown', [
-      state('bottom', style({ transform: 'translateX(0)' })),
-      transition('* => void', [
-        animate(3000, keyframes([
-          style({ opacity: 1, transform: 'translateX(0)', offset: 0 }),
-          style({ opacity: 1, transform: 'translateX(-15px)', offset: 0.7 }),
-          style({ opacity: 0, transform: 'translateX(100%)', offset: 1.0 })
-        ]))
-      ]),
-      transition('* => bottom', [
-        animate(3000, keyframes([
-          style({ opacity: 0, transform: 'translateY(100%)', offset: 0 }),
-          style({ opacity: 0.1, transform: 'translateY(-15px)', offset: 0.7 }),
-          style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 })
-        ]))
-      ])
-    ])
-  ]
+  styleUrls: ['./presentation-templates.component.css']
 })
 export class PresentationTemplatesComponent implements OnInit {
   @Input() switchexpression;
@@ -65,11 +29,30 @@ export class PresentationTemplatesComponent implements OnInit {
   //public tempImg: SafeStyle;
   public bgImage: string = "";
   public loading = false;
+  paragraph_delay = 0;
+  title_delay = 0;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   animateMe() {
 
-    this.state = (this.state === 'in' ? 'bottom' : 'in');
+    if (this.slide.paragraph.fragment_order == 1) {
+      this.paragraph_delay = 0;
+      this.title_delay = this.slide.paragraph.fragment_duration;
+    } else {
+      this.paragraph_delay = this.slide.title.fragment_duration;;
+      this.title_delay = 0;
+    }
+
+    this.paragraphview.nativeElement.classList.add(this.slide.paragraph.transition_type);
+    this.titleview.nativeElement.classList.add(this.slide.title.transition_type);
+
+    var totalDuration = this.slide.paragraph.fragment_duration + this.slide.title.fragment_duration;
+    setTimeout(() => {
+      this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
+      this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
+    }, totalDuration);
+
+
   }
 
   public playPreview() {
@@ -86,7 +69,7 @@ export class PresentationTemplatesComponent implements OnInit {
   onChangeColor(color) {
     console.log(color);
     this.bgcolor = color;
-    this.slide.bgColor = this.bgcolor;
+    this.slide.color = this.bgcolor;
   }
 
   public getParagraph(text) {
@@ -131,8 +114,13 @@ export class PresentationTemplatesComponent implements OnInit {
   ngOnInit() {
     console.log("switchexpression " + this.switchexpression)
     console.log(this.slide);
+    this.bgImage = this.slide.bgImage;
     console.log("lessonId " + this.lessonId)
+    this.bgcolor = this.slide.color;
 
+    if (this.slide.color != null && this.slide.color.trim() != '' && this.slide.color != 'null') {
+      this.color = this.slide.color;
+    }
 
   }
 

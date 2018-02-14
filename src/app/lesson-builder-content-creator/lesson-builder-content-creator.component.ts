@@ -63,11 +63,22 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   }
 
+  public getFragmentCount(type) {
+
+    switch (type) {
+      case 'ONLY_TITLE_PARAGRAPH_NEW':
+        return 1;
+      default:
+        return 0;
+    }
+
+  }
+
   public save(content) {
 
     this.newTitle = new Title("", 1, "", 5)
     this.newParagraph = new Paragraph("", 2, "", 5)
-    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, 0);
+    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType));
     this.lesson.stages[this.stageindex].slides.push(this.slide);
     console.log(this.lesson)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
