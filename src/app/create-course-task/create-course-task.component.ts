@@ -66,9 +66,7 @@ export class CreateCourseTaskComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
 
-  // optional date changed callback
   onDateChanged(event: IMyDateModel): void {
-    // date selected
   }
 
 

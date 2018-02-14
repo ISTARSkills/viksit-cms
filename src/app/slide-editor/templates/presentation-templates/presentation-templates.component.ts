@@ -64,7 +64,7 @@ export class PresentationTemplatesComponent implements OnInit {
   public bgcolor: string = '#FFFFFF';
   //public tempImg: SafeStyle;
   public bgImage: string = "";
-
+  public loading = false;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   animateMe() {
@@ -110,18 +110,20 @@ export class PresentationTemplatesComponent implements OnInit {
       formData.append("file", files[i], files[i]['name']);
     }
     console.log('form data variable :   ' + formData.toString());
-
+    this.loading = true;
 
     this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
       .subscribe(res => {
         console.log('response files res', res);
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
+        this.loading = false;
       }, error => {
         console.log('response files error', error);
         console.log('response files error', error.error.text);
         this.bgImage = error.error.text;
         this.slide.bgImage = this.bgImage;
+        this.loading = false;
       });
 
   }

@@ -40,7 +40,7 @@ export class SlideEditorComponent implements OnInit {
   lesson;
   public loading = false;
 
-  constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+  constructor(private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.index = this.route.snapshot.params.id;
   }
 
@@ -144,6 +144,7 @@ export class SlideEditorComponent implements OnInit {
       console.log(res)
       this.lesson = res['data']
       this.loading = false;
+      this.router.navigate(['../../lesson_builder/' + this.lesson.id], { relativeTo: this.route });
     });
 
 
