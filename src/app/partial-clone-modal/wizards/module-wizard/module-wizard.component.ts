@@ -39,7 +39,7 @@ export class ModuleWizardComponent implements OnInit {
   showExisting: boolean;
   moduleList = [];
   courseList = [];
-  disableOnFinish = false;
+  disableOnFinish = true;
   selectedExistingOrNewModel = 'EXISTING';
   modulesNewCourseModel = "";
   newModuleNameModel = "";
@@ -221,7 +221,7 @@ export class ModuleWizardComponent implements OnInit {
       "dueDate": "08/03/2018"
     };
 
-    this.disableOnFinish = true;
+    this.disableOnFinish = false;
     const body = new HttpParams().set('course_object', JSON.stringify(clonedObject)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
@@ -230,7 +230,7 @@ export class ModuleWizardComponent implements OnInit {
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
     }, error => {
-      this.disableOnFinish = false;
+      this.disableOnFinish = true;
     });
   }
   isValidForm() {
