@@ -8,21 +8,24 @@
 	color: #ffffff;
     background-color: #eb384f;
     border-color: #eb384f;
-	}
-	.gray-bg {
-	    background-color: #f3f3f4;
+}
+.gray-bg {
+	background-color: #f3f3f4;
 	
-	}
+}
 	
-	.navbar-brand themecolor p-2:hover {
-		color: white;
-	}
+.navbar-brand themecolor p-2:hover {
+	color: white;
+}
 	
-	.white-background{
-	    background-color: #ffffff;
-	
-	
-	}
-	nav{
+.white-background{
+	background-color: #ffffff;
+}
+
+nav{
 	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 5px 0 rgba(0, 0, 0, .12);
-	}
+}
+
+.nav-link.active{
+	color: #eb384f !important;
+}
