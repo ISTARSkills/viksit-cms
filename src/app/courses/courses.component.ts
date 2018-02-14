@@ -5,7 +5,7 @@ import { AppConfiguration } from '../app.constants';
 import { Session } from 'selenium-webdriver';
 import { Lesson } from '../pojo/lesson/lesson';
 import { Module } from '../pojo/module/module';
-import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, ModalDismissReasons, NgbModalOptions, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-courses',
@@ -20,6 +20,9 @@ export class CoursesComponent implements OnInit {
   selectedModal;
   selectedCourseModal;
   currentModalInstance: any;
+  changeIcon = true;
+  iconIndex: any = 0;
+  public loading = false;
   options: NgbModalOptions = {
     size: 'lg',
     windowClass: 'animated bounceInUp',
@@ -31,11 +34,13 @@ export class CoursesComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
+    this.loading = true;
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/get_all_course_structure/' + this.complex_object.id).subscribe(data => {
       // Read the result field from the JSON response.
       //console.log('---> ' + data['data'][0]);
       this.courses = data['data'];
       this.storedCourses = data['data'];
+      this.loading = false;
     });
   }
   open(content, s: string, course: any) {
@@ -110,4 +115,13 @@ export class CoursesComponent implements OnInit {
     this.storedCourses = updatedCourses;
   }
 
+  public accordionChange($event: NgbPanelChangeEvent) {
+    var getIndex = ($event.panelId).split("-")[1];
+    this.iconIndex = getIndex;
+    if ($event.nextState === true) {
+      this.changeIcon = false;
+    } else {
+      this.changeIcon = true;
+    }
+  }
 }
