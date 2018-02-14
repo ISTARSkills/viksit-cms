@@ -1,11 +1,11 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 <div class="jumbotron">
   <div class="row m-0 mb-3">
-    <div class="col-10 pl-0">
+    <div class="col-9 pl-0">
       <h3>Courses</h3>
     </div>
-    <div class="col-2 row m-0 p-0">
-      <input type="text" placeholder="Search and Press Enter" name="searchTerm" #box class="search-text-input" (keyup.enter)="searchTask(box.value)">
+    <div class="col-3 row m-0 p-0">
+      <input type="text" placeholder="Search and Press Enter" name="searchTerm" #box class="search-text-input ml-auto" (keyup.enter)="searchTask(box.value)">
       <div class="button-holder">
         <i class="fa fa-search" aria-hidden="true"></i>
       </div>
