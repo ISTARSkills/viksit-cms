@@ -23,6 +23,7 @@ export class CoursesComponent implements OnInit {
   changeIcon = true;
   iconIndex: any = 0;
   public loading = false;
+  userType: string;
   options: NgbModalOptions = {
     size: 'lg',
     windowClass: 'animated bounceInUp',
@@ -34,6 +35,7 @@ export class CoursesComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
+    this.userType = this.complex_object.studentProfile.userType;
     this.loading = true;
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/get_all_course_structure/' + this.complex_object.id).subscribe(data => {
       // Read the result field from the JSON response.

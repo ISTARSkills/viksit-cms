@@ -21,7 +21,7 @@
             <div class="col-6 my-auto pl-0">
               <i class="fa course-list-plus-icon" aria-hidden="true" [ngClass]="{ 'fa-plus-circle': iconIndex != i ||changeIcon ,'fa-minus-circle': !changeIcon && iconIndex == i}"></i> {{course.name}}
             </div>
-            <div class="col-6">
+            <div class="col-6" *ngIf="userType == 'CONTENT_ADMIN'">
               <div class="btn-group float-right">
                 <div class="btn-group" ngbDropdown role="group" placement="bottom-right">
                   <button class="btn custom-btn-dropdown" ngbDropdownToggle (click)="ignore($event);$event.preventDefault()"></button>

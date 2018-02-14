@@ -11,15 +11,10 @@ export class NavbarComponent implements OnInit {
   logoutString: String;
   @Input() userName: String;
   complex_object;
-  userType: string;
   constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.logoutString = 'click to logout';
-    const local_complex_object = localStorage.getItem('currentUser')
-
-    this.complex_object = JSON.parse(local_complex_object);
-    this.userType = this.complex_object.studentProfile.userType;
   }
 
   public logout() {
