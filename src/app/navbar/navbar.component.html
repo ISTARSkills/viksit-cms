@@ -10,18 +10,14 @@
         <a class="nav-link" routerLink="/dashboard" [routerLinkActive]="['active']">Dashboard
         </a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" *ngIf="userType == 'CONTENT_ADMIN'">
         <a class="nav-link" routerLink="/courses" [routerLinkActive]="['active']">Courses
         </a>
       </li>
-
-
-
       <li ngbDropdown class="d-inline-block float-right">
         <a class=" nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>Welcome {{userName}}</a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button class="dropdown-item" (click)="logout()">Logout</button>
-
         </div>
       </li>
     </ul>
