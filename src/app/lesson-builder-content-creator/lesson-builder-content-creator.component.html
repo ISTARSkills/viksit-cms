@@ -1,6 +1,10 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 
 <div class="jumbotron">
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+
+
   <div class="row mb-2">
     <div class="col-6">
       <h4> Lesson Builder </h4>
@@ -23,7 +27,7 @@
   <div class="row course">
     <div class="card course_card">
       <div class="card-header">
-        <span (click)="open()">
+        <span>
           {{lesson?.name}} </span>
         <i ngbPopover="{{lesson?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
         <button (click)="addStageComponent(lesson)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
@@ -83,7 +87,8 @@
                   </div>
                 </div>
                 <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
-                  <button (click)="addSlideComponent(stage)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
+                  <button [disabled]="lesson?.type === 'PRESENTATION'  && stage.slides?.length !=0 " (click)="addSlideComponent(stage,content)"
+                    type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
                     <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Slide</button>
                 </div>
                 <div *ngIf=" stage.slides != undefined && stage.slides.length > 0; else slideElseBlock">
@@ -149,4 +154,24 @@
 
     </div>
   </div>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title m-auto">{{modalName}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div *ngIf=" type == 'PRESENTATION';">
+        <label for="typeahead-format ">Slide Type:</label>
+        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectSlideType">
+          <option value="ONLY_TITLE_PARAGRAPH_NEW">ONLY_TITLE_PARAGRAPH_NEW</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer ">
+      <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
+      <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
+    </div>
+  </ng-template>
 </div>

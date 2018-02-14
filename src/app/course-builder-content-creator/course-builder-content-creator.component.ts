@@ -61,9 +61,11 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   public isCollapsed = true;
   issuesList = [];
   commentValue;
+  isSubmitTrue = false;
   submitandreviewIsVisible = true;
   idNew = false;
   currentModalInstance: any;
+  public loading = false;
   options: NgbModalOptions = {
     size: 'lg',
     windowClass: 'animated bounceInUp',
@@ -308,7 +310,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
       // console.log("this is in component");
       // console.log(this.course);
-
+      this.loading = true;
       // Make the HTTP request:
       this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
         // Read the result field from the JSON response.
@@ -321,25 +323,58 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
         }
         console.log(this.issuesList);
+        this.loading = false;
       });
 
     }
-
-
-
-
 
   }
 
   saveEndExitClicked() {
     console.log('save called>>');
+    this.loading = true;
     const body = new HttpParams().set('course_object', JSON.stringify(this.course));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + this.complex_object.id + '/' + this.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
       console.log(res)
       this.course = res['data'];
+      this.isSubmitTrue = true;
+      this.loading = false;
     });
+
+  }
+
+  saveVisible(modules) {
+
+    if (modules != null && modules.length != 0) {
+
+      for (let module of modules) {
+
+        if (module.sessions != null && module.sessions.length != 0) {
+
+          for (let session of module.sessions) {
+
+            if (session.lessons != null && session.lessons.length != 0) {
+
+              return false;
+
+            } else {
+              return true;
+            }
+
+          }
+        } else {
+          return true;
+        }
+
+      }
+
+
+
+    } else {
+      return true;
+    }
 
   }
 

@@ -1,6 +1,8 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 
 <div class="jumbotron">
+
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
   <div class="row ">
     <h4 class="ml-3">Slide Builder</h4>
     <wizard class="col-12 session-clone-wizard bg-white pb-3" [disableNavigationBar]=true [navBarLocation]="top" [defaultStepIndex]="0">
@@ -45,10 +47,10 @@
             <div class="row m-3" *ngIf="templateList != null && templateList.length != 0">
               <div class="col-3 mb-2" *ngFor="let template of templateList; index as i ">
                 <div class="card" (click)="isClassVisible(i,template)" [ngClass]="{'my-class': i === highlightedDiv && isVisible === true}">
-                  <h5 class="card-header">{{template}}</h5>
+                  <h5 class="card-header" style="font-size: 14px;">{{template}}</h5>
                   <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
 
                   </div>
                 </div>
@@ -61,14 +63,24 @@
             <h4>Slide Editor</h4>
 
             <app-presentation-templates (ngModelChange)="slideChange.emit($event)" *ngIf="isInclude2ndStep" [switchexpression]="switchexpression"
-              [slide]="slide"></app-presentation-templates>
+              [lessonId]="lesson?.id" [slide]="slide"></app-presentation-templates>
 
             <button type="button" class="btn btn-danger" previousStep>Previous</button>
             <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
           </wizard-step>
           <wizard-step (stepEnter)="enterSecondStep($event)">
             <h4>Preview</h4>
-            {{lesson | json}}
+            <div class="row m-3">
+              <div class="card " *ngFor="let slide of slides; index as j ">
+                <h5 class="card-header" style="font-size: 14px;">{{slide.type}}</h5>
+                <div class="card-body">
+                  <h5 class="card-title"></h5>
+                  <p class="card-text"></p>
+
+                </div>
+              </div>
+
+            </div>
             <button type="button" class="btn btn-danger" previousStep>Previous Step</button>
             <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
           </wizard-step>

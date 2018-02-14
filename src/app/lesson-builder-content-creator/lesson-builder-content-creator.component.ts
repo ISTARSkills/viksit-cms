@@ -7,6 +7,7 @@ import { LessonBuilderServiceService } from '../services/lesson_bulider/lesson-b
 import { Title } from '../pojo/slide/title';
 import { Paragraph } from '../pojo/slide/paragraph';
 import { Slide } from '../pojo/slide/slide';
+import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-lesson-builder-content-creator',
@@ -17,8 +18,20 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   lesson: any;
   id
   complex_object;
+  public loading = false;
   public isCollapsed = true;
-  constructor(private route: ActivatedRoute, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+  currentModalInstance: any;
+  closeResult: string;
+  stageindex
+  newTitle: Title;
+  newParagraph: Paragraph
+  slide: Slide
+  selectSlideType = "ONLY_TITLE_PARAGRAPH_NEW";
+  options: NgbModalOptions = {
+    size: 'lg',
+    windowClass: 'animated bounceInUp',
+  };
+  constructor(private modalService: NgbModal, private route: ActivatedRoute, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.id = this.route.snapshot.params.id;
   }
 
@@ -31,9 +44,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
 
     if (this.id != undefined) {
-
-
-
+      this.loading = true;
       const req = this.lessonBuilderService.getlessonDetails(this.id);
       req.subscribe(
         data => {
@@ -41,6 +52,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
           this.lessonBuilderService.currentLesson.subscribe(lesson => this.lesson = lesson)
           console.log("lesson");
           console.log(this.lesson);
+          this.loading = false;
         },
         err => {
           console.log('Something went wrong!');
@@ -48,6 +60,33 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
       );
 
     }
+
+  }
+
+  public save(content) {
+
+    this.newTitle = new Title("", 1, "", 5)
+    this.newParagraph = new Paragraph("", 2, "", 5)
+    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, 0);
+    this.lesson.stages[this.stageindex].slides.push(this.slide);
+    console.log(this.lesson)
+    sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+    this.currentModalInstance.close();
+  }
+
+  saveEndExitClicked() {
+
+    this.loading = true;
+    console.log('save called>>');
+    const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => {
+      console.log(res)
+      this.lesson = res['data']
+      this.lessonBuilderService.lessonSave(res['data'])
+      this.loading = false;
+    });
 
   }
 
@@ -76,15 +115,40 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
   };
 
-  public addSlideComponent = function (stage) {
-    var index = this.lesson.stages.indexOf(stage);
-    this.newTitle = new Title("", 1, "", 5)
-    this.newParagraph = new Paragraph("", 2, "", 5)
-    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", "", null, 0);
+  public addSlideComponent = function (stage, content) {
 
-    this.lesson.stages[index].slides.push(this.slide);
-    console.log(this.lesson)
-    sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+    this.modalName = "Create " + "Slide";
+    this.type = "PRESENTATION";
+    this.stageindex = this.lesson.stages.indexOf(stage);
+    this.currentModalInstance = this.modalService.open(content, this.options);
+    this.currentModalInstance.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+
   };
+
+
+  private getDismissReason(reason: any): string {
+    //
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  public open(content) {
+
+    this.currentModalInstance = this.modalService.open(content, this.options);
+    this.currentModalInstance.result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
 
 }

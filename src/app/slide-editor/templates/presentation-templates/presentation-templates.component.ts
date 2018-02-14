@@ -53,6 +53,7 @@ export class PresentationTemplatesComponent implements OnInit {
   @Input() switchexpression;
   @Input() slide;
   @Output() updatedslide;
+  @Input() lessonId
   @Output() slideChange: EventEmitter<Slide> = new EventEmitter<Slide>();
   @ViewChild('paragraphview') paragraphview;
   @ViewChild('titleview') titleview;
@@ -104,7 +105,7 @@ export class PresentationTemplatesComponent implements OnInit {
     headers.set('Accept', 'application/json');
 
     formData.append("item_type", 'SLIDE_EDITOR');
-    formData.append("item_id", '0');
+    formData.append("item_id", this.lessonId);
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i]['name']);
     }
@@ -128,6 +129,7 @@ export class PresentationTemplatesComponent implements OnInit {
   ngOnInit() {
     console.log("switchexpression " + this.switchexpression)
     console.log(this.slide);
+    console.log("lessonId " + this.lessonId)
 
 
   }

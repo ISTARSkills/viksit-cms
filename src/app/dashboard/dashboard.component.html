@@ -61,10 +61,17 @@
                   <h5 class="card-title text-muted">Description</h5>
                   <p class="card-text">{{task.description}}</p>
                 </div>
-                <button type="button " class="btn btn-danger btn-lg btn-block " (click)="goToTask(task)">
+                <button *ngIf="task.itemType === 'LESSON_CREATION_TASK';" type="button " class="btn btn-danger btn-lg btn-block " (click)="goToTask(task)">
                   <div class="row m-0 custom-button-presentation">
                     <span aria-hidden="true" class="presentation_icon ml-3 mr-2"></span>
-                    {{(task.itemType === 'LESSON_CREATION_TASK') ? 'Create Lesson': 'Create Course'}}</div>
+                    {{(task.itemType === 'CREATED') ? 'Create Lesson': 'Edit Lesson'}}</div>
+
+
+                </button>
+                <button *ngIf="task.itemType === 'COURSE_CREATION_TASK';" type="button " class="btn btn-danger btn-lg btn-block " (click)="goToTask(task)">
+                  <div class="row m-0 custom-button-presentation">
+                    <span aria-hidden="true" class="presentation_icon ml-3 mr-2"></span>
+                    {{(task.status === 'CREATED') ? 'Create Course': 'Edit Course'}}</div>
 
 
                 </button>

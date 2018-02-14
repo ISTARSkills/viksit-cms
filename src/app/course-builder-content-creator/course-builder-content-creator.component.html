@@ -2,6 +2,7 @@
 
 <div class="jumbotron">
 
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
 
 
   <div class="row mb-2">
@@ -21,8 +22,9 @@
     </div>
 
     <div class="col-6">
-      <a *ngIf="submitandreviewIsVisible" (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
-      <a *ngIf="submitandreviewIsVisible" class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</a>
+      <button *ngIf="submitandreviewIsVisible" [disabled]="saveVisible(course?.modules)" (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</button>
+
+      <button *ngIf="submitandreviewIsVisible" [disabled]="!isSubmitTrue" class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</button>
     </div>
 
 
@@ -236,9 +238,9 @@
       </form>
 
       <label for="typeahead-format ">name:</label>
-      <input type="text " class="form-control"  [(ngModel)]="title" />
+      <input type="text " class="form-control" [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
-      <textarea type="text " class="form-control"  [(ngModel)]="desc"></textarea>
+      <textarea type="text " class="form-control" [(ngModel)]="desc"></textarea>
       <div *ngIf=" type == 'Lesson';">
         <label for="typeahead-format ">Lesson Type:</label>
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectlessonType">

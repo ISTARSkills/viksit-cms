@@ -38,8 +38,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    //  this.carousel.interval = -1;
-
     const now = Date.now() - 1;
     const myFormattedDate = this.pipe.transform(now, this.formatdate);
     console.log(myFormattedDate);
@@ -59,7 +57,6 @@ export class DashboardComponent implements OnInit {
         this.tasks = this.storedTasks.filter((item: Task) => item.itemType === "COURSE_CREATION_TASK");
 
 
-        // item.taskType === 'COURSE_CREATION_TASK'
         console.log(this.tasks.length)
 
         break;

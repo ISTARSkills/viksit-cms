@@ -38,6 +38,8 @@ export class SlideEditorComponent implements OnInit {
   slides: any;
   index;
   lesson;
+  public loading = false;
+
   constructor(private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.index = this.route.snapshot.params.id;
   }
@@ -47,26 +49,9 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
 
     this.templateTypePreviewList = [
-      { presentation: ["ONLY_TITLE_PARAGRAPH_NEW", "Title", "Title_Paragraph_Image"] },
+      { presentation: ["ONLY_TITLE_PARAGRAPH_NEW"] },
       { interactive: [] },
       { assessment: [] }]
-
-    // this.lessonBuilderService.getSlide(this.id).subscribe(data => {
-    //   this.slide = data;
-
-    //   console.log(this.slide.type);
-    //   var count = 0;
-    //   for (let list of this.templateTypePreviewList[0].presentation) {
-
-    //     if (this.slide.type === list) {
-    //       this.isClassVisible(count, this.slide.type)
-    //     }
-    //     count++;
-    //     this.templateList.push(list)
-    //     console.log(list);
-    //   }
-
-    // });
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
       this.lesson = data;
@@ -140,7 +125,7 @@ export class SlideEditorComponent implements OnInit {
 
     switch (type) {
       case 'ONLY_TITLE_PARAGRAPH_NEW':
-        return 2;
+        return 1;
       default:
         return 0;
     }
@@ -149,7 +134,20 @@ export class SlideEditorComponent implements OnInit {
 
   finishFunction() {
 
-this.lesson
+    this.loading = true;
+
+    console.log('save called>>');
+    const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => {
+      console.log(res)
+      this.lesson = res['data']
+      this.loading = false;
+    });
+
+
+
   }
 
   enterSecondStep($event) {
