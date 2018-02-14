@@ -1,6 +1,6 @@
-import {AuthService} from '../services/auth/auth.service';
-import {Component, OnInit,Input} from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +10,7 @@ import {Router, ActivatedRoute} from '@angular/router';
 export class NavbarComponent implements OnInit {
   logoutString: String;
   @Input() userName: String;
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.logoutString = 'click to logout';
@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     this.logoutString = 'logout ho gaya';
 
     this.auth.logout();
-    this.router.navigate(['../login'], {relativeTo: this.route});
+    this.router.navigate(['../login'], { relativeTo: this.route });
 
   }
 
