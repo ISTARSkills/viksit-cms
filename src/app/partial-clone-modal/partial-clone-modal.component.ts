@@ -79,7 +79,7 @@ export class PartialCloneModalComponent implements OnInit {
   }
 
   isValidForm() {
-    var isValid = false
+    var isValid = false;
     if (this.createCourseClone != null && this.createCourseClone.trim() != '' && this.createCourseClone.trim().length > 3) {
       isValid = true;
     } else {
