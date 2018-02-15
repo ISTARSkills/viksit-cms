@@ -71,9 +71,29 @@ export class CoursesComponent implements OnInit {
     //event.preventDefault();
     event.stopPropagation();
   }
-  onSelectionChange(course) {
+  courseStatusChanged($event, course) {
+    console.log($event);
+    console.log(course);
+    var action = "";
+    if ($event) {
+      action = "publish";
+    } else {
+      action = "production";
+    }
+    this.loading = true;
+    const body = new HttpParams().set('course_object', JSON.stringify(course));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/publish_course/' + course.id + '/' + action, body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(res => {
+      console.log(res['data']);
+      course = res['data'];
+      this.loading = false;
+    }, error => {
+
+    });
 
   }
+
   searchTask(s: string) {
     //console.log('---> ' + s);
     this.courses = this.storedCourses;

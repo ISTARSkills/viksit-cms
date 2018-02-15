@@ -26,10 +26,11 @@ export class DashboardComponent implements OnInit {
     slidesPerView: 3,
     observer: true,
     keyboard: true,
-    mousewheel: true,
+    mousewheel: false,
     scrollbar: false,
     navigation: true,
-    pagination: false
+    pagination: false,
+    slidesPerGroup: 3
   };
 
 
