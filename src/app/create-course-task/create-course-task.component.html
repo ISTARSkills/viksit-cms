@@ -1,5 +1,6 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 <div class="jumbotron">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
   <div class="row m-0 mb-3">
     <wizard class="col-12 session-clone-wizard bg-white pb-3" [disableNavigationBar]=true [navBarLocation]="top" [defaultStepIndex]="0">
 

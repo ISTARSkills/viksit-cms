@@ -42,7 +42,7 @@ export class CreateCourseTaskComponent implements OnInit {
   userSelectclick$ = new Subject<string>();
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
-
+  public loading = false;
   public config: DropzoneConfigInterface = {
     url: AppConfiguration.ServerWithApiUrl + 'image/upload',
     method: 'POST',
@@ -184,12 +184,13 @@ export class CreateCourseTaskComponent implements OnInit {
         "userAssingedTo": [this.selectedUser.id],
         "dueDate": dueDate
       };
+      this.loading = true;
       const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse)).set('assignee_object', JSON.stringify(assignee_object));
       this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/create_course_task/' + this.complex_object.id, body, {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
       }).subscribe(res => {
         console.log(res['data']);
-
+        this.loading = false;
         this.router.navigate(['../dashboard'], { relativeTo: this.route });
       });
 
