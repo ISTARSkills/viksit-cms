@@ -6,6 +6,7 @@ import { Session } from 'selenium-webdriver';
 import { Lesson } from '../pojo/lesson/lesson';
 import { Module } from '../pojo/module/module';
 import { NgbModal, ModalDismissReasons, NgbModalOptions, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+declare var require: any;
 const swal = require('sweetalert2');
 
 @Component({

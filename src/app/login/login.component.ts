@@ -1,8 +1,10 @@
-import {AuthService} from '../services/auth/auth.service';
-import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router, ActivatedRoute} from '@angular/router';
+import { AuthService } from '../services/auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+declare var require: any;
+const swal = require('sweetalert2');
 
 @Component({
   selector: 'app-login',
@@ -11,23 +13,23 @@ import {Router, ActivatedRoute} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-showLoader: Boolean;
-progressValue: number;
+  showLoader: Boolean;
+  progressValue: number;
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private auth: AuthService) {
-  this.showLoader = false;
+    this.showLoader = false;
     this.progressValue = 25;
   }
 
   ngOnInit() {
 
-    if(localStorage.getItem('currentUser')){
-      this.router.navigate(['../dashboard'], {relativeTo: this.route});
-    }else {
-    this.form = new FormGroup({
-      email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
-      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)]))
-    });
-  }
+    if (localStorage.getItem('currentUser')) {
+      this.router.navigate(['../dashboard'], { relativeTo: this.route });
+    } else {
+      this.form = new FormGroup({
+        email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
+        password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(4)]))
+      });
+    }
   }
 
   onSubmit() {
@@ -39,27 +41,27 @@ progressValue: number;
       req.subscribe(
         // Successful responses call the first callback.
         data => {
-              this.progressValue = 100;
+          this.progressValue = 100;
 
           console.log(data);
           this.auth.login(data);
-          this.router.navigate(['../dashboard'], {relativeTo: this.route});
+          this.router.navigate(['../dashboard'], { relativeTo: this.route });
         },
         // Errors will call this callback instead:
         err => {
-              this.showLoader = false;
-
+          this.showLoader = false;
           console.log('Something went wrong!');
+          swal({
+            type: 'error',
+            title: 'Oops... Something went wrong!',
+            text: 'Please Check username and password',
+          })
         }
       );
-
-
     } else {
-                    this.progressValue = 100;
-
+      this.progressValue = 100;
       console.log('form invalid');
-    this.showLoader = false;
-
+      this.showLoader = false;
     }
   }
   isFieldValid(field: string) {
