@@ -24,7 +24,7 @@
     <div class="col-6">
       <button *ngIf="submitandreviewIsVisible" [disabled]="saveVisible(course?.modules)" (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</button>
 
-      <button *ngIf="submitandreviewIsVisible" [disabled]="!isSubmitTrue" class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</button>
+      <button *ngIf="submitandreviewIsVisible" [disabled]="!isSubmitTrue" (click)="submitForReviewdClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Submit For Review</button>
     </div>
 
 
@@ -233,8 +233,7 @@
 
       <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
         (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
-        <input type="hidden" name="item_id" [(ngModel)]="item_id">
-        <input type="hidden" name="item_type" [(ngModel)]="item_type">
+        <input #itemType type="hidden" name="item_type" [(ngModel)]="item_type">
       </form>
 
       <label for="typeahead-format ">name:</label>

@@ -16,6 +16,7 @@ import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dr
 import { ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 import { CourseBuilderServiceService } from '../services/course_builder/course-builder-service.service';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-course-builder-content-creator',
@@ -25,6 +26,7 @@ import { CourseBuilderServiceService } from '../services/course_builder/course-b
 export class CourseBuilderContentCreatorComponent implements OnInit {
 
   @ViewChild(ContextMenuComponent) public contextMenu: ContextMenuComponent;
+  @ViewChild('itemType') itemType;
 
   public contextMenuActions = [
     {
@@ -35,7 +37,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     }
   ];
   @Input() newCourse;
-  formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   complex_object;
   id: string;
@@ -75,14 +76,20 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     method: 'POST',
     maxFiles: 1,
     clickable: true,
+    maxFilesize: 1,
     createImageThumbnails: true,
     acceptedFiles: 'image/png',
     errorReset: null,
     cancelReset: null,
-    addRemoveLinks: true
+    addRemoveLinks: true,
+    init: function () {
+      this.on("removedfile", function (file) {
+      });
+    }
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService) {
+
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService) {
     this.id = this.route.snapshot.params.id;
 
   }
@@ -97,6 +104,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     return isValid;
   }
 
+
   public addModuleComponent = function (course, content) {
 
     this.idNew = true;
@@ -104,6 +112,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.desc = "";
     this.modalName = "Create " + "Module";
     this.type = "Module";
+    this.item_type = this.type;
+    this.item_typeChange.next(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -127,6 +137,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.desc = "";
     this.modalName = "Create " + "Session";
     this.type = "Session";
+    this.item_type = this.type;
+    this.item_typeChange.next(this.item_type);
+    this.item_typeChange.next(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -153,6 +166,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.desc = "";
     this.modalName = "Create " + "Lesson";
     this.type = "Lesson";
+    this.item_type = this.type;
+    this.item_typeChange.next(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -175,6 +190,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
   public open(type, value, content, module_index, session_index, lesson_index) {
+
+    console.log(type);
     this.modalName = 'Edit ' + type;
     this.idNew = false;
     this.type = type;
@@ -262,6 +279,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
   onUploadSuccess(file) {
 
     // console.log(file);
@@ -296,8 +314,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       this.submitandreviewIsVisible = false;
     }
     console.log("id >>> " + this.id);
-    const now = Date.now() - 1;
-    const myFormattedDate = this.pipe.transform(now, this.formatdate);
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
@@ -306,10 +322,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     if (this.id != undefined) {
       this.navbarIsVisible = true;
 
-      // this.course = this.courseBuilderServive.getCourseStructure(this.id);
 
-      // console.log("this is in component");
-      // console.log(this.course);
       this.loading = true;
       // Make the HTTP request:
       this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
@@ -327,6 +340,18 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       });
 
     }
+
+  }
+
+  submitForReviewdClicked() {
+    console.log('review called>>');
+    this.loading = true;
+    // Make the HTTP request:
+    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/send_course_structure_review/' + this.id).subscribe(data => {
+      // Read the result field from the JSON response.
+      this.loading = false;
+      this.router.navigate(['../../dashboard'], { relativeTo: this.route });
+    });
 
   }
 

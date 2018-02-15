@@ -5,7 +5,7 @@ import { WizardComponent } from 'ng2-archwizard';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
 import { Course } from '../pojo/course';
 import { Module } from '../pojo/module/module';
-import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
+import { INgxMyDpOptions, IMyDateModel, IMyDate } from 'ngx-mydatepicker';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
@@ -52,16 +52,20 @@ export class CreateCourseTaskComponent implements OnInit {
     acceptedFiles: 'image/png',
     errorReset: null,
     cancelReset: null,
-    addRemoveLinks: true
-  };
+    addRemoveLinks: true,
+    params: { 'item_type': this.item_type },
+    init: function () {
 
+    }
+  };
   myOptions: INgxMyDpOptions = {
     // other options...
     dateFormat: 'dd/mm/yyyy',
   };
 
   // Initialized to specific date (09.10.2018)
-  model: any = { date: { year: new Date().getFullYear(), month: new Date().getMonth(), day: new Date().getDay() } };
+  model: any = { date: { day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() } };
+
 
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
@@ -167,20 +171,37 @@ export class CreateCourseTaskComponent implements OnInit {
     console.log(this.newCourse);
     console.log(this.selectedUser);
     console.log(this.model.formatted);
+    let dueDate = "";
+    if (this.selectedUser != null && this.selectedUser != undefined && this.selectedUser != '' && this.model != null) {
+
+      if (this.model.formatted != undefined) {
+        dueDate = this.model.formatted;
+      } else {
+        dueDate = this.model.date.day + "/" + this.model.date.month + "/" + this.model.date.year;
+      }
+
+      var assignee_object = {
+        "userAssingedTo": [this.selectedUser.id],
+        "dueDate": dueDate
+      };
+      const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse)).set('assignee_object', JSON.stringify(assignee_object));
+      this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/create_course_task/' + this.complex_object.id, body, {
+        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+      }).subscribe(res => {
+        console.log(res['data']);
+
+        this.router.navigate(['../dashboard'], { relativeTo: this.route });
+      });
 
 
-    var assignee_object = {
-      "userAssingedTo": [this.selectedUser.id],
-      "dueDate": this.model.formatted
-    };
-    const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse)).set('assignee_object', JSON.stringify(assignee_object));
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/create_course_task/' + this.complex_object.id, body, {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
-      console.log(res['data']);
 
-      this.router.navigate(['../dashboard'], { relativeTo: this.route });
-    });
+
+    } else {
+
+      alert("Please Assign The Task to a User");
+
+
+    }
 
 
 
