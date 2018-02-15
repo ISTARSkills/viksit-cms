@@ -20,7 +20,7 @@ const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', can
 { path: 'courses', component: CoursesComponent, canActivate: [AuthGuard] },
 { path: 'create_course_task', component: CreateCourseTaskComponent, canActivate: [AuthGuard] },
 { path: 'lesson_builder/:id', component: LessonBuilderContentCreatorComponent, canActivate: [AuthGuard] },
-{ path: 'review_task', component: ContentAdminReviewTaskComponent, canActivate: [AuthGuard] },
+{ path: 'review_task/:task_id', component: ContentAdminReviewTaskComponent, canActivate: [AuthGuard] },
 { path: 'slide_editor/:id', component: SlideEditorComponent, canActivate: [AuthGuard] }
 
 

@@ -23,6 +23,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ContentAdminReviewTaskComponent implements OnInit {
   progress = 50;
   isOn = true;
+  task_id: string;
   isDisabled = false;
   progressWidth1 = 0;
   progressWidth2 = 0;
@@ -38,7 +39,10 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   courseAssignee;
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
-  constructor(private http: HttpClient, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) {
+    this.task_id = this.route.snapshot.params.task_id;
+
+  }
   myOptions: INgxMyDpOptions = {
     // other options...
     dateFormat: 'dd-mm-yyyy',
@@ -57,19 +61,22 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   ngOnInit() {
     const local_complex_object = localStorage.getItem('currentUser');
     this.complex_object = JSON.parse(local_complex_object);
-    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/16542645').subscribe(data => {
+    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.task_id).subscribe(data => {
       // Read the result field from the JSON response.
       this.newCourse = data['data'];
       this.courseDueDate = this.newCourse.dueDate;
-      this.dateFormatted = new Date(this.courseDueDate);
+      this.dateFormatted = new Date(this.courseDueDate.split('-')[2] + "-" + this.courseDueDate.split('-')[1] + "-" + this.courseDueDate.split('-')[0]);
+      console.log(this.dateFormatted)
+      console.log(this.courseDueDate)
       this.model = {
         date: {
           year: this.dateFormatted.getFullYear(),
-          month: this.dateFormatted.getMonth(),
+          month: this.dateFormatted.getMonth() + 1,
           day: this.dateFormatted.getDate()
         }
       }
       this.courseAssignee = this.newCourse.assignee;
+      console.log(this.courseAssignee)
       for (let issue of this.newCourse.issues) {
         for (let comments of issue.comments) {
           this.issuesList.push(comments);
@@ -84,7 +91,12 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     this.http.get(AppConfiguration.ServerWithApiUrl + 'user/user_bytype/CONTENT_CREATOR').subscribe(data => {
       // Read the result field from the JSON response.
       this.users = data['data'];
-      this.getCourseAssignee();
+      //this.getCourseAssignee();
+      for (let user of this.users) {
+        if (user.id == this.courseAssignee) {
+          this.selectedUser = user.id;
+        }
+      }
     });
 
   }
@@ -161,7 +173,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   completeReview() {
     console.log(this.newCourse);
     const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/16542645', body, {
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/' + this.task_id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
       //console.log(res['data']);

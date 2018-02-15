@@ -39,7 +39,7 @@
                       <div class="card-block">
                         <div class="row m-0">
                           <div class="col-6 pl-0">
-                            <ng-select [items]="users" bindLabel="email" bindValue="id" placeholder="Choose Assignee" [(ngModel)]="selectedUser">
+                            <ng-select [items]="users" bindLabel="email" bindValue="id" placeholder="Choose Assignee" [(ngModel)]="newCourse!.assignee">
                             </ng-select>
                           </div>
                           <div class="col-6 pr-0">
@@ -68,9 +68,9 @@
                         <h5>
                           <small>{{newCourse?.description}}</small>
                         </h5>
-                        <div class="form-group mb-0">
+                        <!-- <div class="form-group mb-0">
                           <textarea class="form-control" [(ngModel)]="courseComment" placeholder="Comments..." rows="3"></textarea>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </ng-template>
@@ -115,10 +115,9 @@
                             <h6>
                               <small>{{lesson?.description != null ? lesson?.description : 'Not Set'}}</small>
                             </h6>
-                            <div class="form-group mb-0">
-                              <!-- <app-comment-box [lesson]="lesson"></app-comment-box> -->
+                            <!-- <div class="form-group mb-0">
                               <textarea class="form-control" [(ngModel)]="lessonList[i].description" placeholder="Comments..." rows="2"></textarea>
-                            </div>
+                            </div> -->
                           </div>
                         </div>
                       </div>

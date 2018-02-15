@@ -1,6 +1,6 @@
 <app-navbar *ngIf="navbarIsVisible" [userName]="complex_object.studentProfile.firstName"></app-navbar>
 
-<div class="jumbotron">
+<div #jumbotron class="jumbotron">
 
   <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
 

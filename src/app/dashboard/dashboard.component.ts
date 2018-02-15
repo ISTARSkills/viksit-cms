@@ -89,16 +89,66 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  getActionByStatus(task) {
 
+    switch (task.itemType.trim().toLowerCase()) {
+      case 'course_creation_task':
+
+        if (task.status === 'REVIEW') {
+
+          return 'Review Course';
+
+
+        } else if (task.status === 'ASSIGNED') {
+
+          return 'Create Course';
+        } else if (task.status === 'INPROGRESS') {
+
+          return 'Edit Course';
+        }
+
+        break;
+      case 'lesson_creation_task':
+
+        if (task.status === 'REVIEW') {
+
+          return 'Review Lesson';
+
+
+        } else if (task.status === 'ASSIGNED') {
+
+          return 'Create Lesson';
+        } else if (task.status === 'INPROGRESS') {
+
+          return 'Edit Lesson';
+        }
+
+        break;
+
+    }
+
+  }
   goToTask(task: Task) {
     console.log(task.itemType.trim().toLowerCase())
     switch (task.itemType.trim().toLowerCase()) {
       case 'course_creation_task':
-        this.router.navigate(['../course/' + task.id], { relativeTo: this.route });
+
+        if (task.status === 'REVIEW') {
+          this.router.navigate(['../review_task/' + task.id], { relativeTo: this.route });
+
+        } else if (task.status === 'ASSIGNED' || task.status === 'INPROGRESS') {
+          this.router.navigate(['../course/' + task.id], { relativeTo: this.route });
+        }
 
         break;
       case 'lesson_creation_task':
-        this.router.navigate(['../lesson_builder/' + task.itemId], { relativeTo: this.route });
+
+
+        if (task.status === 'REVIEW') {
+
+        } else if (task.status === 'ASSIGNED' || task.status === 'INPROGRESS') {
+          this.router.navigate(['../lesson_builder/' + task.itemId], { relativeTo: this.route });
+        }
 
         break;
 

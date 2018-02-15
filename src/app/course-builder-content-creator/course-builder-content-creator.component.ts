@@ -27,7 +27,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   @ViewChild(ContextMenuComponent) public contextMenu: ContextMenuComponent;
   @ViewChild('itemType') itemType;
-
+  @ViewChild('jumbotron') jumbotron;
   public contextMenuActions = [
     {
       html: (item) => `Insert Comment`,
@@ -113,7 +113,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.modalName = "Create " + "Module";
     this.type = "Module";
     this.item_type = this.type;
-    this.item_typeChange.next(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -138,8 +137,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.modalName = "Create " + "Session";
     this.type = "Session";
     this.item_type = this.type;
-    this.item_typeChange.next(this.item_type);
-    this.item_typeChange.next(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -167,7 +164,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.modalName = "Create " + "Lesson";
     this.type = "Lesson";
     this.item_type = this.type;
-    this.item_typeChange.next(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -309,6 +305,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
     if (this.newCourse != undefined) {
+
+      this.jumbotron.nativeElement.classList.remove("jumbotron");
+      this.navbarIsVisible = false;
       console.log("newCourse >>> " + this.newCourse.name);
       this.course = this.newCourse;
       this.submitandreviewIsVisible = false;
@@ -342,6 +341,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     }
 
   }
+
 
   submitForReviewdClicked() {
     console.log('review called>>');
