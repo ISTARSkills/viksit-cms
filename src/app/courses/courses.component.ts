@@ -6,6 +6,7 @@ import { Session } from 'selenium-webdriver';
 import { Lesson } from '../pojo/lesson/lesson';
 import { Module } from '../pojo/module/module';
 import { NgbModal, ModalDismissReasons, NgbModalOptions, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+const swal = require('sweetalert2');
 
 @Component({
   selector: 'app-courses',
@@ -72,6 +73,7 @@ export class CoursesComponent implements OnInit {
     event.stopPropagation();
   }
   courseStatusChanged($event, course) {
+
     console.log($event);
     console.log(course);
     var action = "";
@@ -80,17 +82,49 @@ export class CoursesComponent implements OnInit {
     } else {
       action = "production";
     }
-    this.loading = true;
-    const body = new HttpParams().set('course_object', JSON.stringify(course));
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/publish_course/' + course.id + '/' + action, body, {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
-      console.log(res['data']);
-      course = res['data'];
-      this.loading = false;
-    }, error => {
+    swal({
+      title: 'Are you sure?',
+      text: "You want to change the status of course?",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success ml-2',
+      cancelButtonClass: 'btn btn-danger mr-2',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        this.loading = true;
+        const body = new HttpParams().set('course_object', JSON.stringify(course));
+        this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/publish_course/' + course.id + '/' + action, body, {
+          headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+        }).subscribe(res => {
+          console.log(res['data']);
+          course = res['data'];
+          this.loading = false;
+        }, error => {
 
-    });
+        });
+        swal(
+          'Done',
+          'Course status changed successfully',
+          'success'
+        )
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelled',
+          'Request has been cancelled',
+          'error'
+        )
+      }
+    })
+
 
   }
 
