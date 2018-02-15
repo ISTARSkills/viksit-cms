@@ -15,9 +15,9 @@
   </div>
   <div *ngIf="courses !=null && courses != 0 ;else taskElseBlock">
     <ngb-accordion [closeOthers]="true" activeIds="" (panelChange)="accordionChange($event)" class="custom-courses-list">
-      <ngb-panel id="course-{{i}}" *ngFor="let course of courses; index as i">
+      <ngb-panel id="course-{{i}}" *ngFor="let course of courses; index as i;trackBy:userById">
         <ng-template ngbPanelTitle>
-          <div class="row m-0">
+          <div class="row m-0 remove-focus">
             <div class="col-6 my-auto pl-0">
               <i class="fa course-list-plus-icon" aria-hidden="true" [ngClass]="{ 'fa-plus-circle': iconIndex != i ||changeIcon ,'fa-minus-circle': !changeIcon && iconIndex == i}"></i> {{course.name}}
             </div>
@@ -34,13 +34,13 @@
                   </div>
                 </div>
               </div>
-              <div class="btn-group btn-group-toggle float-right mr-3" [attr.id]="course.id" ngbRadioGroup name="{{i}}" [(ngModel)]="course.id"
-                (click)="ignore($event)">
+              <div class="btn-group btn-group-toggle float-right mr-3" [attr.id]="course.id" ngbRadioGroup name="{{i}}" [ngModel]="course.isPublished"
+                (ngModelChange)="courseStatusChanged($event,course)" (click)="ignore($event)">
                 <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                  <input ngbButton type="radio" class="invisible" [checked]="course.status === 'COMPLETED'" value="COMPLETED" (change)="onSelectionChange(course)">PUBLISH
+                  <input ngbButton type="radio" class="invisible" [value]="true">PUBLISH
                 </label>
                 <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                  <input ngbButton type="radio" class="invisible" [checked]="course.status === 'INCOMPLETE'" value="INCOMPLETE">PRODUCTION
+                  <input ngbButton type="radio" class="invisible" [value]="false">PRODUCTION
                 </label>
               </div>
             </div>
