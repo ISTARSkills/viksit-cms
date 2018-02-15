@@ -10,7 +10,8 @@ export class Slide {
     type: string;
     id: number;
     fragmentcount: number;
-    constructor(title: Title, paragraph: Paragraph, image: string, bgImage: string, color: string, type: string, id: number, fragmentcount: number) {
+    order_id: number
+    constructor(title: Title, paragraph: Paragraph, image: string, bgImage: string, color: string, type: string, id: number, fragmentcount: number, order_id: number) {
 
         this.title = title;
         this.paragraph = paragraph;
@@ -20,6 +21,7 @@ export class Slide {
         this.type = type;
         this.id = id;
         this.fragmentcount = fragmentcount;
+        this.order_id = order_id;
 
     }
 }
