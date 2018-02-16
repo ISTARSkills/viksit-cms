@@ -19,6 +19,8 @@ export class SlideEditorComponent implements OnInit {
 
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
+  @ViewChild('paragraphview') paragraphview;
+  @ViewChild('titleview') titleview;
 
   public isVisible = false;
   highlightedDiv: number;
@@ -144,11 +146,22 @@ export class SlideEditorComponent implements OnInit {
       console.log(res)
       this.lesson = res['data']
       this.loading = false;
-      this.router.navigate(['../../lesson_builder/' + this.lesson.id], { relativeTo: this.route });
+      this.router.navigate(['/lesson_builder/' + this.lesson.id], { relativeTo: this.route });
     });
 
 
 
+  }
+
+  isValidForm() {
+    var isValid = false;
+    console.log(this.slide);
+    if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
+      isValid = true;
+    } else {
+      isValid = false;
+    }
+    return isValid;
   }
 
   enterSecondStep($event) {
@@ -168,12 +181,6 @@ export class SlideEditorComponent implements OnInit {
         this.isOn = true;
         this.isDisabled = true;
       } if (this.wizard.model.currentStepIndex == 2) {
-
-        //this.slideChange.emit(this.slide);
-        // this.lessonBuilderService.getAllSlide().subscribe(data => {
-        //   this.slides = data;
-
-        // });
 
         this.progressWidth2 = 34;
         this.isOn = true;
