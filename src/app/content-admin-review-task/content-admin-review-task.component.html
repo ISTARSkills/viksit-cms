@@ -29,7 +29,7 @@
             <wizard-step (stepEnter)="enterSecondStep($event)">
               <h3 class="col-6 p-0 my-auto">Review and Edit</h3>
               <app-course-builder-content-creator *ngIf="isInclude2ndStep" [newCourse]="newCourse"></app-course-builder-content-creator>
-              <button type="button" class="btn btn-danger float-right mt-3" nextStep>Next Step</button>
+              <button type="button" class="btn btn-danger float-right mt-3" nextStep>Next</button>
             </wizard-step>
             <wizard-step (stepEnter)="enterSecondStep($event)">
               <h3 class="col-6 p-0 mb-3">Task Assign</h3>
@@ -93,9 +93,9 @@
                               <div class="col-6 pr-0">
                                 <div class="input-group">
                                   <input class="form-control" style="float:none" placeholder="Select a date" name="lessonList[i].id" ngx-mydatepicker [ngModel]="lessonList[i].dueDate"
-                                    (ngModelChange)="lessonList[i].dueDate=($event.formatted)" [options]="myOptions" #dp="ngx-mydatepicker"
-                                    (dateChanged)="onDateChanged(lessonList[i],'lesson')" [value]="lessonList[i].dueDate != undefined && lessonList[i].dueDate != null ? lessonList[i].dueDate : (todaydate | date:'dd-MM-yyyy')"
-                                  />
+                                    (ngModelChange)="lessonList[i].dueDate=setCustomModelDate($event)" [options]="myOptions"
+                                    #dp="ngx-mydatepicker" (dateChanged)="onDateChanged(lessonList[i],'lesson')" [value]="lessonList[i].dueDate != undefined && lessonList[i].dueDate != null ? lessonList[i].dueDate : (todaydate | date:'dd-MM-yyyy')"
+                                    required/>
                                   <span class="input-group-btn">
                                     <div class="row m-0">
                                       <button type="button" class="btn btn-default px-2" (click)="dp.clearDate()">
@@ -128,8 +128,8 @@
                   </ng-template>
                 </ngb-tab>
               </ngb-tabset>
-              <button type="button" class="btn btn-danger mt-3" previousStep>Go to previous step</button>
-              <button type="button" class="btn btn-danger float-right mt-3" nextStep>Go to next step</button>
+              <button type="button" class="btn btn-danger mt-3" previousStep>Previous</button>
+              <button type="button" class="btn btn-danger float-right mt-3" [disabled]="validateStep()" nextStep>Next</button>
             </wizard-step>
             <wizard-step (stepEnter)="enterSecondStep($event)">
               <h3 class="col-6 p-0 my-auto">Preview</h3>
@@ -155,7 +155,7 @@
                   </tr>
                 </tbody>
               </table>
-              <button type="button" class="btn btn-danger mt-3" previousStep>Previous Step</button>
+              <button type="button" class="btn btn-danger mt-3" previousStep>Previous</button>
               <button type="button" class="btn btn-danger float-right mt-3" (click)="completeReview()">Finish</button>
             </wizard-step>
           </div>

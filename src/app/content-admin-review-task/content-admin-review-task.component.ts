@@ -59,8 +59,6 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   // optional date changed callback
   onDateChanged(value, type): void {
     // date selected
-    console.log(value)
-    console.log(type)
     if (type == 'lesson') {
       this.onChangeAssignee(value);
     }
@@ -75,8 +73,6 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       this.newCourse = data['data'];
       this.courseDueDate = this.newCourse.dueDate;
       this.dateFormatted = new Date(this.courseDueDate.split('-')[2] + "-" + this.courseDueDate.split('-')[1] + "-" + this.courseDueDate.split('-')[0]);
-      console.log(this.dateFormatted)
-      console.log(this.courseDueDate)
       this.model = {
         date: {
           year: this.dateFormatted.getFullYear(),
@@ -85,13 +81,11 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         }
       }
       this.courseAssignee = this.newCourse.assignee;
-      console.log(this.courseAssignee)
       for (let issue of this.newCourse.issues) {
         for (let comments of issue.comments) {
           this.issuesList.push(comments);
         }
       }
-      console.log(this.newCourse);
       this.lessonUpdateList();
       this.loading = false;
       this.isInclude2ndStep = true;
@@ -113,7 +107,6 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   enterSecondStep($event) {
 
     if (this.wizard != undefined) {
-      console.log(this.wizard.model.currentStepIndex);
       this.currentprogress = this.wizard.model.currentStepIndex;
       if (this.wizard.model.currentStepIndex == 0) {
         this.progressWidth1 = 0;
@@ -126,16 +119,13 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         this.progressWidth2 = 0;
         this.isOn = true;
         this.isDisabled = true;
-        console.log(this.newCourse)
       } if (this.wizard.model.currentStepIndex == 2) {
         this.progressWidth2 = 34;
         this.isOn = true;
         this.isDisabled = true;
-        console.log(this.newCourse)
       }
 
     } else {
-      //console.log(this.wizard);
       this.progressWidth1 = 0;
       this.progressWidth2 = 0;
       this.currentprogress = 0;
@@ -174,6 +164,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     }
   }
   getStatus(lesson) {
+    //console.log(lesson)
     if (lesson.dueDate <= new Date()) {
       return "#c9302c";
     } else {
@@ -181,22 +172,19 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     }
   }
   completeReview() {
-    console.log(this.newCourse);
     this.loading = true;
     const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/' + this.task_id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      //console.log(res['data']);
       this.newCourse = res['data'];
       this.loading = false;
-      this.router.navigate(['../../dashboard'], { relativeTo: this.route });
+      this.router.navigate(['/dashboard'], { relativeTo: this.route });
     }, error => {
       console.log('Some thing went wrong on submitting')
     });
   }
   onChangeAssignee(lesson) {
-    console.log(lesson);
     for (let module of this.newCourse.modules) {
       for (let session of module.sessions) {
         for (let mainLesson of session.lessons) {
@@ -205,6 +193,34 @@ export class ContentAdminReviewTaskComponent implements OnInit {
           }
         }
       }
+    }
+  }
+  public validateStep() {
+    var isValid = true;
+    var flag = true;
+    for (let lesson of this.lessonList) {
+      if (flag) {
+        if (lesson.dueDate == "") {
+          isValid = true;
+          break;
+        } else if (lesson.assignee == null) {
+          isValid = true;
+          break;
+        } else {
+          isValid = false;
+        }
+        if (isValid) {
+          flag = false;
+        }
+      }
+    }
+    return isValid;
+  }
+  setCustomModelDate($event) {
+    if ($event != null && $event.formatted != null && $event.formatted != undefined && $event.formatted != "") {
+      return $event.formatted;
+    } else {
+      return "";
     }
   }
 }
