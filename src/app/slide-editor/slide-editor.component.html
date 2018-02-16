@@ -66,7 +66,7 @@
               [lessonId]="lesson?.id" [slide]="slide"></app-presentation-templates>
 
             <button type="button" class="btn btn-danger" previousStep>Previous</button>
-            <button type="button" class="btn btn-danger float-right" nextStep>Next Step</button>
+            <button type="button" [disabled]="!isValidForm()" class="btn btn-danger float-right" nextStep>Next Step</button>
           </wizard-step>
           <wizard-step (stepEnter)="enterSecondStep($event)">
             <h4>Preview</h4>

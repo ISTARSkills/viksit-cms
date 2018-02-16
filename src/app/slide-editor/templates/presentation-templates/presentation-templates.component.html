@@ -4,17 +4,21 @@
       <div class="card">
         <div class="card-block">
           <div class="row ">
-            <div class="col-5">
+            <div class="col-3">
               <h6>Background Color</h6>
               <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
               />
             </div>
-            <div class="col-5">
+            <div class="col-4">
               <h6>Background Image</h6>
-              <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+              <input type="file" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
             </div>
-            <div class="col-2">
-              <button (click)="animateMe()" type="button" style="border-radius: 25px;" class="btn btn-outline-danger">Play</button>
+            <div class="col-3">
+              <h6>Slide Audio</h6>
+              <input type="file" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+            </div>
+            <div class="col-2 m-auto text-right">
+              <button [disabled]="onPlayDisable" (click)="animateMe()" type="button" style="border-radius: 25px;" class="btn btn-outline-danger">Play</button>
             </div>
           </div>
         </div>
@@ -40,7 +44,7 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>Title Transaction Style</label>
-                    <select class="form-control" [(ngModel)]="slide.title.transition_type">
+                    <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.transition_type">
                       <option selected value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
@@ -72,7 +76,7 @@
                 <div class="col-4">
                   <div class="form-group">
                     <label>Pharagraph Transaction Style</label>
-                    <select class="form-control" [(ngModel)]="slide.paragraph.transition_type">
+                    <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.paragraph.transition_type">
                       <option selected value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
