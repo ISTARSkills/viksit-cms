@@ -88,6 +88,7 @@ export class CoursesComponent implements OnInit {
       text: "You want to change the status of course?",
       type: 'warning',
       showCancelButton: true,
+      allowOutsideClick: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes',
@@ -118,12 +119,14 @@ export class CoursesComponent implements OnInit {
         // Read more about handling dismissals
         result.dismiss === swal.DismissReason.cancel
       ) {
-        swal(
+        /* swal(
           'Cancelled',
           'Request has been cancelled',
           'error'
-        )
+        ) */
+        //this.courses = this.courses
       }
+      //window.location.reload();
     })
 
 
@@ -170,8 +173,11 @@ export class CoursesComponent implements OnInit {
     this.currentModalInstance.close();
     this.courses = updatedCourses;
     this.storedCourses = updatedCourses;
+    this.loading = false;
   }
-
+  updateLoader($event) {
+    this.loading = $event;
+  }
   public accordionChange($event: NgbPanelChangeEvent) {
     var getIndex = ($event.panelId).split("-")[1];
     this.iconIndex = getIndex;

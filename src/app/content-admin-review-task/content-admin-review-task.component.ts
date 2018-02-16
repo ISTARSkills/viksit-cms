@@ -38,6 +38,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   selectedUser: any;
   courseDueDate;
   courseAssignee;
+  public loading = false;
   public todaydate = new Date();
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
@@ -66,6 +67,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading = true;
     const local_complex_object = localStorage.getItem('currentUser');
     this.complex_object = JSON.parse(local_complex_object);
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.task_id).subscribe(data => {
@@ -91,7 +93,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       }
       console.log(this.newCourse);
       this.lessonUpdateList();
-
+      this.loading = false;
       this.isInclude2ndStep = true;
     });
 
@@ -180,12 +182,14 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   }
   completeReview() {
     console.log(this.newCourse);
+    this.loading = true;
     const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/' + this.task_id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
       //console.log(res['data']);
       this.newCourse = res['data'];
+      this.loading = false;
       this.router.navigate(['../../dashboard'], { relativeTo: this.route });
     }, error => {
       console.log('Some thing went wrong on submitting')

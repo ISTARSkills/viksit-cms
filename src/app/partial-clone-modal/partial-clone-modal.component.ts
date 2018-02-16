@@ -21,6 +21,8 @@ export class PartialCloneModalComponent implements OnInit {
   @Output() coursesChange = new EventEmitter<any>();
   createCourseClone;
   complex_object;
+  @Input() loading;
+  @Output() loadingChange = new EventEmitter<any>();
   disableOnFinish = true;
   constructor(private http: HttpClient) { }
 
@@ -57,6 +59,8 @@ export class PartialCloneModalComponent implements OnInit {
     };
     //console.log("Course Size before request--> " + this.courses.length)
     this.disableOnFinish = false;
+    this.loading = true;
+    this.loadingChange.emit(this.loading);
     const body = new HttpParams().set('course_object', JSON.stringify(newCourse)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
@@ -65,9 +69,13 @@ export class PartialCloneModalComponent implements OnInit {
       this.courses = null;
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
+      this.loading = false;
+      this.loadingChange.emit(this.loading);
       //console.log("response");
       //console.log(this.courses);
     }, error => {
+      this.loading = false;
+      this.loadingChange.emit(this.loading);
       this.disableOnFinish = true;
     });
   }
@@ -77,7 +85,10 @@ export class PartialCloneModalComponent implements OnInit {
     //console.log(updatedCourse);
     this.coursesChange.emit(updatedCourse);
   }
-
+  updateLoader($event) {
+    this.loading = $event;
+    this.loadingChange.emit(this.loading);
+  }
   isValidForm() {
     var isValid = false;
     if (this.createCourseClone != null && this.createCourseClone.trim() != '' && this.createCourseClone.trim().length > 3) {

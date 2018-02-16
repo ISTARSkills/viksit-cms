@@ -1,6 +1,6 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 <div class="jumbotron">
-  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px',fullScreenBackdrop:true }"></ngx-loading>
 
   <div class="row m-0 mb-3">
     <div class="col-9 pl-0">
@@ -62,6 +62,6 @@
   </ng-template>
   <ng-template #content let-c="close" let-d="dismiss">
     <app-partial-clone-modal [cValue]="this.c" [dValue]="this.d" [selectedModal]="selectedModal" [selectedCourseModal]="selectedCourseModal"
-      [courses]="courses" (coursesChange)="updateCourseStructure($event)"></app-partial-clone-modal>
+      [courses]="courses" (coursesChange)="updateCourseStructure($event)" [loading]="loading" (loadingChange)="updateLoader($event)"></app-partial-clone-modal>
   </ng-template>
 </div>
