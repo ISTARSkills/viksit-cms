@@ -31,7 +31,7 @@ export class CoursesComponent implements OnInit {
     windowClass: 'animated bounceInUp',
   };
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal) { }
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit() {
     const local_complex_object = localStorage.getItem('currentUser')
@@ -180,5 +180,9 @@ export class CoursesComponent implements OnInit {
     } else {
       this.changeIcon = true;
     }
+  }
+  redirectToAssignPage(course) {
+    var courseTaskId = course.taskId;
+    this.router.navigate(['../review_task/' + courseTaskId], { relativeTo: this.route });
   }
 }

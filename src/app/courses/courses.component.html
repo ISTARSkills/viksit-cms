@@ -26,7 +26,7 @@
                 <div class="btn-group" ngbDropdown role="group" placement="bottom-right">
                   <button class="btn custom-btn-dropdown" ngbDropdownToggle (click)="ignore($event);$event.preventDefault()"></button>
                   <div class="dropdown-menu" ngbDropdownMenu>
-                    <button class="dropdown-item">Assign Task</button>
+                    <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();redirectToAssignPage(course)">Assign Task</button>
                     <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'course',course)">Clone Course</button>
                     <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'module',course)">Clone Module</button>
                     <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content,'session',course)">Clone Session</button>
