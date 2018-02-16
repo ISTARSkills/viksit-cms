@@ -191,7 +191,7 @@ export class CreateCourseTaskComponent implements OnInit {
       }).subscribe(res => {
         console.log(res['data']);
         this.loading = false;
-        this.router.navigate(['../dashboard'], { relativeTo: this.route });
+        this.router.navigate(['../../dashboard'], { relativeTo: this.route });
       });
 
 

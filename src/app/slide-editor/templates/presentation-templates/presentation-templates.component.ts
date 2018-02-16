@@ -31,10 +31,11 @@ export class PresentationTemplatesComponent implements OnInit {
   public loading = false;
   paragraph_delay = 0;
   title_delay = 0;
+  public onPlayDisable = false;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   animateMe() {
-
+    this.onPlayDisable = true;
     if (this.slide.paragraph.fragment_order == 1) {
       this.paragraph_delay = 0;
       this.title_delay = this.slide.paragraph.fragment_duration;
@@ -50,6 +51,8 @@ export class PresentationTemplatesComponent implements OnInit {
     setTimeout(() => {
       this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
       this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
+      this.onPlayDisable = false;
+
     }, totalDuration);
 
 
