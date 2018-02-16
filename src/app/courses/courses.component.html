@@ -15,7 +15,7 @@
   </div>
   <div *ngIf="courses !=null && courses != 0 ;else taskElseBlock">
     <ngb-accordion [closeOthers]="true" activeIds="" (panelChange)="accordionChange($event)" class="custom-courses-list">
-      <ngb-panel id="course-{{i}}" *ngFor="let course of courses; index as i;trackBy:userById">
+      <ngb-panel id="course-{{i}}" *ngFor="let course of courses; index as i;trackBy:trackById">
         <ng-template ngbPanelTitle>
           <div class="row m-0 remove-focus">
             <div class="col-6 my-auto pl-0">

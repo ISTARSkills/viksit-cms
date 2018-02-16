@@ -45,7 +45,8 @@
                           <div class="col-6 pr-0">
                             <div class="input-group">
                               <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="model"
-                                [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" />
+                                [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged(newCourse,'course')"
+                              />
                               <span class="input-group-btn">
                                 <div class="row m-0">
                                   <button type="button" class="btn btn-default" (click)="dp.clearDate()">
@@ -92,7 +93,8 @@
                                 <div class="input-group">
                                   <input class="form-control" style="float:none" placeholder="Select a date" name="lessonList[i].id" ngx-mydatepicker [ngModel]="lessonList[i].dueDate"
                                     (ngModelChange)="lessonList[i].dueDate=($event.formatted)" [options]="myOptions" #dp="ngx-mydatepicker"
-                                    [value]="lessonList[i].dueDate" />
+                                    (dateChanged)="onDateChanged(lessonList[i],'lesson')" [value]="lessonList[i].dueDate != undefined && lessonList[i].dueDate != null ? lessonList[i].dueDate : (todaydate | date:'dd-MM-yyyy')"
+                                  />
                                   <span class="input-group-btn">
                                     <div class="row m-0">
                                       <button type="button" class="btn btn-default px-2" (click)="dp.clearDate()">

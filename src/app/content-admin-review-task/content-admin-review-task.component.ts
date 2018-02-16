@@ -13,6 +13,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Lesson } from '../pojo/lesson/lesson';
 
 @Component({
   selector: 'app-content-admin-review-task',
@@ -37,6 +38,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   selectedUser: any;
   courseDueDate;
   courseAssignee;
+  public todaydate = new Date();
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
   constructor(private http: HttpClient, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) {
@@ -54,8 +56,13 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   model: any;
 
   // optional date changed callback
-  onDateChanged(event: IMyDateModel): void {
+  onDateChanged(value, type): void {
     // date selected
+    console.log(value)
+    console.log(type)
+    if (type == 'lesson') {
+      this.onChangeAssignee(value);
+    }
   }
 
   ngOnInit() {
@@ -122,6 +129,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         this.progressWidth2 = 34;
         this.isOn = true;
         this.isDisabled = true;
+        console.log(this.newCourse)
       }
 
     } else {
@@ -178,7 +186,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     }).subscribe(res => {
       //console.log(res['data']);
       this.newCourse = res['data'];
-      this.router.navigate(['../dashboard'], { relativeTo: this.route });
+      this.router.navigate(['../../dashboard'], { relativeTo: this.route });
     }, error => {
       console.log('Some thing went wrong on submitting')
     });
