@@ -15,13 +15,16 @@
     </div>
   </div>
   <div *ngIf="selectedModal == 'module'">
-    <app-module-wizard [courses]="courses" (coursesChange)="updateCourseStructure($event)" [selectedCourseModal]="selectedCourseModal"></app-module-wizard>
+    <app-module-wizard [courses]="courses" (coursesChange)="updateCourseStructure($event)" [loading]="loading" (loadingChange)="updateLoader($event)"
+      [selectedCourseModal]="selectedCourseModal"></app-module-wizard>
   </div>
   <div *ngIf="selectedModal == 'session'">
-    <app-session-wizard [courses]="courses" (coursesChange)="updateCourseStructure($event)" [selectedCourseModal]="selectedCourseModal"></app-session-wizard>
+    <app-session-wizard [courses]="courses" (coursesChange)="updateCourseStructure($event)" [loading]="loading" (loadingChange)="updateLoader($event)"
+      [selectedCourseModal]="selectedCourseModal"></app-session-wizard>
   </div>
   <div *ngIf="selectedModal == 'lesson'">
-    <app-lesson-wizard [courses]="courses" (coursesChange)="updateCourseStructure($event)" [selectedCourseModal]="selectedCourseModal"></app-lesson-wizard>
+    <app-lesson-wizard [courses]="courses" (coursesChange)="updateCourseStructure($event)" [loading]="loading" (loadingChange)="updateLoader($event)"
+      [selectedCourseModal]="selectedCourseModal"></app-lesson-wizard>
   </div>
 </div>
 <div class="modal-footer" *ngIf="selectedModal == 'course'">

@@ -13,6 +13,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Lesson } from '../pojo/lesson/lesson';
 
 @Component({
   selector: 'app-content-admin-review-task',
@@ -37,6 +38,8 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   selectedUser: any;
   courseDueDate;
   courseAssignee;
+  public loading = false;
+  public todaydate = new Date();
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
   constructor(private http: HttpClient, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) {
@@ -54,11 +57,17 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   model: any;
 
   // optional date changed callback
-  onDateChanged(event: IMyDateModel): void {
+  onDateChanged(value, type): void {
     // date selected
+    console.log(value)
+    console.log(type)
+    if (type == 'lesson') {
+      this.onChangeAssignee(value);
+    }
   }
 
   ngOnInit() {
+    this.loading = true;
     const local_complex_object = localStorage.getItem('currentUser');
     this.complex_object = JSON.parse(local_complex_object);
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.task_id).subscribe(data => {
@@ -84,7 +93,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       }
       console.log(this.newCourse);
       this.lessonUpdateList();
-
+      this.loading = false;
       this.isInclude2ndStep = true;
     });
 
@@ -122,6 +131,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         this.progressWidth2 = 34;
         this.isOn = true;
         this.isDisabled = true;
+        console.log(this.newCourse)
       }
 
     } else {
@@ -172,13 +182,15 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   }
   completeReview() {
     console.log(this.newCourse);
+    this.loading = true;
     const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/' + this.task_id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
       //console.log(res['data']);
       this.newCourse = res['data'];
-      this.router.navigate(['../dashboard'], { relativeTo: this.route });
+      this.loading = false;
+      this.router.navigate(['../../dashboard'], { relativeTo: this.route });
     }, error => {
       console.log('Some thing went wrong on submitting')
     });
