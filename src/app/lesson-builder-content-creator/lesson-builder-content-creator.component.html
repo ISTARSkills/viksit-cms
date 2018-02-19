@@ -30,11 +30,11 @@
         <span>
           {{lesson?.name}} </span>
         <i ngbPopover="{{lesson?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
-        <button (click)="addStageComponent(lesson)" type="button" class="btn btn-outline-info course_header_buttons float-right mr-2">
-          <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Stage</button>
-        <button type="button" class="btn btn-outline-info course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
+        <button (click)="addStageComponent(lesson)" type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2">
+          <i class="fas fa-plus-circle"></i> Add Stage</button>
+        <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
-          <i class="fa fa-circle mr-2" aria-hidden="true"></i>Comments</button>
+          <i class="fas fa-comments"></i> Comments</button>
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
           <div class="card custom-chat">
             <div class="card-body m-2">
@@ -88,8 +88,8 @@
                 </div>
                 <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
                   <button [disabled]="lesson?.type === 'PRESENTATION'  && stage.slides?.length !=0 " (click)="addSlideComponent(stage,content)"
-                    type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
-                    <i class="fa fa-circle mr-2" aria-hidden="true"></i>Add Slide</button>
+                    type="button" class="btn btn-outline-danger course_body_buttons float-right mr-2">
+                    <i class="fas fa-plus-circle"></i> Add Slide</button>
                 </div>
                 <div *ngIf=" stage.slides != undefined && stage.slides.length > 0; else slideElseBlock">
                   <div class="card mt-2" *ngFor="let slide of stage.slides; index as k;" dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'slide'"
