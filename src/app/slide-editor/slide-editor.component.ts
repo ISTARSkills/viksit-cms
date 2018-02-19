@@ -176,7 +176,7 @@ export class SlideEditorComponent implements OnInit {
       }
       if (this.wizard.model.currentStepIndex == 1) {
         this.isInclude2ndStep = true;
-        this.progressWidth1 = 33;
+        this.progressWidth1 = 50;
         this.progressWidth2 = 0;
         this.isOn = true;
         this.isDisabled = true;
