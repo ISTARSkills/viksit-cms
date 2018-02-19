@@ -18,7 +18,7 @@
       <wizard-step (stepEnter)="enterSecondStep($event)">
         <h3 class="col-6 p-0 my-auto">Lesson Details</h3>
         <div class="form-group row">
-          <label for="clone_lesson_selected" class="col-4 col-form-label">Select Source Lesson</label>
+          <label for="clone_lesson_selected" class="col-4 col-form-label">Select Source Lesson*</label>
           <div class="col-8">
             <ng-template #lessonTemplate let-r="result" let-t="term">
               {{r.id+' - '+r.name}}
@@ -31,7 +31,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="lesson_name" class="col-4 col-form-label">Lesson Name
+          <label for="lesson_name" class="col-4 col-form-label">Targeted Lesson Name*
           </label>
           <div class="col-8">
             <input class="form-control" type="text" value="" [(ngModel)]="newLessonNameModel" placeholder="Enter the lesson name to be clone"
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-4 col-form-label">Select Destination Course</label>
+          <label class="col-4 col-form-label">Select Destination Course*</label>
           <div class="col-8">
             <ng-template #courseTemplate let-r="result" let-t="term">
               {{r.id+' - '+r.name}}
@@ -66,7 +66,7 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="module" class="col-4 col-form-label">Select Destination Module</label>
+          <label for="module" class="col-4 col-form-label">Select Destination Module*</label>
           <div class="col-8">
             <ng-template #moduleTemplate let-r="result" let-t="term">
               {{r.id+' - '+r.name}}
@@ -79,7 +79,7 @@
           </div>
         </div>
         <div class="form-group row" *ngIf="showExisting">
-          <label for="session" class="col-4 col-form-label">Select Destination Session</label>
+          <label for="session" class="col-4 col-form-label">Select Destination Session*</label>
           <div class="col-8">
             <ng-template #sessionTemplate let-r="result" let-t="term">
               {{r.id+' - '+r.name}}
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="form-group row" *ngIf="!showExisting">
-          <label for="new_session_name" class="col-4 col-form-label">Session Name
+          <label for="new_session_name" class="col-4 col-form-label">Session Name*
           </label>
           <div class="col-8">
             <input class="form-control" type="text" value="" [(ngModel)]="lessonsNewSessionModel" placeholder="Enter the session name to be clone"
