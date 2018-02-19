@@ -33,12 +33,13 @@ export class PresentationTemplatesComponent implements OnInit {
   paragraph_delay = 0;
   title_delay = 0;
   public onPlayDisable = false;
+  someValue = 2;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   animateMe() {
     this.onPlayDisable = true;
-    this.audio.load();
-    this.audio.play();
+    //this.audio.load();
+    // this.audio.play();
 
     if (this.slide.paragraph.fragment_order == 1) {
       this.paragraph_delay = 0;
@@ -52,12 +53,13 @@ export class PresentationTemplatesComponent implements OnInit {
     this.paragraphview.nativeElement.classList.add(this.slide.paragraph.transition_type);
     this.titleview.nativeElement.classList.add(this.slide.title.transition_type);
 
-    var totalDuration = this.slide.paragraph.fragment_duration + this.slide.title.fragment_duration;
+    var totalDuration = parseInt(this.slide.paragraph.fragment_duration) + parseInt(this.slide.title.fragment_duration);
+    console.log(totalDuration);
     setTimeout(() => {
       this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
       this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
       this.onPlayDisable = false;
-
+      console.log(this.onPlayDisable);
     }, totalDuration);
 
 
