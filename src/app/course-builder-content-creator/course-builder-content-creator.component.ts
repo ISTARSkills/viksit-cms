@@ -342,6 +342,11 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   }
 
+  dragOperationFunction(operation) {
+
+    this.dragOperation = operation;
+
+  }
 
   submitForReviewdClicked() {
     //console.log('review called>>');

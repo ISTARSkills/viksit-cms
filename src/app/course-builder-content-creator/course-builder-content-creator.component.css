@@ -17,20 +17,29 @@
     font-size: 13px;
     font-weight: bold;
     text-align: center;
-     background-color:#ffffff !important;
 }
 .course_body_buttons{
      border-radius: 27px;
-      font-size: 8px;
+      font-size: 12px;
+}
+
+.module-card-header{
+    background-color: #7ed321;
+    color: #ffff;
+}
+
+.session-card-header{
+    background-color:#35bdf0;
+    color: #ffff;
 }
 
 .custom-course-cardblock{
         flex: 0.1 !important;
 }
 
-.card-header{
+/* .card-header{
     background-color:#ffffff !important;
-}
+} */
 
 
 .top-border-green {
@@ -136,3 +145,20 @@ margin-bottom: 5px;
 	background-color: #999999;
 }
 
+.custom-accordion > .card{
+
+    border:0px !important; 
+}
+
+.btn-outline-primary {
+    color:#35bdf0 !important;
+    background-image: none;
+    background-color: transparent;
+    border-color: #35bdf0 !important;
+}
+
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #35bdf0 !important;
+    border-color: #35bdf0 !important;
+}

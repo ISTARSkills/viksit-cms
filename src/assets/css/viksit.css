@@ -106,3 +106,8 @@ display: block !important;
 *:focus {
     outline:none !important
 }
+
+.custom-accordion > .card{
+
+    border:0px !important; 
+}
