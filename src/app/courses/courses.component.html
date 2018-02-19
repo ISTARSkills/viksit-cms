@@ -13,53 +13,55 @@
       </div>
     </div>
   </div>
-  <div *ngIf="courses !=null && courses != 0 ;else taskElseBlock">
-    <ngb-accordion [closeOthers]="true" activeIds="" (panelChange)="accordionChange($event)" class="custom-courses-list">
-      <ngb-panel id="course-{{i}}" *ngFor="let course of courses; index as i;trackBy:trackById">
-        <ng-template ngbPanelTitle>
-          <div class="row m-0 remove-focus">
-            <div class="col-6 my-auto pl-0">
-              <i class="fa course-list-plus-icon" aria-hidden="true" [ngClass]="{ 'fa-plus-circle': iconIndex != i ||changeIcon ,'fa-minus-circle': !changeIcon && iconIndex == i}"></i> {{course.name}}
-            </div>
-            <div class="col-6" *ngIf="userType == 'CONTENT_ADMIN'">
-              <div class="btn-group float-right">
-                <div class="btn-group" ngbDropdown role="group" placement="bottom-right">
-                  <button class="btn custom-btn-dropdown" ngbDropdownToggle (click)="ignore($event);$event.preventDefault()"></button>
-                  <div class="dropdown-menu" ngbDropdownMenu>
-                    <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();redirectToAssignPage(course)">Assign Task</button>
-                    <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'course',course)">Clone Course</button>
-                    <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'module',course)">Clone Module</button>
-                    <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content,'session',course)">Clone Session</button>
-                    <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'lesson',course)">Clone Lesson</button>
+  <div style="min-height: 80vh">
+    <div *ngIf="courses !=null && courses != 0 ;else taskElseBlock">
+      <ngb-accordion [closeOthers]="true" activeIds="" (panelChange)="accordionChange($event)" class="custom-courses-list">
+        <ngb-panel id="course-{{i}}" *ngFor="let course of courses; index as i;trackBy:trackById">
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+                <i class="fa course-list-plus-icon" aria-hidden="true" [ngClass]="{ 'fa-plus-circle': iconIndex != i ||changeIcon ,'fa-minus-circle': !changeIcon && iconIndex == i}"></i> {{course.name}}
+              </div>
+              <div class="col-6" *ngIf="userType == 'CONTENT_ADMIN'">
+                <div class="btn-group float-right">
+                  <div class="btn-group" ngbDropdown role="group" placement="bottom-right">
+                    <button class="btn custom-btn-dropdown" ngbDropdownToggle (click)="ignore($event);$event.preventDefault()"></button>
+                    <div class="dropdown-menu" ngbDropdownMenu>
+                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();redirectToAssignPage(course)">Assign Task</button>
+                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'course',course)">Clone Course</button>
+                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'module',course)">Clone Module</button>
+                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content,'session',course)">Clone Session</button>
+                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'lesson',course)">Clone Lesson</button>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="btn-group btn-group-toggle float-right mr-3" [attr.id]="course.id" ngbRadioGroup name="{{i}}" [ngModel]="course.isPublished"
-                (ngModelChange)="courseStatusChanged($event,course)" (click)="ignore($event)">
-                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                  <input ngbButton type="radio" class="invisible" [value]="true">PUBLISH
-                </label>
-                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                  <input ngbButton type="radio" class="invisible" [value]="false">PRODUCTION
-                </label>
+                <div class="btn-group btn-group-toggle float-right mr-3" [attr.id]="course.id" ngbRadioGroup name="{{i}}" [ngModel]="course.isPublished"
+                  (ngModelChange)="courseStatusChanged($event,course)" (click)="ignore($event)">
+                  <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                    <input ngbButton type="radio" class="invisible" [value]="true">PUBLISH
+                  </label>
+                  <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                    <input ngbButton type="radio" class="invisible" [value]="false">PRODUCTION
+                  </label>
+                </div>
               </div>
             </div>
-          </div>
-        </ng-template>
-        <ng-template ngbPanelContent>
-          <app-partial-course-list-item [data]="course"></app-partial-course-list-item>
-        </ng-template>
-      </ngb-panel>
-    </ngb-accordion>
-  </div>
-  <ng-template #taskElseBlock>
-    <div class='card custom-cards_css mx-auto mb-4'>
-      <div class='row mx-auto'>
-        <h4 class=' text-muted text-center mx-auto custom-font-family-tag m-3'>
-          Course Not Found.</h4>
-      </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <app-partial-course-list-item [data]="course"></app-partial-course-list-item>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
     </div>
-  </ng-template>
+    <ng-template #taskElseBlock>
+      <div class='card custom-cards_css mx-auto mb-4'>
+        <div class='row mx-auto'>
+          <h4 class=' text-muted text-center mx-auto custom-font-family-tag m-3'>
+            Course Not Found.</h4>
+        </div>
+      </div>
+    </ng-template>
+  </div>
   <ng-template #content let-c="close" let-d="dismiss">
     <app-partial-clone-modal [cValue]="this.c" [dValue]="this.d" [selectedModal]="selectedModal" [selectedCourseModal]="selectedCourseModal"
       [courses]="courses" (coursesChange)="updateCourseStructure($event)" [loading]="loading" (loadingChange)="updateLoader($event)"></app-partial-clone-modal>
