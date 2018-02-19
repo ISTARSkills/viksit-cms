@@ -295,7 +295,7 @@ export class SessionWizardComponent implements OnInit {
     var assignee_object = {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": this.getTodayDate(),
-      "clone": "module",
+      "clone": "session",
       "oldId": oldlessonIds
     };
     this.disableOnFinish = false;

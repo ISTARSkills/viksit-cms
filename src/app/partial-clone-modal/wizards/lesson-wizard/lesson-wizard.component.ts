@@ -336,7 +336,7 @@ export class LessonWizardComponent implements OnInit {
     var assignee_object = {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": this.getTodayDate(),
-      "clone": "module",
+      "clone": "lesson",
       "oldId": oldlessonIds
     };
     this.disableOnFinish = true;
