@@ -82,6 +82,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     errorReset: null,
     cancelReset: null,
     addRemoveLinks: true,
+    dictDefaultMessage: 'Upload Image',
     init: function () {
       this.on("removedfile", function (file) {
       });
