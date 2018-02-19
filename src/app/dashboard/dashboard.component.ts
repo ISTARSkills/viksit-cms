@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -19,7 +20,7 @@ export class DashboardComponent implements OnInit {
   formatdate = 'dd/MM/yyyy h:mm:ss a';
   pipe = new DatePipe('en-US');
   tasks;
-  complex_object;
+  complex_object
   storedTasks;
   public config: SwiperConfigInterface = {
     direction: 'horizontal',
@@ -48,6 +49,22 @@ export class DashboardComponent implements OnInit {
     this.tasks = this.complex_object.tasks;
     this.storedTasks = this.tasks;
     console.log(this.tasks);
+
+    const req = this.auth.getComplexForUpdateTask(this.complex_object.id);
+    req.subscribe(
+      // Successful responses call the first callback.
+      data => {
+        console.log(data);
+        this.auth.login(data);
+        this.auth.updatedTask.subscribe(tasks => this.tasks = tasks)
+      },
+      // Errors will call this callback instead:
+      err => {
+        console.log('Something went wrong!');
+
+      }
+    );
+
   }
 
   setTask(taskType: string) {
@@ -99,7 +116,7 @@ export class DashboardComponent implements OnInit {
           return 'Review Course';
 
 
-        } else if (task.status === 'ASSIGNED') {
+        } else if (task.status === 'ASSIGNED' || task.status === 'CREATED') {
 
           return 'Create Course';
         } else if (task.status === 'INPROGRESS') {
@@ -115,7 +132,7 @@ export class DashboardComponent implements OnInit {
           return 'Review Lesson';
 
 
-        } else if (task.status === 'ASSIGNED') {
+        } else if (task.status === 'ASSIGNED' || task.status === 'CREATED') {
 
           return 'Create Lesson';
         } else if (task.status === 'INPROGRESS') {
@@ -134,10 +151,10 @@ export class DashboardComponent implements OnInit {
       case 'course_creation_task':
 
         if (task.status === 'REVIEW') {
-          this.router.navigate(['../review_task/' + task.id], { relativeTo: this.route });
+          this.router.navigate(['/review_task/' + task.id], { relativeTo: this.route });
 
-        } else if (task.status === 'ASSIGNED' || task.status === 'INPROGRESS') {
-          this.router.navigate(['../course/' + task.id], { relativeTo: this.route });
+        } else if (task.status === 'CREATED' || task.status === 'ASSIGNED' || task.status === 'INPROGRESS') {
+          this.router.navigate(['/course/' + task.id], { relativeTo: this.route });
         }
 
         break;
@@ -146,8 +163,8 @@ export class DashboardComponent implements OnInit {
 
         if (task.status === 'REVIEW') {
 
-        } else if (task.status === 'ASSIGNED' || task.status === 'INPROGRESS') {
-          this.router.navigate(['../lesson_builder/' + task.itemId], { relativeTo: this.route });
+        } else if (task.status === 'CREATED' || task.status === 'ASSIGNED' || task.status === 'INPROGRESS') {
+          this.router.navigate(['/lesson_builder/' + task.itemId], { relativeTo: this.route });
         }
 
         break;
