@@ -66,9 +66,10 @@
               [lessonId]="lesson?.id" [slide]="slide"></app-presentation-templates>
 
             <button type="button" class="btn btn-danger" previousStep>Previous</button>
-            <button type="button" [disabled]="!isValidForm()" class="btn btn-danger float-right" nextStep>Next</button>
+            <button type="button" [disabled]="!isValidForm()" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
+            <!-- <button type="button" [disabled]="!isValidForm()" class="btn btn-danger float-right" nextStep>Next</button> -->
           </wizard-step>
-          <wizard-step (stepEnter)="enterSecondStep($event)">
+          <!-- <wizard-step (stepEnter)="enterSecondStep($event)">
             <h4>Preview</h4>
             <div class="row m-3">
               <div class="card " *ngFor="let slide of slides; index as j ">
@@ -83,7 +84,7 @@
             </div>
             <button type="button" class="btn btn-danger" previousStep>Previous Step</button>
             <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
-          </wizard-step>
+          </wizard-step> -->
         </div>
       </div>
     </wizard>
