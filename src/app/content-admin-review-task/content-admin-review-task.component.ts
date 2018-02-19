@@ -90,8 +90,11 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       this.loading = false;
       this.isInclude2ndStep = true;
     });
-
-    this.http.get(AppConfiguration.ServerWithApiUrl + 'user/user_bytype/CONTENT_CREATOR').subscribe(data => {
+    var types = { "userType": "CONTENT_CREATOR,CONTENT_ADMIN" };
+    const body = new HttpParams().set('type', JSON.stringify(types));
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'user/user_bytype', body, {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+    }).subscribe(data => {
       // Read the result field from the JSON response.
       this.users = data['data'];
       //this.getCourseAssignee();
