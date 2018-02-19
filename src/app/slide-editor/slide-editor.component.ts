@@ -60,7 +60,7 @@ export class SlideEditorComponent implements OnInit {
       this.slides = [];
       for (let stage of this.lesson.stages) {
         for (let slide of stage.slides) {
-          console.log(slide);
+          // console.log(slide);
           this.slides.push(slide);
         }
       }
@@ -70,7 +70,7 @@ export class SlideEditorComponent implements OnInit {
       // this.slides = data;
       this.slide = this.slides[this.index];
 
-      console.log(this.slide.type);
+      // console.log(this.slide.type);
       var count = 0;
       for (let list of this.templateTypePreviewList[0].presentation) {
 
@@ -93,7 +93,7 @@ export class SlideEditorComponent implements OnInit {
     if ($event.target.value === "PRESENTATION") {
       for (let list of this.templateTypePreviewList[0].presentation) {
         this.templateList.push(list)
-        console.log(list);
+        // console.log(list);
       }
     } else if ($event.target.value === "INTERACTIVE") {
 
@@ -108,7 +108,7 @@ export class SlideEditorComponent implements OnInit {
       }
     }
 
-    console.log($event.target.value);
+    // console.log($event.target.value);
   }
 
   isClassVisible(newValue: number, template_type: string) {
@@ -118,7 +118,7 @@ export class SlideEditorComponent implements OnInit {
     this.slide.type = template_type
     this.slide.fragmentcount = this.getFragmentCount(template_type);
 
-    console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
+    //  console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
   }
 
 
@@ -138,12 +138,12 @@ export class SlideEditorComponent implements OnInit {
 
     this.loading = true;
 
-    console.log('save called>>');
+    // console.log('save called>>');
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      console.log(res)
+      //  console.log(res)
       this.lesson = res['data']
       this.loading = false;
       this.router.navigate(['/lesson_builder/' + this.lesson.id], { relativeTo: this.route });
@@ -155,7 +155,7 @@ export class SlideEditorComponent implements OnInit {
 
   isValidForm() {
     var isValid = false;
-    console.log(this.slide);
+    // console.log(this.slide);
     if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
       isValid = true;
     } else {

@@ -75,7 +75,7 @@ export class PresentationTemplatesComponent implements OnInit {
   }
 
   onChangeColor(color) {
-    console.log(color);
+    //  console.log(color);
     this.bgcolor = color;
     this.slide.color = this.bgcolor;
   }
@@ -87,7 +87,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
   onChangeAudio(event) {
 
-    console.log(event.target.files[0]);
+    // console.log(event.target.files[0]);
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
     var headers = new Headers();
@@ -99,19 +99,19 @@ export class PresentationTemplatesComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i]['name']);
     }
-    console.log('form data variable :   ' + formData.toString());
+    // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
     this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
       .subscribe(res => {
-        console.log('response files res', res);
+        //  console.log('response files res', res);
         this.audioUrl = res.toString();
         this.slide.audioUrl = this.bgImage;
         this.audio.src = this.slide.audioUrl;
         this.loading = false;
       }, error => {
-        console.log('response files error', error);
-        console.log('response files error', error.error.text);
+        //  console.log('response files error', error);
+        //   console.log('response files error', error.error.text);
         this.audioUrl = error.error.text;
         this.slide.audioUrl = this.audioUrl;
         this.audio.src = this.slide.audioUrl;
@@ -123,9 +123,9 @@ export class PresentationTemplatesComponent implements OnInit {
 
   public onChangeImage(event) {
 
-    console.log(event.srcElement.value);
-    console.log(event.target.files[0]);
-    console.log(event);
+    // console.log(event.srcElement.value);
+    //  console.log(event.target.files[0]);
+    //  console.log(event);
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
     var headers = new Headers();
@@ -137,18 +137,18 @@ export class PresentationTemplatesComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i]['name']);
     }
-    console.log('form data variable :   ' + formData.toString());
+    //  console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
     this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
       .subscribe(res => {
-        console.log('response files res', res);
+        //  console.log('response files res', res);
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
         this.loading = false;
       }, error => {
-        console.log('response files error', error);
-        console.log('response files error', error.error.text);
+        //  console.log('response files error', error);
+        //  console.log('response files error', error.error.text);
         this.bgImage = error.error.text;
         this.slide.bgImage = this.bgImage;
         this.loading = false;
@@ -157,10 +157,10 @@ export class PresentationTemplatesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log("switchexpression " + this.switchexpression)
-    console.log(this.slide);
+    // console.log("switchexpression " + this.switchexpression)
+    //  console.log(this.slide);
     this.bgImage = this.slide.bgImage;
-    console.log("lessonId " + this.lessonId)
+    //  console.log("lessonId " + this.lessonId)
     this.bgcolor = this.slide.color;
 
     if (this.slide.color != null && this.slide.color.trim() != '' && this.slide.color != 'null') {
