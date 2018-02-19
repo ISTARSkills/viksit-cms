@@ -40,7 +40,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
-    console.log(">>>> " + this.complex_object.studentProfile.firstName);
+    //console.log(">>>> " + this.complex_object.studentProfile.firstName);
 
 
     if (this.id != undefined) {
@@ -50,8 +50,8 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
         data => {
           this.lessonBuilderService.lessonSave(data['data'])
           this.lessonBuilderService.currentLesson.subscribe(lesson => this.lesson = lesson)
-          console.log("lesson");
-          console.log(this.lesson);
+          //console.log("lesson");
+          //console.log(this.lesson);
           this.loading = false;
         },
         err => {
@@ -80,7 +80,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     this.newParagraph = new Paragraph("", 2, "", 500)
     this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "");
     this.lesson.stages[this.stageindex].slides.push(this.slide);
-    console.log(this.lesson)
+    //console.log(this.lesson)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
     this.currentModalInstance.close();
   }
@@ -88,12 +88,12 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   saveEndExitClicked() {
 
     this.loading = true;
-    console.log('save called>>');
+    //console.log('save called>>');
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      console.log(res)
+      //console.log(res)
       this.lesson = res['data']
       this.lessonBuilderService.lessonSave(res['data'])
       this.loading = false;
@@ -108,7 +108,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
       slides: []
     }
     this.lesson.stages.push(stage);
-    console.log(this.lesson);
+    //console.log(this.lesson);
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
   }
 

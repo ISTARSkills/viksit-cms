@@ -125,7 +125,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   public removeModuleFunction = function (module) {
     var index = this.course.modules.indexOf(module);
     this.course.modules.splice(index, 1);
-    console.log(this.course);
+    //console.log(this.course);
   };
 
   public addSessionComponent = function (module, content) {
@@ -150,7 +150,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
 
     this.course.modules[moduleIndex].sessions.splice(sessionIndex, 1);
-    console.log(this.course);
+    //console.log(this.course);
   };
 
   public addLessonsComponent = function (module, session, content) {
@@ -177,7 +177,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
     var lessonIndex = this.course.modules[moduleIndex].sessions[sessionIndex].lessons.indexOf(lesson);
     this.course.modules[moduleIndex].sessions[sessionIndex].lessons.splice(lessonIndex, 1);
-    console.log(this.course);
+    //console.log(this.course);
   };
 
   public moveToLessonsFunction = function (module, session, lesson) {
@@ -187,7 +187,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   public open(type, value, content, module_index, session_index, lesson_index) {
 
-    console.log(type);
+    //console.log(type);
     this.modalName = 'Edit ' + type;
     this.idNew = false;
     this.type = type;
@@ -198,8 +198,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.module_index = module_index;
     this.session_index = session_index;
     this.lesson_index = lesson_index;
-    console.log(this.item_id);
-    console.log(this.item_type);
+    //console.log(this.item_id);
+    //console.log(this.item_type);
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -210,7 +210,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   public save(content) {
 
-    console.log(this.type.toLowerCase());
+    //console.log(this.type.toLowerCase());
     switch (this.type.toLowerCase()) {
       case 'course':
         this.course.name = this.title;
@@ -261,7 +261,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
         break;
 
     }
-    console.log(this.course);
+    //console.log(this.course);
     this.currentModalInstance.close();
   }
 
@@ -279,9 +279,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   onUploadSuccess(file) {
 
     // console.log(file);
-    console.log(file[0].upload.filename);
-    console.log(file[0].type);
-    console.log(file[0].xhr.response);
+    //console.log(file[0].upload.filename);
+    //console.log(file[0].type);
+    //console.log(file[0].xhr.response);
     if (this.type.toLowerCase() === 'course') {
       this.courseImage = file[0].xhr.response
     } else if (this.type.toLowerCase() === 'module') {
@@ -308,11 +308,11 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
       this.jumbotron.nativeElement.classList.remove("jumbotron");
       this.navbarIsVisible = false;
-      console.log("newCourse >>> " + this.newCourse.name);
+      //console.log("newCourse >>> " + this.newCourse.name);
       this.course = this.newCourse;
       this.submitandreviewIsVisible = false;
     }
-    console.log("id >>> " + this.id);
+    //console.log("id >>> " + this.id);
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
@@ -327,14 +327,14 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
         // Read the result field from the JSON response.
         this.course = data['data'];
-        console.log(this.course);
+        //console.log(this.course);
         for (let issue of this.course.issues) {
           for (let comments of issue.comments) {
             this.issuesList.push(comments);
           }
 
         }
-        console.log(this.issuesList);
+        //console.log(this.issuesList);
         this.loading = false;
       });
 
@@ -344,7 +344,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
   submitForReviewdClicked() {
-    console.log('review called>>');
+    //console.log('review called>>');
     this.loading = true;
     // Make the HTTP request:
     this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/send_course_structure_review/' + this.id).subscribe(data => {
@@ -356,13 +356,13 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   }
 
   saveEndExitClicked() {
-    console.log('save called>>');
+    //console.log('save called>>');
     this.loading = true;
     const body = new HttpParams().set('course_object', JSON.stringify(this.course));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + this.complex_object.id + '/' + this.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
     }).subscribe(res => {
-      console.log(res)
+      //console.log(res)
       this.course = res['data'];
       this.isSubmitTrue = true;
       this.loading = false;
@@ -406,9 +406,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
   keyDownFunction(event) {
 
-    console.log(this.commentValue);
+    //console.log(this.commentValue);
     if (event.keyCode == 13) {
-      console.log(event);
+      //console.log(event);
       this.issuesList.push({
         imageURL: this.complex_object.studentProfile.profileImage,
         name: this.complex_object.studentProfile.firstName,
@@ -418,8 +418,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       this.commentValue = null;
     }
 
-    console.log(this.complex_object.studentProfile.profileImage);
-    console.log(this.complex_object.studentProfile.firstName);
+    //console.log(this.complex_object.studentProfile.profileImage);
+    //console.log(this.complex_object.studentProfile.firstName);
   }
 
   offset(el) {

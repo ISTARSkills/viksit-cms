@@ -75,8 +75,8 @@ export class CoursesComponent implements OnInit {
   }
   courseStatusChanged($event, course) {
 
-    console.log($event);
-    console.log(course);
+    //console.log($event);
+    //console.log(course);
     var action = "";
     if ($event) {
       action = "publish";
@@ -104,7 +104,7 @@ export class CoursesComponent implements OnInit {
         this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/publish_course/' + course.id + '/' + action, body, {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
         }).subscribe(res => {
-          console.log(res['data']);
+          //console.log(res['data']);
           course = res['data'];
           this.loading = false;
         }, error => {

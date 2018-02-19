@@ -42,19 +42,19 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     const now = Date.now() - 1;
     const myFormattedDate = this.pipe.transform(now, this.formatdate);
-    console.log(myFormattedDate);
+    //console.log(myFormattedDate);
     const local_complex_object = localStorage.getItem('currentUser')
 
     this.complex_object = JSON.parse(local_complex_object);
     this.tasks = this.complex_object.tasks;
     this.storedTasks = this.tasks;
-    console.log(this.tasks);
+    //console.log(this.tasks);
 
     const req = this.auth.getComplexForUpdateTask(this.complex_object.id);
     req.subscribe(
       // Successful responses call the first callback.
       data => {
-        console.log(data);
+        //console.log(data);
         this.auth.login(data);
         this.auth.updatedTask.subscribe(tasks => this.tasks = tasks)
       },
