@@ -181,8 +181,34 @@ export class ModuleWizardComponent implements OnInit {
     }
   }
 
+  public getTodayDate() {
+
+    var today = new Date();
+    var date = today.getDate();
+    var month = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
+    var dd = "";
+    var mm = "";
+
+    if (date < 10) {
+      dd = '0' + date;
+    } else {
+      dd = date + "";
+    }
+    if (month < 10) {
+      mm = '0' + month;
+    } else {
+      mm = month + "";
+    }
+    var todayDate = dd + '/' + mm + '/' + yyyy;
+    return todayDate;
+
+  }
+
   submitModuleClone() {
     var clonedObject;
+    var oldlessonIds = Array();
     //console.log(this.selectedCourseModal);
     var modules = Array();
     for (let module of this.selectedCourseModal.modules) {
@@ -193,6 +219,7 @@ export class ModuleWizardComponent implements OnInit {
           for (let lesson of session.lessons) {
             var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
             lessons.push(newLesson);
+            oldlessonIds.push(lesson.id);
           }
           var newSession = new Session(session.name, session.description, 0, lessons, null);
           sessions.push(newSession);
@@ -220,7 +247,9 @@ export class ModuleWizardComponent implements OnInit {
 
     var assignee_object = {
       "userAssingedTo": [this.complex_object.id],
-      "dueDate": "08/03/2018"
+      "dueDate": this.getTodayDate(),
+      "clone": "module",
+      "oldId": oldlessonIds
     };
 
     this.disableOnFinish = true;

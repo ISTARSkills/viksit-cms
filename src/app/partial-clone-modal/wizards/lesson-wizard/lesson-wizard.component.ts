@@ -261,8 +261,34 @@ export class LessonWizardComponent implements OnInit {
     }
   }
 
+  public getTodayDate() {
+
+    var today = new Date();
+    var date = today.getDate();
+    var month = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
+    var dd = "";
+    var mm = "";
+
+    if (date < 10) {
+      dd = '0' + date;
+    } else {
+      dd = date + "";
+    }
+    if (month < 10) {
+      mm = '0' + month;
+    } else {
+      mm = month + "";
+    }
+    var todayDate = dd + '/' + mm + '/' + yyyy;
+    return todayDate;
+
+  }
+
   submitLessonClone() {
     var clonedObject;
+    var oldlessonIds = Array();
     //console.log(this.selectedCourseModal);
     var lessons = Array();
     for (let module of this.selectedCourseModal.modules) {
@@ -271,6 +297,7 @@ export class LessonWizardComponent implements OnInit {
           if (lesson.id == this.lessonSelectModel.id) {
             var newLesson = new Lesson(this.newLessonNameModel, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
             lessons.push(newLesson);
+            oldlessonIds.push(lesson.id);
           }
         }
       }
@@ -286,6 +313,7 @@ export class LessonWizardComponent implements OnInit {
                 if (session.id == this.sessionSelectModel.id) {
                   for (let new_lesson of lessons) {
                     session.lessons.push(new_lesson);
+
                   }
                   //console.log(course);
                   clonedObject = course;
@@ -307,7 +335,9 @@ export class LessonWizardComponent implements OnInit {
 
     var assignee_object = {
       "userAssingedTo": [this.complex_object.id],
-      "dueDate": "08/03/2018"
+      "dueDate": this.getTodayDate(),
+      "clone": "module",
+      "oldId": oldlessonIds
     };
     this.disableOnFinish = true;
     this.loading = true;
