@@ -24,6 +24,25 @@
       <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
     </div>
   </div>
+  <div [hidden]="mobilePreviewIsVisible" #mobilePreview class="col-4 float-right lesson-mobile-preview animated">
+    <div (click)="mobilePreviewFunction('hide')">
+      <i class="fas fa-times"></i>
+    </div>
+    <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+    <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+      <div class="card-block">
+        <img [hidden]="onPlayDisable" (click)="playPreview()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%"
+          src='../../assets/image/play.png' alt=''>
+        <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="title_fragment_duration" #titleview class="title-text text-center animated">{{title_text}}</div>
+        <div [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="paragraph_fragment_duration" #paragraphview
+          class="paragraph-text animated">
+          {{paragraph_text}}
+
+        </div>
+      </div>
+    </div>
+
+  </div>
   <div class="row course">
     <div class="card course_card">
       <div class="card-header">
@@ -35,6 +54,8 @@
         <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
           <i class="fas fa-comments"></i> Comments</button>
+        <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="mobilePreviewFunction('show')">
+          <i class="far fa-play-circle"></i> Preview </button>
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
           <div class="card custom-chat">
             <div class="card-body m-2">

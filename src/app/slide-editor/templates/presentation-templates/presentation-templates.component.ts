@@ -38,8 +38,11 @@ export class PresentationTemplatesComponent implements OnInit {
 
   animateMe() {
     this.onPlayDisable = true;
-    //this.audio.load();
-    // this.audio.play();
+    if (this.audio != null && this.audio != undefined && this.audio.src != '') {
+      this.audio.load();
+      this.audio.play();
+    }
+
 
     if (this.slide.paragraph.fragment_order == 1) {
       this.paragraph_delay = 0;
@@ -65,16 +68,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
   }
 
-  public playPreview() {
-    this.paragraphview.nativeElement.classList.remove("fadeinbottom");
-    this.titleview.nativeElement.classList.remove("fadein");
 
-    setTimeout(function () {
-      this.paragraphview.nativeElement.classList.add("fadeinbottom");
-      this.titleview.nativeElement.classList.add("fadein");
-    }.bind(this), 100);
-
-  }
 
   onChangeColor(color) {
     //  console.log(color);

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Lesson } from '../pojo/lesson/lesson';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -20,12 +20,27 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   complex_object;
   public loading = false;
   public isCollapsed = true;
+  @ViewChild('mobilePreview') mobilePreview;
   currentModalInstance: any;
   closeResult: string;
   stageindex
   newTitle: Title;
   newParagraph: Paragraph
   slide: Slide
+  @ViewChild('paragraphview') paragraphview;
+  @ViewChild('titleview') titleview;
+  audio = new Audio();
+  paragraph_delay = 0;
+  title_delay = 0;
+  mobilePreviewIsVisible = true;
+  public onPlayDisable = false;
+  title_fragment_duration;
+  paragraph_fragment_duration;
+  paragraph_text;
+  title_text;
+  bgImage;
+  bgcolor;
+  slidePreviewPosition = 0;
   selectSlideType = "ONLY_TITLE_PARAGRAPH_NEW";
   options: NgbModalOptions = {
     size: 'lg',
@@ -61,6 +76,72 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
     }
 
+  }
+
+  public mobilePreviewFunction(action) {
+
+    if (action === 'show') {
+      this.mobilePreviewIsVisible = false;
+      this.mobilePreview.nativeElement.classList.add("slideInRight");
+    } else {
+      this.mobilePreviewIsVisible = true;
+      this.mobilePreview.nativeElement.classList.remove("slideInRight");
+    }
+
+  }
+
+  public startPreview(slidePreviewPosition) {
+    let slide = null;
+    this.bgImage = "none";
+    this.bgcolor = "";
+    slide = this.lesson.stages[slidePreviewPosition].slides[0];
+    this.title_fragment_duration = slide.title.fragment_duration;
+    this.paragraph_fragment_duration = slide.paragraph.fragment_duration;
+    this.paragraph_text = slide.paragraph.text;
+    this.title_text = slide.title.text;
+    this.audio.src = slide.audioUrl;
+    if (this.audio != null && this.audio != undefined && this.audio.src != '') {
+      this.audio.load();
+      this.audio.play();
+    }
+
+    if (slide.bgImage != '') {
+      this.bgImage = slide.bgImage;
+    }
+    this.bgcolor = slide.color
+    if (slide.paragraph.fragment_order == 1) {
+      this.paragraph_delay = 0;
+      this.title_delay = slide.paragraph.fragment_duration;
+    } else {
+      this.paragraph_delay = slide.title.fragment_duration;
+      this.title_delay = 0;
+    }
+
+    this.paragraphview.nativeElement.classList.add(slide.paragraph.transition_type);
+    this.titleview.nativeElement.classList.add(slide.title.transition_type);
+    var totalDuration = parseInt(slide.paragraph.fragment_duration) + parseInt(slide.title.fragment_duration);
+
+    setTimeout(() => {
+
+      this.titleview.nativeElement.classList.remove(slide.title.transition_type);
+      this.paragraphview.nativeElement.classList.remove(slide.paragraph.transition_type);
+
+      if (slidePreviewPosition < (this.lesson.stages.length - 1)) {
+        this.startPreview(slidePreviewPosition + 1)
+      } else {
+        this.onPlayDisable = false;
+      }
+
+
+    }, totalDuration);
+
+  }
+
+
+  public playPreview() {
+    this.slidePreviewPosition = 0;
+    this.onPlayDisable = true;
+    this.startPreview(this.slidePreviewPosition);
   }
 
   public getFragmentCount(type) {

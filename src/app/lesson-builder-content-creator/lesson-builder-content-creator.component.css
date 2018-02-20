@@ -135,3 +135,116 @@ margin-bottom: 5px;
 	height: 50px;
 	background-color: #999999;
 }
+
+
+@media screen and (max-width: 400px) {
+    .custom_mobile-preview{
+        position: absolute;
+        top: 11%;
+        left: 11%;
+        width: 59%;
+        height: 76%;
+        border-radius: 0;
+    
+    }
+   
+}
+
+@media screen and (min-width: 401px) and (max-width: 720px) {
+    .custom_mobile-preview{
+        position: absolute;
+        top: 11%;
+        left: 11%;
+        width: 59%;
+        height: 76%;
+        border-radius: 0;
+    
+    }
+   
+}
+
+@media screen and (min-width: 721px) and (max-width: 1280px) {
+
+    .custom_mobile-preview{
+        position: absolute;
+        top: 8%;
+        left: 12%;
+        width: 57%;
+        height: 57%;
+        border-radius: 0;
+    
+    }
+   
+}
+
+@media screen and (min-width: 1281px) and (max-width: 1440px) {
+
+    .custom_mobile-preview{
+        position: absolute;
+        top: 11%;
+        left: 11%;
+        width: 59%;
+        height: 76%;
+        border-radius: 0;
+    
+    }
+   
+}
+
+@media screen and (min-width: 1441px) and (max-width: 1920px) {
+   
+    .custom_mobile-preview{
+        position: absolute;
+        top: 11%;
+        left: 11%;
+        width: 59%;
+        height: 76%;
+        border-radius: 0;
+    
+    }
+}
+
+@media screen and (min-width: 1921px) {
+
+    .custom_mobile-preview{
+        position: absolute;
+        top: 11%;
+        left: 11%;
+        width: 59%;
+        height: 76%;
+        border-radius: 0;
+    
+    }
+   
+}
+
+.lesson-mobile-preview{
+    position: absolute;
+    right: 0;
+    z-index: 99999;
+    left: auto;
+    background-color: #fff;
+}
+
+.paly-img{
+    position: absolute;
+    margin: 25%;
+    top: 24%;
+  }
+
+    
+  .title-text {
+    font-size: 24px;
+    color: rgb(3, 3, 3);
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px;
+  }
+ 
+   .paragraph-text{
+    white-space: pre-line;
+    font-size: 14px; 
+    bottom: 5rem;
+    color: rgb(3, 3, 3);
+    position: absolute;
+  } 
