@@ -100,7 +100,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     this.paragraph_text = slide.paragraph.text;
     this.title_text = slide.title.text;
     this.audio.src = slide.audioUrl;
-    if (this.audio != null && this.audio != undefined && this.audio.src != '') {
+    if (slide.audioUrl != '' && slide.audioUrl != 'none') {
       this.audio.load();
       this.audio.play();
     }
@@ -117,14 +117,22 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
       this.title_delay = 0;
     }
 
-    this.paragraphview.nativeElement.classList.add(slide.paragraph.transition_type);
-    this.titleview.nativeElement.classList.add(slide.title.transition_type);
+    if (slide.paragraph.transition_type != '') {
+      this.paragraphview.nativeElement.classList.add(slide.paragraph.transition_type);
+    }
+    if (slide.title.transition_type != '') {
+      this.titleview.nativeElement.classList.add(slide.title.transition_type);
+    }
     var totalDuration = parseInt(slide.paragraph.fragment_duration) + parseInt(slide.title.fragment_duration);
 
     setTimeout(() => {
 
-      this.titleview.nativeElement.classList.remove(slide.title.transition_type);
-      this.paragraphview.nativeElement.classList.remove(slide.paragraph.transition_type);
+      if (slide.paragraph.transition_type != '') {
+        this.paragraphview.nativeElement.classList.remove(slide.paragraph.transition_type);
+      }
+      if (slide.title.transition_type != '') {
+        this.titleview.nativeElement.classList.remove(slide.title.transition_type);
+      }
 
       if (slidePreviewPosition < (this.lesson.stages.length - 1)) {
         this.startPreview(slidePreviewPosition + 1)

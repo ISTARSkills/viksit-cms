@@ -52,15 +52,28 @@ export class PresentationTemplatesComponent implements OnInit {
       this.title_delay = 0;
     }
 
+    if (this.slide.paragraph.transition_type != '') {
+      this.paragraphview.nativeElement.classList.add(this.slide.paragraph.transition_type);
+    }
+    if (this.slide.title.transition_type != '') {
+      this.titleview.nativeElement.classList.add(this.slide.title.transition_type);
+    }
 
-    this.paragraphview.nativeElement.classList.add(this.slide.paragraph.transition_type);
-    this.titleview.nativeElement.classList.add(this.slide.title.transition_type);
+
+
 
     var totalDuration = parseInt(this.slide.paragraph.fragment_duration) + parseInt(this.slide.title.fragment_duration);
     console.log(totalDuration);
     setTimeout(() => {
-      this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
-      this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
+      if (this.slide.paragraph.transition_type != '') {
+        this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
+      }
+      if (this.slide.title.transition_type != '') {
+        this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
+      }
+
+
+
       this.onPlayDisable = false;
       console.log(this.onPlayDisable);
     }, totalDuration);
