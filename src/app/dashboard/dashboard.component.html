@@ -1,12 +1,11 @@
 <app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
 <!-- You can now use your library component in app.component.html -->
 
-<div class="jumbotron p-0 h-100">
+<div class="jumbotron p-0 mb-0" [ngStyle]="{'height': complex_object.studentProfile.userType =='CONTENT_ADMIN' ? '100%' : '95vh'}">
   <div class=" container pt-3">
     <div class="row m-0">
       <div class="col pr-0">
-        <div class="d-flex justify-content-end">
-
+        <div class="d-flex">
           <div class="p-2">
             <!-- <label class=" sr-only " for="inlineFormInputGroup ">Username</label> -->
             <div class="input-group mb-2 mr-sm-2 mb-sm-0 ">
@@ -15,32 +14,27 @@
                 <option selected>Filter Task By</option>
                 <option value="Lesson">Lesson</option>
                 <option value="Course">Course</option>
-
               </select>
             </div>
-
           </div>
-          <div class="mr-auto py-2 pl-2">
+          <div class="py-2 pl-2" [ngClass]="{'ml-auto': complex_object.studentProfile.userType !='CONTENT_ADMIN'}">
             <!-- <label class="sr-only" for="inlineFormInput">Name</label> -->
             <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
               (keyup.enter)="searchTask(box.value)">
           </div>
-          <div class="p-2">
-
+          <div class="p-2 ml-auto">
             <div *ngIf="complex_object.studentProfile.userType =='CONTENT_ADMIN'" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
               <button class="btn btn-danger" ngbDropdownToggle>Create New Task</button>
               <div class="dropdown-menu" ngbDropdownMenu>
                 <a href="/create_course_task" class="dropdown-item">Course Task</a>
-
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div class=" container " style="min-height: 100vh">
+  <div class=" container " style="min-height: 75vh">
     <div class="row align-items-center">
       <div *ngIf="tasks != null && tasks != undefined && tasks.length > 0; else taskElseBlock" class="col-12 col-md-12 ">
 

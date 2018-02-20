@@ -128,7 +128,6 @@ export class SessionWizardComponent implements OnInit {
 
   onFilterChange(e: any) {
     if (e === "NEW") {
-      this.courseSelectModel = "";
       this.moduleSelectModel = "";
       this.showExisting = false;
     } else {

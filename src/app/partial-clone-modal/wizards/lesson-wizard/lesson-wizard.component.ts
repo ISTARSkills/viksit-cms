@@ -150,8 +150,7 @@ export class LessonWizardComponent implements OnInit {
 
   onFilterChange(e: any) {
     if (e === "NEW") {
-      this.courseSelectModel = "";
-      this.moduleSelectModel = "";
+      this.sessionSelectModel = null
       this.showExisting = false;
     } else {
       this.lessonsNewSessionModel = "";

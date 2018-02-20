@@ -9,14 +9,14 @@
           <div class="col-12">
             <div class="progress">
               <div class="progress-bar " [ngClass]="{'bg-warning': isOn && currentprogress === 0, 'bg-success': isDisabled && currentprogress != 0}"
-                role="progressbar" style="width: 33%; height: 5px" aria-valuenow="33" aria-valuemin="0" aria-valuemax="33"></div>
+                role="progressbar" style="width: 50%; height: 5px" aria-valuenow="50" aria-valuemin="0" aria-valuemax="50"></div>
               <div class="progress-bar bg-success " [ngClass]="{'bg-warning': isOn && currentprogress === 1, 'bg-success': isDisabled && currentprogress != 1}"
-                [style.width.%]="progressWidth1" role="progressbar" style="height: 5px" aria-valuenow="33" aria-valuemin="0"
-                aria-valuemax="66">
+                [style.width.%]="progressWidth1" role="progressbar" style="height: 5px" aria-valuenow="50" aria-valuemin="0"
+                aria-valuemax="100">
               </div>
-              <div class="progress-bar " role="progressbar" [ngClass]="{'bg-warning': isOn && currentprogress === 2, 'bg-success': isDisabled && currentprogress != 2}"
+              <!-- <div class="progress-bar " role="progressbar" [ngClass]="{'bg-warning': isOn && currentprogress === 2, 'bg-success': isDisabled && currentprogress != 2}"
                 [style.width.%]="progressWidth2" style="height: 5px" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100">
-              </div>
+              </div> -->
 
             </div>
           </div>
@@ -62,13 +62,60 @@
                     </label>
                   </div>
                 </fieldset> -->
-
-              </div>
-              <div class="col-6">
                 <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
                   (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
                 </form>
+              </div>
+              <div class="col-6">
+                <div class="form-group-inline row mb-4">
 
+                  <div class="col-8">
+                    <div class="row">
+                      <label class="col-sm-2 col-form-label">Assignee</label>
+                      <div class="col-sm-10">
+                        <ng-template #userTemplate let-r="result" let-t="term">
+                          {{r.id+' - '+r.email}}
+                        </ng-template>
+                        <input id="user-typeahead-focus" type="text" class="form-control" [(ngModel)]="selectedUser" [ngbTypeahead]="userSearch"
+                          (focus)="userSelectfocus$.next($event.target.value)" (click)="userSelectclick$.next($event.target.value)"
+                          #userSelectionInstance="ngbTypeahead" [class.is-invalid]="userFailed" placeholder="Select user" [inputFormatter]="userFormatter"
+                          [resultTemplate]="userTemplate" />
+                        <div class="invalid-feedback text-danger" *ngIf="userFailed">No user Selected.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4 my-auto">
+                    <fieldset class="form-group form-check-inline">
+                      <!-- <legend>Select</legend> -->
+                      <div class="form-check-inline mb-0">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optionsRadios1" id="optionsRadios3" value="option1" checked> Can Edit
+                        </label>
+                      </div>
+                      <div class="form-check-inline">
+                        <label class="form-check-label">
+                          <input type="radio" class="form-check-input" name="optionsRadios1" id="optionsRadios4" value="option2"> Only View
+                        </label>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+                <div class="input-group">
+                  <label class="col-sm-2 col-form-label pl-0">Due Date: </label>
+                  <input class="form-control col-10" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="model"
+                    [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" />
+
+                  <span class="input-group-btn">
+                    <div class="row m-0">
+                      <button type="button" class="btn btn-default" (click)="dp.clearDate()">
+                        <i class="fas fa-times"></i>
+                      </button>
+                      <button type="button" class="btn btn-default" (click)="dp.toggleCalendar()">
+                        <i class="far fa-calendar-alt"></i>
+                      </button>
+                    </div>
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -80,75 +127,8 @@
 
             <app-course-builder-content-creator *ngIf="isInclude2ndStep" [newCourse]="newCourse"></app-course-builder-content-creator>
             <button type="button" class="btn btn-danger mt-2" previousStep>Previous</button>
-            <button type="button" class="btn btn-danger float-right mt-2" nextStep>Next</button>
-          </wizard-step>
-          <wizard-step (stepEnter)="enterSecondStep($event)">
-            <h4>Assign User</h4>
-            <div class="row m-3" style="    min-height: 55vh;">
-
-              <div class="col-6 m-auto">
-                <div class="card">
-                  <div class="card-block">
-
-                    <div class="form-group-inline row mb-4">
-
-                      <div class="col-8">
-                        <div class="row">
-                          <label class="col-sm-2 col-form-label">Assignee</label>
-                          <div class="col-sm-10">
-                            <ng-template #userTemplate let-r="result" let-t="term">
-                              {{r.id+' - '+r.email}}
-                            </ng-template>
-                            <input id="user-typeahead-focus" type="text" class="form-control" [(ngModel)]="selectedUser" [ngbTypeahead]="userSearch"
-                              (focus)="userSelectfocus$.next($event.target.value)" (click)="userSelectclick$.next($event.target.value)"
-                              #userSelectionInstance="ngbTypeahead" [class.is-invalid]="userFailed" placeholder="Select user"
-                              [inputFormatter]="userFormatter" [resultTemplate]="userTemplate" />
-                            <div class="invalid-feedback text-danger" *ngIf="userFailed">No user Selected.</div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-4 my-auto">
-                        <fieldset class="form-group form-check-inline">
-                          <!-- <legend>Select</legend> -->
-                          <div class="form-check-inline mb-0">
-                            <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="optionsRadios1" id="optionsRadios3" value="option1" checked> Can Edit
-                            </label>
-                          </div>
-                          <div class="form-check-inline">
-                            <label class="form-check-label">
-                              <input type="radio" class="form-check-input" name="optionsRadios1" id="optionsRadios4" value="option2"> Only View
-                            </label>
-                          </div>
-                        </fieldset>
-                      </div>
-                    </div>
-                    <form>
-
-                      <div class="input-group">
-                        <label class="col-sm-2 col-form-label pl-0">Due Date: </label>
-                        <input class="form-control col-10" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="model"
-                          [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" />
-
-                        <span class="input-group-btn">
-                          <div class="row m-0">
-                            <button type="button" class="btn btn-default" (click)="dp.clearDate()">
-                              <i class="fas fa-times"></i>
-                            </button>
-                            <button type="button" class="btn btn-default" (click)="dp.toggleCalendar()">
-                              <i class="far fa-calendar-alt"></i>
-                            </button>
-                          </div>
-                        </span>
-                      </div>
-                    </form>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button type="button" class="btn btn-danger" previousStep>Previous</button>
-            <button type="button" class="btn btn-danger float-right" (click)="finishFunction()">Finish</button>
+            <button type="button" class="btn btn-danger float-right mt-2" (click)="finishFunction()">
+              Finish</button>
           </wizard-step>
         </div>
       </div>

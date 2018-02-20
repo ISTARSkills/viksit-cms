@@ -61,6 +61,9 @@ export class CreateCourseTaskComponent implements OnInit {
   myOptions: INgxMyDpOptions = {
     // other options...
     dateFormat: 'dd/mm/yyyy',
+    closeSelectorOnDateSelect: false,
+    showSelectorArrow: false,
+    closeSelectorOnDocumentClick: false
   };
 
   // Initialized to specific date (09.10.2018)
@@ -145,7 +148,7 @@ export class CreateCourseTaskComponent implements OnInit {
 
         this.isInclude2ndStep = true;
         console.log("this.newCourse >>> " + this.newCourse.name);
-        this.progressWidth1 = 33;
+        this.progressWidth1 = 50;
         this.progressWidth2 = 0;
         this.isOn = true;
         this.isDisabled = true;

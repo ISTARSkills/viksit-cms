@@ -1,4 +1,4 @@
-body,input{
+body,input,button,select{
 font-family: avenir-light !important;
 }
 .popover-body{

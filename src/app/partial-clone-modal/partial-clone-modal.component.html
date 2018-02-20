@@ -7,10 +7,9 @@
 <div class="modal-body">
   <div *ngIf="selectedModal === 'course'">
     <div class="form-group row">
-      <label for="example-text-input" class="col-3 col-form-label">Targeted Course Name</label>
+      <label for="example-text-input" class="col-3 col-form-label">Targeted Course Name*</label>
       <div class="col-9">
-        <input class="form-control" type="text" [(ngModel)]="createCourseClone" name="course_name" placeholder="Enter the course name to be clone"
-          id="clone_course_name">
+        <input class="form-control" type="text" [(ngModel)]="createCourseClone" name="course_name" id="clone_course_name">
       </div>
     </div>
   </div>
