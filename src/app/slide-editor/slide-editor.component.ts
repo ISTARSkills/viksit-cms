@@ -51,7 +51,7 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
 
     this.templateTypePreviewList = [
-      { presentation: ["ONLY_TITLE_PARAGRAPH_NEW"] },
+      { presentation: ["ONLY_TITLE_PARAGRAPH_NEW", "LESSON_INTRODUCTION_CARD"] },
       { interactive: [] },
       { assessment: [] }]
 
@@ -74,7 +74,7 @@ export class SlideEditorComponent implements OnInit {
       var count = 0;
       for (let list of this.templateTypePreviewList[0].presentation) {
 
-        if (this.slide.type === list) {
+        if (this.slide != null && this.slide.type === list) {
           this.isClassVisible(count, this.slide.type)
         }
         count++;
@@ -161,7 +161,7 @@ export class SlideEditorComponent implements OnInit {
     } else {
       isValid = false;
     }
-    return isValid;
+    return true;
   }
 
   enterSecondStep($event) {

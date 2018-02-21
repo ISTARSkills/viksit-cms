@@ -29,11 +29,15 @@ export class PresentationTemplatesComponent implements OnInit {
   public bgcolor: string = '#FFFFFF';
   public audioUrl: string = "";
   public bgImage: string = "";
+  public fgImage: string = "";
   public loading = false;
+  textcolor = '#FFFFFF'
   paragraph_delay = 0;
+  editorValue;
   title_delay = 0;
   public onPlayDisable = false;
   someValue = 2;
+
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
 
   animateMe() {
@@ -84,9 +88,14 @@ export class PresentationTemplatesComponent implements OnInit {
 
 
   onChangeColor(color) {
-    //  console.log(color);
     this.bgcolor = color;
     this.slide.color = this.bgcolor;
+  }
+
+  onTextChangeColor(color) {
+    console.log(color);
+    this.textcolor = color;
+    this.slide.fontColor = this.textcolor;
   }
 
   public getParagraph(text) {
@@ -128,13 +137,7 @@ export class PresentationTemplatesComponent implements OnInit {
       });
 
   }
-
-
-  public onChangeImage(event) {
-
-    // console.log(event.srcElement.value);
-    //  console.log(event.target.files[0]);
-    //  console.log(event);
+  public onChangeForgroundImage(event) {
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
     var headers = new Headers();
@@ -146,18 +149,43 @@ export class PresentationTemplatesComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i]['name']);
     }
-    //  console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
     this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
       .subscribe(res => {
-        //  console.log('response files res', res);
+        this.fgImage = res.toString();
+        this.slide.image = this.fgImage;
+        this.loading = false;
+      }, error => {
+
+        this.fgImage = error.error.text;
+        this.slide.image = this.fgImage;
+        this.loading = false;
+      });
+
+  }
+
+  public onChangeImage(event) {
+    const files: Array<File> = event.target.files;
+    const formData: any = new FormData();
+    var headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+
+    formData.append("item_type", 'SLIDE_EDITOR');
+    formData.append("item_id", this.lessonId);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i]['name']);
+    }
+    this.loading = true;
+
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+      .subscribe(res => {
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
         this.loading = false;
       }, error => {
-        //  console.log('response files error', error);
-        //  console.log('response files error', error.error.text);
+
         this.bgImage = error.error.text;
         this.slide.bgImage = this.bgImage;
         this.loading = false;
@@ -172,13 +200,26 @@ export class PresentationTemplatesComponent implements OnInit {
     //  console.log("lessonId " + this.lessonId)
     this.bgcolor = this.slide.color;
 
+    this.fgImage = this.slide.image;
+
     if (this.slide.color != null && this.slide.color.trim() != '' && this.slide.color != 'null') {
       this.color = this.slide.color;
     }
 
+    if (this.slide.fontColor != null && this.slide.fontColor.trim() != '' && this.slide.fontColor != 'null') {
+      this.textcolor = this.slide.fontColor;
+    }
+
+
+
     if (this.slide.audioUrl != null && this.slide.audioUrl.trim() != '' && this.slide.audioUrl != 'null') {
       this.audio.src = this.slide.audioUrl;
     }
+    if (this.switchexpression === 'LESSON_INTRODUCTION_CARD') {
+      this.onPlayDisable = true;
+    }
+
+
   }
 
 }
