@@ -17,6 +17,8 @@ import { ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 import { CourseBuilderServiceService } from '../services/course_builder/course-builder-service.service';
 import { Subject } from 'rxjs/Subject';
+declare var require: any;
+const swal = require('sweetalert2');
 
 @Component({
   selector: 'app-course-builder-content-creator',
@@ -70,6 +72,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   options: NgbModalOptions = {
     size: 'lg',
     windowClass: 'animated bounceInUp',
+    backdrop: 'static'
   };
   public config: DropzoneConfigInterface = {
     url: AppConfiguration.ServerWithApiUrl + 'image/upload',
@@ -124,9 +127,42 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
   public removeModuleFunction = function (module) {
-    var index = this.course.modules.indexOf(module);
-    this.course.modules.splice(index, 1);
+
     //console.log(this.course);
+    swal({
+      title: 'Are you sure?',
+      text: "Do you want to delete this module?",
+      type: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success ml-2',
+      cancelButtonClass: 'btn btn-danger mr-2',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var index = this.course.modules.indexOf(module);
+        this.course.modules.splice(index, 1);
+        swal(
+          'Done',
+          'Module deleted successfully',
+          'success'
+        )
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelled',
+          'Your module is safe!',
+          'error'
+        )
+      }
+    })
   };
 
   public addSessionComponent = function (module, content) {
@@ -147,10 +183,41 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   };
 
   public removeSessionsFunction = function (module, session) {
-    var moduleIndex = this.course.modules.indexOf(module);
-    var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
-
-    this.course.modules[moduleIndex].sessions.splice(sessionIndex, 1);
+    swal({
+      title: 'Are you sure?',
+      text: "Do you want to delete this session?",
+      type: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success ml-2',
+      cancelButtonClass: 'btn btn-danger mr-2',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var moduleIndex = this.course.modules.indexOf(module);
+        var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
+        this.course.modules[moduleIndex].sessions.splice(sessionIndex, 1);
+        swal(
+          'Done',
+          'Session deleted successfully',
+          'success'
+        )
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelled',
+          'Your session is safe!',
+          'error'
+        )
+      }
+    })
     //console.log(this.course);
   };
 
@@ -174,10 +241,42 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   };
 
   public removeLessonsFunction = function (module, session, lesson) {
-    var moduleIndex = this.course.modules.indexOf(module);
-    var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
-    var lessonIndex = this.course.modules[moduleIndex].sessions[sessionIndex].lessons.indexOf(lesson);
-    this.course.modules[moduleIndex].sessions[sessionIndex].lessons.splice(lessonIndex, 1);
+    swal({
+      title: 'Are you sure?',
+      text: "Do you want to delete this lesson?",
+      type: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success ml-2',
+      cancelButtonClass: 'btn btn-danger mr-2',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var moduleIndex = this.course.modules.indexOf(module);
+        var sessionIndex = this.course.modules[moduleIndex].sessions.indexOf(session);
+        var lessonIndex = this.course.modules[moduleIndex].sessions[sessionIndex].lessons.indexOf(lesson);
+        this.course.modules[moduleIndex].sessions[sessionIndex].lessons.splice(lessonIndex, 1);
+        swal(
+          'Done',
+          'Lesson deleted successfully',
+          'success'
+        )
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelled',
+          'Your lesson is safe!',
+          'error'
+        )
+      }
+    })
     //console.log(this.course);
   };
 

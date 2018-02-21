@@ -132,7 +132,15 @@
               <button type="button" class="btn btn-danger float-right mt-3" [disabled]="validateStep()" nextStep>Next</button>
             </wizard-step>
             <wizard-step (stepEnter)="enterSecondStep($event)">
-              <h3 class="col-6 p-0 my-auto">Preview</h3>
+              <div class="row m-0">
+                <h3 class="col-6 p-0 my-auto">Preview</h3>
+                <div class="col-6 row m-0 p-0">
+                  <input type="text" placeholder="Search and Press Enter" name="searchTerm" #box class="search-text-input ml-auto" (keyup.enter)="searchTerm(box.value)">
+                  <div class="button-holder">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
               <table class="table">
                 <thead>
                   <tr>
@@ -144,7 +152,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let lesson of lessonList;index as i ; trackBy:trackByIndex">
+                  <tr *ngFor="let lesson of lessonListFilter;index as i ; trackBy:trackByIndex">
                     <th scope="row">{{i+1}}</th>
                     <td>{{lesson.name}}</td>
                     <td class="w-50">{{lesson.description}}</td>
