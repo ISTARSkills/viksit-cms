@@ -27,7 +27,7 @@
               (focus)="moduleSelectclick$.next($event.target.value)" (click)="moduleSelectclick$.next($event.target.value)"
               #moduleSelectionInstance="ngbTypeahead" [class.is-invalid]="moduleFailed" placeholder="Select module" [inputFormatter]="moduleFormatter"
               [resultTemplate]="moduleTemplate" />
-            <div class="invalid-feedback text-danger" *ngIf="sessionFailed">No module Found for requested string.</div>
+            <div class="invalid-feedback text-danger" *ngIf="sessionFailed">You can only select existing module.</div>
           </div>
         </div>
         <div class="form-group row">
@@ -62,15 +62,14 @@
               (focus)="courseSelectfocus$.next($event.target.value)" (click)="courseSelectclick$.next($event.target.value)"
               #moduleCourseSelectioninstance="ngbTypeahead" [inputFormatter]="courseFormatter" [resultTemplate]="courseTemplate"
               placeholder="Select course" [class.is-invalid]="courseFailed" />
-            <div class="invalid-feedback text-danger" *ngIf="courseFailed">No Course Found for requested string.</div>
+            <div class="invalid-feedback text-danger" *ngIf="courseFailed">You can only select existing course.</div>
           </div>
         </div>
         <div class="form-group row" *ngIf="!showExisting">
           <label for="new_course_name" class="col-4 col-form-label">Course Name*
           </label>
           <div class="col-8">
-            <input class="form-control" type="text" value="" [(ngModel)]="modulesNewCourseModel" placeholder="Enter the course name to be clone"
-              id="new_course_name">
+            <input class="form-control" type="text" value="" [(ngModel)]="modulesNewCourseModel" id="new_course_name">
           </div>
         </div>
         <button type="button" class="btn btn-danger" previousStep>Previous</button>

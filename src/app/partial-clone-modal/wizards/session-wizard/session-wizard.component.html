@@ -27,31 +27,21 @@
               (focus)="sessionSelectclick$.next($event.target.value)" (click)="sessionSelectclick$.next($event.target.value)"
               #sessionSelectionInstance="ngbTypeahead" [class.is-invalid]="sessionFailed" placeholder="Select session" [inputFormatter]="sessionFormatter"
               [resultTemplate]="sessionTemplate" />
-            <div class="invalid-feedback text-danger" *ngIf="sessionFailed">No Session Found for requested string.</div>
+            <div class="invalid-feedback text-danger" *ngIf="sessionFailed">You can only select existing session.</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="session_name" class="col-4 col-form-label">Targeted Session Name*
           </label>
           <div class="col-8">
-            <input class="form-control" type="text" value="" [(ngModel)]="newSessionNameModel" placeholder="Enter the session name to be clone"
-              id="session_name">
+            <input class="form-control" type="text" value="" [(ngModel)]="newSessionNameModel" id="session_name">
           </div>
         </div>
         <button type="button" class="btn btn-danger float-right" [disabled]="!isValidForm()" nextStep>Next</button>
       </wizard-step>
       <wizard-step (stepEnter)="enterSecondStep($event)">
         <h3 class="col-6 p-0 my-auto">Session Selection</h3>
-        <div class="text-center">
-          <div class="btn-group btn-group-toggle" ngbRadioGroup name="moduleSelection" [(ngModel)]="selectedExistingOrNewModel" (ngModelChange)="onFilterChange($event)">
-            <label ngbButtonLabel class="btn-danger">
-              <input ngbButton type="radio" value="EXISTING"> Existing
-            </label>
-            <label ngbButtonLabel class="btn-danger">
-              <input ngbButton type="radio" value="NEW"> New
-            </label>
-          </div>
-        </div>
+
         <div class="form-group row">
           <label class="col-4 col-form-label">Select Destination Course*</label>
           <div class="col-8">
@@ -62,7 +52,17 @@
               (focus)="courseSelectfocus$.next($event.target.value)" (click)="courseSelectclick$.next($event.target.value)"
               #sessionCourseSelectioninstance="ngbTypeahead" [inputFormatter]="courseFormatter" [resultTemplate]="courseTemplate"
               (ngModelChange)="onCourseChange($event)" placeholder="Select course" [class.is-invalid]="courseFailed" />
-            <div class="invalid-feedback text-danger" *ngIf="courseFailed">No Course Found for requested string.</div>
+            <div class="invalid-feedback text-danger" *ngIf="courseFailed">You can only select existing course.</div>
+          </div>
+        </div>
+        <div class="text-center">
+          <div class="btn-group btn-group-toggle" ngbRadioGroup name="moduleSelection" [(ngModel)]="selectedExistingOrNewModel" (ngModelChange)="onFilterChange($event)">
+            <label ngbButtonLabel class="btn-danger">
+              <input ngbButton type="radio" value="EXISTING"> Existing
+            </label>
+            <label ngbButtonLabel class="btn-danger">
+              <input ngbButton type="radio" value="NEW"> New
+            </label>
           </div>
         </div>
         <div class="form-group row" *ngIf="showExisting">
@@ -75,7 +75,7 @@
               [ngbTypeahead]="moduleSearch" (focus)="moduleSelectfocus$.next($event.target.value)" (click)="moduleSelectclick$.next($event.target.value)"
               #sessionModuleSelectionInstance="ngbTypeahead" [inputFormatter]="moduleFormatter" [resultTemplate]="moduleTemplate"
               placeholder="Select module" />
-            <div class="invalid-feedback text-danger" *ngIf="moduleFailed">No Modules Found for requested string.</div>
+            <div class="invalid-feedback text-danger" *ngIf="moduleFailed">You can only select existing module.</div>
           </div>
         </div>
         <div class="form-group row" *ngIf="!showExisting">

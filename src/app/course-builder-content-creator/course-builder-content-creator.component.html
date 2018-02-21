@@ -92,42 +92,37 @@
           <div *ngFor="let module of course?.modules; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'module'"
             class="col-3 p-0">
             <div dnd-sortable-container [sortableData]="course?.modules[j].sessions" [dropZones]="['widget-dropZone']">
-              <div class="card module_card row-eq-height" style="min-height: 100vh;">
-
-                <div class="card-header  p-0 pt-3 pb-3 module-card-header">
-
-
-
+              <div class="card module_card row-eq-height top-border-red" style="height: 80vh;">
+                <div class="card-header  p-0 pt-3 pb-3">
                   <div class="row m-0 row-eq-height">
-
-                    <div (click)="dragOperationFunction('module')" class="col-2 text-right">
+                    <div (click)="dragOperationFunction('module')" class="col-2 text-center">
                       <i class="fas fa-exchange-alt"></i>
                     </div>
-                    <div class="col-8 text-center custom-course-header module-font-fize module-card-header" (click)="open('Module',module,content,j,null,null)">
+                    <div class="col-8 text-center custom-course-header module-font-fize" (click)="open('Module',module,content,j,null,null)">
                       {{module.name}}</div>
-                    <div class="col-2 text-right">
-                      <i (click)="removeModuleFunction(module)" class="fa fa-times" aria-hidden="true"></i>
+                    <div class="col-2 text-center">
+                      <i (click)="removeModuleFunction(module)" class="fas fa-trash-alt" aria-hidden="true"></i>
                     </div>
                   </div>
                 </div>
                 <div class="card-block custom-course-cardblock mx-auto p-0 pt-1">
-                  <button (click)="addSessionComponent(module,content)" type="button" class="btn btn-outline-success course_body_buttons float-right mr-2">
+                  <button (click)="addSessionComponent(module,content)" type="button" class="btn btn-outline-info course_body_buttons float-right mr-2">
                     <i class="fas fa-plus-circle"></i> Session</button>
                 </div>
                 <div *ngIf=" module.sessions != undefined && module.sessions.length > 0; else sessionElseBlock">
-                  <div class="card m-2" *ngFor="let session of module.sessions; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'session'"
+                  <div class="card m-3" *ngFor="let session of module.sessions; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'session'"
                     [dragData]="course?.modules[j].sessions[k]">
-                    <div class="card-header session-card-header">
+                    <div class="card-header session-card-header px-0">
 
                       <div class="row m-0 row-eq-height">
-                        <div (click)="dragOperationFunction('session')" class="col-2 text-left">
+                        <div (click)="dragOperationFunction('session')" class="col-2 text-center">
                           <i class="fas fa-exchange-alt"></i>
                         </div>
                         <div class="col-8 text-center" (click)="open('Session',session,content,j,k,null)">
                           <span> {{session.name}}</span>
                         </div>
-                        <div class="col-2 text-right">
-                          <i (click)="removeSessionsFunction(module,session)" class="fa fa-times" aria-hidden="true"></i>
+                        <div class="col-2 text-center">
+                          <i (click)="removeSessionsFunction(module,session)" class="fas fa-trash-alt" aria-hidden="true"></i>
                         </div>
                       </div>
                     </div>
@@ -136,7 +131,7 @@
                         <!--  <div class="col-4">9</div>
                         <div class="col-4">{{session.progress}}</div> -->
                         <div class="col-8">
-                          <button type="button" (click)="addLessonsComponent(module,session,content)" class="mt-2 mb-2 btn btn-outline-primary  course_body_buttons float-right">
+                          <button type="button" (click)="addLessonsComponent(module,session,content)" class="mt-2 mb-2 btn btn-outline-success  course_body_buttons float-right">
                             <i class="fas fa-plus-circle"></i> Lesson</button>
                         </div>
 
@@ -149,25 +144,14 @@
 
                               <b class="desc-heading-font-fize m-2"> Description: &nbsp;</b>
                               <p class="card-text custom-description m-2">{{session.description}}</p>
-
-
                             </ng-template>
                             <ng-template ngbPanelContent>
                               <div dnd-sortable-container [sortableData]="course?.modules[j].sessions[k].lessons" [dropZones]="['lesson-dropZone']">
-
                                 <h5 class="text-center">Lessons</h5>
-
-
-
-
                                 <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else lessonElseBlock">
-
-
-
-
                                   <div *ngFor="let lesson of session.lessons; index as l ">
 
-                                    <div *ngIf="!lesson.isDeleted" class="card m-3 top-border-red" dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'"
+                                    <div *ngIf="!lesson.isDeleted" class="card m-3 top-border-green" dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'"
                                       [dragData]="course?.modules[j].sessions[k].lessons[l]">
                                       <div class="card-header pl-0 pr-0">
 
@@ -176,8 +160,8 @@
                                             <i class="fas fa-exchange-alt"></i>
                                           </div>
                                           <div class="col-8 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
-                                          <div class="col-2 text-right">
-                                            <i (click)="removeLessonsFunction(module,session,lesson)" class="fa fa-times" aria-hidden="true"></i>
+                                          <div class="col-2 text-center">
+                                            <i (click)="removeLessonsFunction(module,session,lesson)" class="fas fa-trash-alt" aria-hidden="true"></i>
                                           </div>
                                         </div>
 
@@ -196,32 +180,21 @@
                             </ng-template>
                           </ngb-panel>
                         </ngb-accordion>
-
-
-
-
                       </div>
-
                     </div>
                   </div>
                 </div>
                 <ng-template #sessionElseBlock>
                   <p class="text-center">No Session Present</p>
                 </ng-template>
-
-
               </div>
-
             </div>
           </div>
-
         </div>
-
         <ng-template #moduleElseBlock>
           <p class="text-center">No Module Present</p>
         </ng-template>
       </div>
-
     </div>
   </div>
 
@@ -233,13 +206,10 @@
       </button>
     </div>
     <div class="modal-body">
-
-
       <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
         (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
         <input #itemType type="hidden" name="item_type" [(ngModel)]="item_type">
       </form>
-
       <label for="typeahead-format ">Name:</label>
       <input type="text " class="form-control" [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
@@ -265,5 +235,4 @@
       {{ action.html(item) }}
     </ng-template>
   </context-menu> -->
-
 </div>

@@ -38,6 +38,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   selectedUser: any;
   courseDueDate;
   courseAssignee;
+  lessonListFilter;
   public loading = false;
   public todaydate = new Date();
   @ViewChild(WizardComponent)
@@ -144,6 +145,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         }
       }
     }
+    this.lessonListFilter = this.lessonList;
   }
   getUsername(userId) {
     for (let user of this.users) {
@@ -225,5 +227,24 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     } else {
       return "";
     }
+  }
+  searchTerm(value) {
+    console.log(value);
+    this.lessonListFilter = this.lessonList;
+    if (value.trim() == '') {
+      this.lessonListFilter = this.lessonList;
+    } else {
+      var re = value.toLowerCase().trim();
+      this.lessonListFilter = this.lessonListFilter.filter((item: any) => {
+        if (item.description.toLowerCase().trim().indexOf(re) > -1) {
+          return true;
+        } else if (item.name.toLowerCase().trim().indexOf(re) > -1) {
+          return true;
+        } else if (this.getUsername(item.assignee).toLowerCase().trim().indexOf(re) > -1) {
+          return true;
+        }
+      });
+    }
+
   }
 }
