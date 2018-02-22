@@ -185,6 +185,11 @@
     position: absolute;
   } 
 
+  .paragraph-text2{
+    font-size: 14px; 
+    color: rgb(3, 3, 3);
+  } 
+
   .subtitle-text {
     font-size: 20px;
     text-align: center;
@@ -221,6 +226,6 @@
 
   .paly-img{
     position: absolute;
-    margin: 25%;
-    top: 24%;
+    top: 39%;
+    left: 38%;
   }

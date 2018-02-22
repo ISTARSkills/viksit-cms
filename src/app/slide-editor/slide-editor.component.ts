@@ -51,7 +51,7 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
 
     this.templateTypePreviewList = [
-      { presentation: ["ONLY_TITLE_PARAGRAPH_NEW", "LESSON_INTRODUCTION_CARD"] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD"] },
       { interactive: [] },
       { assessment: [] }]
 
@@ -126,7 +126,11 @@ export class SlideEditorComponent implements OnInit {
   public getFragmentCount(type) {
 
     switch (type) {
-      case 'ONLY_TITLE_PARAGRAPH_NEW':
+      case 'TITLE_PARAGRAPH_CARD':
+        return 1;
+      case 'IMAGE_TITLE_PARAGRAPH_CARD':
+        return 2;
+      case 'LESSON_INTRODUCTION_CARD':
         return 1;
       default:
         return 0;

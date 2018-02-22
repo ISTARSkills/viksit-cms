@@ -30,18 +30,19 @@
     </div>
     <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
     <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
-      <div class="card-block">
+      <div class="card-block p-0">
+        <div class="text-center">
+          <img #imageview class='card-img custom-notask-imgtag animated' style="background-size: cover;width: 100%" [src]="fgImage"
+            alt='' [style.animation-delay.ms]="image_delay" [style.animation-duration.ms]="image_fragment_duration">
+        </div>
         <img [hidden]="onPlayDisable" (click)="playPreview()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%"
           src='../../assets/image/play.png' alt=''>
         <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="title_fragment_duration" #titleview class="title-text text-center animated">{{title_text}}</div>
-        <div [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="paragraph_fragment_duration" #paragraphview
-          class="paragraph-text animated">
-          {{paragraph_text}}
-
+        <div [innerHTML]="paragraph_text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="paragraph_fragment_duration"
+          #paragraphview class="paragraph-text animated">
         </div>
       </div>
     </div>
-
   </div>
   <div class="row course">
     <div class="card course_card">
