@@ -22,7 +22,7 @@
             <input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0 minwidth26" id="inlineFormInput" #box placeholder="Search Task & Press Enter"
               (keyup.enter)="searchTask(box.value)">
           </div>
-          <div class="p-2 ml-auto">
+          <div class="p-2" [ngClass]="{'ml-auto': complex_object.studentProfile.userType =='CONTENT_ADMIN'}">
             <div *ngIf="complex_object.studentProfile.userType =='CONTENT_ADMIN'" class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
               <button class="btn btn-danger" ngbDropdownToggle>Create New Task</button>
               <div class="dropdown-menu" ngbDropdownMenu>

@@ -30,6 +30,7 @@ font-family: avenir-light !important;
 
 .custom-accordion>.card>.card-header{
     background-color:#ffffff !important;
+    padding: 0;
 }
 
 .course-modal>.dz-preview>.dz-image>img{

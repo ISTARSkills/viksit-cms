@@ -92,7 +92,7 @@
           <div *ngFor="let module of course?.modules; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'module'"
             class="col-3 p-0">
             <div dnd-sortable-container [sortableData]="course?.modules[j].sessions" [dropZones]="['widget-dropZone']">
-              <div class="card module_card row-eq-height top-border-red" style="height: 80vh;">
+              <div class="card module_card row-eq-height top-border-red" style="height: 80%;">
                 <div class="card-header  p-0 pt-3 pb-3">
                   <div class="row m-0 row-eq-height">
                     <div (click)="dragOperationFunction('module')" class="col-2 text-center">
@@ -112,76 +112,97 @@
                 <div *ngIf=" module.sessions != undefined && module.sessions.length > 0; else sessionElseBlock">
                   <div class="card m-3" *ngFor="let session of module.sessions; index as k " dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'session'"
                     [dragData]="course?.modules[j].sessions[k]">
-                    <div class="card-header session-card-header px-0">
 
-                      <div class="row m-0 row-eq-height">
-                        <div (click)="dragOperationFunction('session')" class="col-2 text-center">
-                          <i class="fas fa-exchange-alt"></i>
-                        </div>
-                        <div class="col-8 text-center" (click)="open('Session',session,content,j,k,null)">
-                          <span> {{session.name}}</span>
-                        </div>
-                        <div class="col-2 text-center">
-                          <i (click)="removeSessionsFunction(module,session)" class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-block p-0">
-                      <div class="row m-0 row-eq-height">
-                        <!--  <div class="col-4">9</div>
-                        <div class="col-4">{{session.progress}}</div> -->
-                        <div class="col-8">
-                          <button type="button" (click)="addLessonsComponent(module,session,content)" class="mt-2 mb-2 btn btn-outline-success  course_body_buttons float-right">
-                            <i class="fas fa-plus-circle"></i> Lesson</button>
-                        </div>
 
-                      </div>
-                      <div class="row m-0 row-eq-height">
 
-                        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class='custom-accordion w-100'>
-                          <ngb-panel>
-                            <ng-template ngbPanelTitle>
+                    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class='custom-accordion w-100'>
+                      <ngb-panel>
+                        <ng-template ngbPanelTitle>
+                          <div class="card-header session-card-header px-0">
 
+                            <div class="row m-0 row-eq-height px-2">
+                              <div (click)="$event.stopPropagation();$event.preventDefault();dragOperationFunction('session')" class="col-1 text-center p-0">
+                                <i class="fas fa-exchange-alt"></i>
+                              </div>
+                              <div class="col-9 text-center">
+                                <span> {{session.name}}</span>
+                              </div>
+                              <div class="col-1 text-center p-0">
+                                <i (click)="$event.stopPropagation();$event.preventDefault();open('Session',session,content,j,k,null)" class="far fa-edit"
+                                  aria-hidden="true"></i>
+
+                              </div>
+                              <div class="col-1 text-center p-0">
+                                <i (click)="$event.stopPropagation();$event.preventDefault();removeSessionsFunction(module,session)" class="fas fa-trash-alt"
+                                  aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </div>
+
+                        </ng-template>
+                        <ng-template ngbPanelContent>
+                          <div class="card-block p-0">
+                            <div class="row m-0 row-eq-height">
+                              <!--  <div class="col-4">9</div>
+                                                      <div class="col-4">{{session.progress}}</div> -->
+                              <div class="col-8">
+                                <button type="button" (click)="addLessonsComponent(module,session,content)" class="mt-2 mb-2 btn btn-outline-success  course_body_buttons float-right">
+                                  <i class="fas fa-plus-circle"></i> Lesson</button>
+                              </div>
+
+                            </div>
+                            <div class="row m-0 row-eq-height">
                               <b class="desc-heading-font-fize m-2"> Description: &nbsp;</b>
                               <p class="card-text custom-description m-2">{{session.description}}</p>
-                            </ng-template>
-                            <ng-template ngbPanelContent>
-                              <div dnd-sortable-container [sortableData]="course?.modules[j].sessions[k].lessons" [dropZones]="['lesson-dropZone']">
-                                <h5 class="text-center">Lessons</h5>
-                                <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else lessonElseBlock">
-                                  <div *ngFor="let lesson of session.lessons; index as l ">
+                            </div>
+                            <div dnd-sortable-container [sortableData]="course?.modules[j].sessions[k].lessons" [dropZones]="['lesson-dropZone']">
+                              <h5 class="text-center">Lessons</h5>
+                              <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else lessonElseBlock">
+                                <div *ngFor="let lesson of session.lessons; index as l ">
 
-                                    <div *ngIf="!lesson.isDeleted" class="card m-3 top-border-green" dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'"
-                                      [dragData]="course?.modules[j].sessions[k].lessons[l]">
-                                      <div class="card-header pl-0 pr-0">
+                                  <div *ngIf="!lesson.isDeleted" class="card m-3" dnd-sortable [sortableIndex]="l" [dragEnabled]="dragOperation == 'lesson'"
+                                    [dragData]="course?.modules[j].sessions[k].lessons[l]">
+                                    <ngb-accordion #acc1="ngbAccordion" activeIds="ngb-panel-0" class='custom-accordion w-100'>
+                                      <ngb-panel>
+                                        <ng-template ngbPanelTitle>
+                                          <div class="card-header pl-0 pr-0 lesson-card-header">
 
-                                        <div class="row m-0 row-eq-height">
-                                          <div (click)="dragOperationFunction('lesson')" class="col-2 ">
-                                            <i class="fas fa-exchange-alt"></i>
+                                            <div class="row m-0 row-eq-height px-2">
+                                              <div (click)="$event.stopPropagation();$event.preventDefault();dragOperationFunction('lesson')" class="col-1 p-0">
+                                                <i class="fas fa-exchange-alt"></i>
+                                              </div>
+                                              <div class="col-9 lesson-header-size" (click)="hideDescription(lesson)"> {{lesson.name}}</div>
+                                              <div class="col-1 p-0 text-center">
+                                                <i (click)="$event.stopPropagation();$event.preventDefault();open('Lesson',lesson,content,j,k,l)" class="far fa-edit" aria-hidden="true"></i>
+                                              </div>
+                                              <div class="col-1 p-0 text-center">
+                                                <i (click)="$event.stopPropagation();$event.preventDefault();removeLessonsFunction(module,session,lesson)" class="fas fa-trash-alt"
+                                                  aria-hidden="true"></i>
+                                              </div>
+                                            </div>
+
                                           </div>
-                                          <div class="col-8 lesson-header-size " (click)="open('Lesson',lesson,content,j,k,l)"> {{lesson.name}}</div>
-                                          <div class="col-2 text-center">
-                                            <i (click)="removeLessonsFunction(module,session,lesson)" class="fas fa-trash-alt" aria-hidden="true"></i>
+                                        </ng-template>
+                                        <ng-template ngbPanelContent>
+                                          <div class="card-body m-3">
+                                            <b class="desc-heading-font-fize">Description: &nbsp;</b>
+                                            <p class="card-text custom-description">{{lesson.description}}</p>
                                           </div>
-                                        </div>
-
-                                      </div>
-                                      <div class="card-body m-3">
-                                        <b class="desc-heading-font-fize">Description: &nbsp;</b>
-                                        <p class="card-text custom-description">{{lesson.description}}</p>
-                                      </div>
-                                    </div>
+                                        </ng-template>
+                                      </ngb-panel>
+                                    </ngb-accordion>
                                   </div>
                                 </div>
                               </div>
-                              <ng-template #lessonElseBlock>
-                                <p class="text-center">No Lesson Present</p>
-                              </ng-template>
+                            </div>
+                            <ng-template #lessonElseBlock>
+                              <p class="text-center">No Lesson Present</p>
                             </ng-template>
-                          </ngb-panel>
-                        </ngb-accordion>
-                      </div>
-                    </div>
+
+                          </div>
+                        </ng-template>
+                      </ngb-panel>
+                    </ngb-accordion>
                   </div>
                 </div>
                 <ng-template #sessionElseBlock>
