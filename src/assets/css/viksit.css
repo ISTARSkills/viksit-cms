@@ -111,3 +111,8 @@ display: block !important;
 
     border:0px !important; 
 }
+.interactive-panel > .card{
+
+    margin-bottom: 11px;
+
+}

@@ -51,7 +51,7 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
 
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD"] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2"] },
       { interactive: [] },
       { assessment: [] }]
 
@@ -117,7 +117,7 @@ export class SlideEditorComponent implements OnInit {
     this.highlightedDiv = newValue;
     this.slide.type = template_type
     this.slide.fragmentcount = this.getFragmentCount(template_type);
-
+    // console.log(this.slide);
     //  console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
   }
 
@@ -132,6 +132,8 @@ export class SlideEditorComponent implements OnInit {
         return 2;
       case 'LESSON_INTRODUCTION_CARD':
         return 1;
+      case 'INTERACTIVE_2_CROSS_2':
+        return 1;
       default:
         return 0;
     }
@@ -142,7 +144,8 @@ export class SlideEditorComponent implements OnInit {
 
     this.loading = true;
 
-    // console.log('save called>>');
+    console.log('save called>>');
+    console.log(this.lesson);
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),

@@ -11,6 +11,7 @@ import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalOptions } from '
 import { List } from '../pojo/slide/list';
 import { SubTitle } from '../pojo/slide/subtitle';
 import { Image } from '../pojo/slide/image';
+import { InteractiveList } from '../pojo/slide/interactivelist';
 
 @Component({
   selector: 'app-lesson-builder-content-creator',
@@ -30,6 +31,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   newTitle: Title;
   newParagraph: Paragraph
   newList: List
+  newInteractiveList: InteractiveList
   slide: Slide
   subTitle: SubTitle
   @ViewChild('imageview') imageview;
@@ -183,15 +185,20 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   public getNewSlide(index) {
 
     var lists = Array();
-    this.newTitle = new Title("", 1, "", 500)
-    this.newParagraph = new Paragraph("", 2, "", 500)
+    var interactivelists = Array();
+    this.newTitle = new Title("", 1, "", 500);
+    this.newParagraph = new Paragraph("", 2, "", 500);
+    this.image = new Image("", 1, "", 500);
     for (let i = 0; i < 5; i++) {
       this.newList = new List("", "", i);
+      this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, null)
       lists.push(this.newList);
+      interactivelists.push(this.newInteractiveList);
     }
-    this.image = new Image("", 1, "", 500);
+
+
     this.subTitle = new SubTitle("", 1, "", 500)
-    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle);
+    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle, interactivelists);
     this.lesson.stages[index].slides.push(this.slide);
     //console.log(this.lesson)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));

@@ -3,7 +3,7 @@ import { SubTitle } from "./subtitle";
 import { Paragraph } from "./paragraph";
 import { List } from "./list";
 import { Image } from "./image";
-
+import { InteractiveList } from "./interactivelist";
 export class Slide {
 
     title: Title;
@@ -19,7 +19,8 @@ export class Slide {
     order_id: number;
     audioUrl: string;
     list: Array<List>
-    constructor(title: Title, paragraph: Paragraph, image: Image, bgImage: string, color: string, type: string, id: number, fragmentcount: number, order_id: number, audioUrl: string, list: Array<List>, subTitle: SubTitle) {
+    interactivelist: Array<InteractiveList>
+    constructor(title: Title, paragraph: Paragraph, image: Image, bgImage: string, color: string, type: string, id: number, fragmentcount: number, order_id: number, audioUrl: string, list: Array<List>, subTitle: SubTitle, interactivelist: Array<InteractiveList>) {
         this.title = title;
         this.paragraph = paragraph;
         this.image = image;
@@ -32,5 +33,6 @@ export class Slide {
         this.audioUrl = audioUrl;
         this.list = list;
         this.subTitle = subTitle;
+        this.interactivelist = interactivelist;
     }
 }

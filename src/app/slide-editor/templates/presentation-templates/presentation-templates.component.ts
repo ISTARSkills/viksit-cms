@@ -30,8 +30,17 @@ export class PresentationTemplatesComponent implements OnInit {
   public bgcolor: string = '#FFFFFF';
   public audioUrl: string = "";
   public bgImage: string = "";
+  public g1Image: string = "";
+  public g2gImage: string = "";
+  public g3Image: string = "";
+  public g4Image: string = "";
   public fgImage: string = "";
   public loading = false;
+  isCorrect1Option = false;
+  isCorrect2Option = false;
+  isCorrect3Option = false;
+  isCorrect4Option = false;
+  isMultiSelect = false;
   textcolor = '#FFFFFF'
   paragraph_delay = 0;
   image_delay = 0;
@@ -235,9 +244,110 @@ export class PresentationTemplatesComponent implements OnInit {
 
   }
 
+  ignore(event: Event) {
+    //event.preventDefault();
+    event.stopPropagation();
+  }
+
+  onChangeGridImage(event, gridIndex) {
+
+    const files: Array<File> = event.target.files;
+    const formData: any = new FormData();
+    var headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+
+    formData.append("item_type", 'SLIDE_EDITOR');
+    formData.append("item_id", this.lessonId);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i]['name']);
+    }
+    this.loading = true;
+
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+      .subscribe(res => {
+        this.getGridByIndexForImage(gridIndex, res.toString())
+        this.loading = false;
+      }, error => {
+        this.getGridByIndexForImage(gridIndex, error.error.text)
+        this.loading = false;
+      });
+
+  }
+
+  onChangeGridAudio(event, gridIndex) {
+
+    // console.log(event.target.files[0]);
+    const files: Array<File> = event.target.files;
+    const formData: any = new FormData();
+    var headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+
+    formData.append("item_type", 'SLIDE_EDITOR');
+    formData.append("item_id", this.lessonId);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i]['name']);
+    }
+    // console.log('form data variable :   ' + formData.toString());
+    this.loading = true;
+
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+      .subscribe(res => {
+        this.getGridByIndexForAudio(gridIndex, res.toString())
+        this.loading = false;
+      }, error => {
+        this.getGridByIndexForAudio(gridIndex, error.error.text)
+        this.loading = false;
+      });
+
+  }
+  getGridByIndexForImage(gridIndex, imageUrl) {
+
+    switch (gridIndex) {
+      case '1':
+        this.slide.interactivelist[0].image.url = imageUrl;
+        break;
+      case '2':
+        this.slide.interactivelist[1].image.url = imageUrl;
+        break;
+      case '3':
+        this.slide.interactivelist[2].image.url = imageUrl;
+        break;
+      case '4':
+        this.slide.interactivelist[3].image.url = imageUrl;
+        break;
+      default:
+        break;
+    }
+
+  }
+
+  getGridByIndexForAudio(gridIndex, audioUrl) {
+
+    switch (gridIndex) {
+      case '1':
+        this.slide.interactivelist[0].fragmentAudioUrl = audioUrl;
+        break;
+      case '2':
+        this.slide.interactivelist[1].fragmentAudioUrl = audioUrl;
+        break;
+      case '3':
+        this.slide.interactivelist[2].fragmentAudioUrl = audioUrl;
+        break;
+      case '4':
+        this.slide.interactivelist[3].fragmentAudioUrl = audioUrl;
+        break;
+      default:
+        break;
+    }
+
+  }
+
+
   ngOnInit() {
     // console.log("switchexpression " + this.switchexpression)
-    //  console.log(this.slide);
+    console.log(this.slide);
     this.bgImage = this.slide.bgImage;
     //  console.log("lessonId " + this.lessonId)
     this.bgcolor = this.slide.color;
@@ -265,8 +375,61 @@ export class PresentationTemplatesComponent implements OnInit {
     if (this.switchexpression === 'LESSON_INTRODUCTION_CARD') {
       this.onPlayDisable = true;
     }
+    if (this.slide.interactivelist != null && this.slide.interactivelist[0].isMultiSelect != null) {
+      this.isMultiSelect = this.slide.interactivelist[0].isMultiSelect;
+    }
 
 
   }
+
+  public isMultiSelectFunction() {
+
+    this.isMultiSelect = !this.isMultiSelect;
+
+  }
+
+  public isCorrectOptionFunction(option: string) {
+
+    console.log(this.isMultiSelect);
+
+    if (this.isMultiSelect === false) {
+
+      for (let interactive of this.slide.interactivelist) {
+        interactive.isCorrectOption = false;
+        interactive.isMultiSelect = false;
+      }
+
+      if (option === '1') {
+        this.slide.interactivelist[0].isCorrectOption = true;
+        console.log(this.slide.interactivelist[1].isCorrectOption);
+      } else if (option === '2') {
+        this.slide.interactivelist[1].isCorrectOption = true;
+      } else if (option === '3') {
+        this.slide.interactivelist[2].isCorrectOption = true;
+      } else if (option === '4') {
+        this.slide.interactivelist[3].isCorrectOption = true;
+      }
+
+    } else if (this.isMultiSelect === true) {
+
+      for (let interactive of this.slide.interactivelist) {
+        interactive.isMultiSelect = true;
+      }
+
+      if (option === '1') {
+        this.slide.interactivelist[0].isCorrectOption = true;
+      } else if (option === '2') {
+        this.slide.interactivelist[1].isCorrectOption = true;
+      } else if (option === '3') {
+        this.slide.interactivelist[2].isCorrectOption = true;
+      } else if (option === '4') {
+        this.slide.interactivelist[3].isCorrectOption = true;
+      }
+
+    }
+    console.log(this.slide);
+
+  }
+
 
 }
