@@ -3,7 +3,7 @@
     .custom_mobile-preview{
         position: absolute;
         top: 11%;
-        left: 11%;
+        left: 20.3%;
         width: 59%;
         height: 76%;
         border-radius: 0;
@@ -16,7 +16,7 @@
     .custom_mobile-preview{
         position: absolute;
         top: 11%;
-        left: 11%;
+        left: 20.3%;
         width: 59%;
         height: 76%;
         border-radius: 0;
@@ -30,7 +30,7 @@
     .custom_mobile-preview{
         position: absolute;
         top: 8%;
-        left: 12%;
+        left: 21.3%;
         width: 57%;
         height: 57%;
         border-radius: 0;
@@ -44,7 +44,7 @@
     .custom_mobile-preview{
         position: absolute;
         top: 11%;
-        left: 11%;
+        left: 20.3%;
         width: 59%;
         height: 76%;
         border-radius: 0;
@@ -58,7 +58,7 @@
     .custom_mobile-preview{
         position: absolute;
         top: 11%;
-        left: 11%;
+        left: 20.3%;
         width: 59%;
         height: 76%;
         border-radius: 0;
@@ -71,7 +71,7 @@
     .custom_mobile-preview{
         position: absolute;
         top: 11%;
-        left: 11%;
+        left: 20.3%;
         width: 59%;
         height: 76%;
         border-radius: 0;
@@ -161,19 +161,50 @@
   
   .title-text {
     font-size: 24px;
-    color: rgb(3, 3, 3);
     font-weight: bold;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 10px;
   }
  
-   .paragraph-text{
+   .paragraph-ckeditor-text{
+    font-size: 14px; 
+    max-height: 162px;
+    overflow: auto;
+  } 
+
+  .paragraph-ckeditor-text::-webkit-scrollbar {
+    display: none;
+    }
+  
+
+  .paragraph-text{
     white-space: pre-line;
     font-size: 14px; 
     bottom: 5rem;
     color: rgb(3, 3, 3);
     position: absolute;
   } 
+
+  .paragraph-text2{
+    font-size: 14px; 
+    color: rgb(3, 3, 3);
+  } 
+
+  .subtitle-text {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .custom-left-Panel {
+    border-right: solid 1px #ffffff;
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #ffffff
+  }
+  .custom-right-Panel {
+    border-left: solid 1px #ffffff;
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #ffffff
+  }
 
   .fadeinbottom{
     position: absolute;
@@ -195,6 +226,6 @@
 
   .paly-img{
     position: absolute;
-    margin: 25%;
-    top: 24%;
+    top: 39%;
+    left: 38%;
   }

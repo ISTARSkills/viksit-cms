@@ -53,6 +53,7 @@ export class CreateCourseTaskComponent implements OnInit {
     errorReset: null,
     cancelReset: null,
     addRemoveLinks: true,
+    dictDefaultMessage: 'Upload Image',
     params: { 'item_type': this.item_type },
     init: function () {
 

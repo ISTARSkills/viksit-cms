@@ -8,6 +8,9 @@ import { Title } from '../pojo/slide/title';
 import { Paragraph } from '../pojo/slide/paragraph';
 import { Slide } from '../pojo/slide/slide';
 import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { List } from '../pojo/slide/list';
+import { SubTitle } from '../pojo/slide/subtitle';
+import { Image } from '../pojo/slide/image';
 
 @Component({
   selector: 'app-lesson-builder-content-creator',
@@ -26,27 +29,34 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   stageindex
   newTitle: Title;
   newParagraph: Paragraph
+  newList: List
   slide: Slide
+  subTitle: SubTitle
+  @ViewChild('imageview') imageview;
   @ViewChild('paragraphview') paragraphview;
   @ViewChild('titleview') titleview;
   audio = new Audio();
   paragraph_delay = 0;
   title_delay = 0;
+  image
   mobilePreviewIsVisible = true;
   public onPlayDisable = false;
   title_fragment_duration;
   paragraph_fragment_duration;
+  fgImage
+  image_fragment_duration
   paragraph_text;
   title_text;
   bgImage;
   bgcolor;
   slidePreviewPosition = 0;
-  selectSlideType = "ONLY_TITLE_PARAGRAPH_NEW";
+  image_delay = 0;
+  selectSlideType = "TITLE_PARAGRAPH_CARD";
   options: NgbModalOptions = {
     size: 'lg',
     windowClass: 'animated bounceInUp',
   };
-  constructor(private modalService: NgbModal, private route: ActivatedRoute, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+  constructor(private modalService: NgbModal, private router: Router, private route: ActivatedRoute, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.id = this.route.snapshot.params.id;
   }
 
@@ -94,9 +104,16 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     let slide = null;
     this.bgImage = "none";
     this.bgcolor = "";
+    this.fgImage = "none"
     slide = this.lesson.stages[slidePreviewPosition].slides[0];
     this.title_fragment_duration = slide.title.fragment_duration;
     this.paragraph_fragment_duration = slide.paragraph.fragment_duration;
+
+    if (slide.image != undefined) {
+      this.fgImage = slide.image.url;
+      this.image_fragment_duration = slide.image.fragment_duration;
+    }
+
     this.paragraph_text = slide.paragraph.text;
     this.title_text = slide.title.text;
     this.audio.src = slide.audioUrl;
@@ -163,15 +180,22 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   }
 
-  public save(content) {
+  public getNewSlide(index) {
 
+    var lists = Array();
     this.newTitle = new Title("", 1, "", 500)
     this.newParagraph = new Paragraph("", 2, "", 500)
-    this.slide = new Slide(this.newTitle, this.newParagraph, "", "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "");
-    this.lesson.stages[this.stageindex].slides.push(this.slide);
+    for (let i = 0; i < 5; i++) {
+      this.newList = new List("", "", i);
+      lists.push(this.newList);
+    }
+    this.image = new Image("", 1, "", 500);
+    this.subTitle = new SubTitle("", 1, "", 500)
+    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle);
+    this.lesson.stages[index].slides.push(this.slide);
     //console.log(this.lesson)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
-    this.currentModalInstance.close();
+    // this.currentModalInstance.close();
   }
 
   saveEndExitClicked() {
@@ -215,17 +239,20 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
   };
 
-  public addSlideComponent = function (stage, content) {
+  public addSlideComponent = function (index) {
 
-    this.modalName = "Create " + "Slide";
-    this.type = "PRESENTATION";
-    this.stageindex = this.lesson.stages.indexOf(stage);
-    this.currentModalInstance = this.modalService.open(content, this.options);
-    this.currentModalInstance.result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    console.log(index);
+    this.getNewSlide(index)
+    this.router.navigate(['/slide_editor/' + index], { relativeTo: this.route });
+    // this.modalName = "Create " + "Slide";
+    // this.type = "PRESENTATION";
+    // this.stageindex = this.lesson.stages.indexOf(stage);
+    // this.currentModalInstance = this.modalService.open(content, this.options);
+    // this.currentModalInstance.result.then((result) => {
+    //   this.closeResult = `Closed with: ${result}`;
+    // }, (reason) => {
+    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    // });
 
   };
 

@@ -21,6 +21,7 @@ export class PresentationTemplatesComponent implements OnInit {
   @Output() slideChange: EventEmitter<Slide> = new EventEmitter<Slide>();
   @ViewChild('paragraphview') paragraphview;
   @ViewChild('titleview') titleview;
+  @ViewChild('imageview') imageview;
   item_id;
   item_type = "SLIDE_CREATION";
   state: string = '';
@@ -29,12 +30,59 @@ export class PresentationTemplatesComponent implements OnInit {
   public bgcolor: string = '#FFFFFF';
   public audioUrl: string = "";
   public bgImage: string = "";
+  public fgImage: string = "";
   public loading = false;
+  textcolor = '#FFFFFF'
   paragraph_delay = 0;
+  image_delay = 0;
+  editorValue;
   title_delay = 0;
   public onPlayDisable = false;
   someValue = 2;
+  totalDuration = 0;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
+
+
+
+  getFragmentOrdering() {
+
+    switch (this.switchexpression) {
+      case 'TITLE_PARAGRAPH_CARD':
+        this.totalDuration = parseInt(this.slide.paragraph.fragment_duration) + parseInt(this.slide.title.fragment_duration);
+        if (this.slide.paragraph.fragment_order == 1) {
+          this.paragraph_delay = 0;
+          this.title_delay = this.slide.paragraph.fragment_duration;
+        } else {
+          this.paragraph_delay = this.slide.title.fragment_duration;;
+          this.title_delay = 0;
+        }
+        break;
+      case 'IMAGE_TITLE_PARAGRAPH_CARD':
+        this.totalDuration = parseInt(this.slide.paragraph.fragment_duration) + parseInt(this.slide.title.fragment_duration) + parseInt(this.slide.image.fragment_duration);
+        if (this.slide.title.fragment_order == 1 && this.slide.paragraph.fragment_order == 2 && this.slide.image.fragment_order == 3) {
+          this.title_delay = 0;
+          this.paragraph_delay = this.slide.title.fragment_duration;
+          this.image_delay = parseInt(this.slide.paragraph.fragment_duration) + parseInt(this.slide.title.fragment_duration);
+
+        } else if (this.slide.title.fragment_order == 2 && this.slide.paragraph.fragment_order == 1 && this.slide.image.fragment_order == 3) {
+          this.paragraph_delay = 0;
+          this.title_delay = this.slide.paragraph.fragment_duration;
+          this.image_delay = parseInt(this.slide.title.fragment_duration) + parseInt(this.slide.paragraph.fragment_duration)
+
+        } else if (this.slide.title.fragment_order == 2 && this.slide.paragraph.fragment_order == 3 && this.slide.image.fragment_order == 1) {
+          this.image_delay = 0;
+          this.title_delay = this.slide.image.fragment_duration;
+          this.paragraph_delay = parseInt(this.slide.title.fragment_duration) + parseInt(this.slide.image.fragment_duration)
+
+        }
+        break;
+      case 'LESSON_INTRODUCTION_CARD':
+        break;
+      default:
+        break;
+    }
+
+  }
 
   animateMe() {
     this.onPlayDisable = true;
@@ -43,40 +91,36 @@ export class PresentationTemplatesComponent implements OnInit {
       this.audio.play();
     }
 
+    this.getFragmentOrdering();
 
-    if (this.slide.paragraph.fragment_order == 1) {
-      this.paragraph_delay = 0;
-      this.title_delay = this.slide.paragraph.fragment_duration;
-    } else {
-      this.paragraph_delay = this.slide.title.fragment_duration;;
-      this.title_delay = 0;
-    }
 
-    if (this.slide.paragraph.transition_type != '') {
+
+    if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '') {
       this.paragraphview.nativeElement.classList.add(this.slide.paragraph.transition_type);
     }
-    if (this.slide.title.transition_type != '') {
+    if (this.slide.title != null && this.slide.title.transition_type != '') {
       this.titleview.nativeElement.classList.add(this.slide.title.transition_type);
     }
+    if (this.slide.image != null && this.slide.image.transition_type != '') {
+      this.imageview.nativeElement.classList.add(this.slide.image.transition_type);
+    }
 
-
-
-
-    var totalDuration = parseInt(this.slide.paragraph.fragment_duration) + parseInt(this.slide.title.fragment_duration);
-    console.log(totalDuration);
+    console.log(this.totalDuration);
     setTimeout(() => {
-      if (this.slide.paragraph.transition_type != '') {
+      if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '') {
         this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
       }
-      if (this.slide.title.transition_type != '') {
+      if (this.slide.title != null && this.slide.title.transition_type != '') {
         this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
       }
 
-
+      if (this.slide.image != null && this.slide.image.transition_type != '') {
+        this.imageview.nativeElement.classList.remove(this.slide.image.transition_type);
+      }
 
       this.onPlayDisable = false;
       console.log(this.onPlayDisable);
-    }, totalDuration);
+    }, this.totalDuration);
 
 
   }
@@ -84,9 +128,14 @@ export class PresentationTemplatesComponent implements OnInit {
 
 
   onChangeColor(color) {
-    //  console.log(color);
     this.bgcolor = color;
     this.slide.color = this.bgcolor;
+  }
+
+  onTextChangeColor(color) {
+    console.log(color);
+    this.textcolor = color;
+    this.slide.fontColor = this.textcolor;
   }
 
   public getParagraph(text) {
@@ -128,13 +177,7 @@ export class PresentationTemplatesComponent implements OnInit {
       });
 
   }
-
-
-  public onChangeImage(event) {
-
-    // console.log(event.srcElement.value);
-    //  console.log(event.target.files[0]);
-    //  console.log(event);
+  public onChangeForgroundImage(event) {
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
     var headers = new Headers();
@@ -146,18 +189,45 @@ export class PresentationTemplatesComponent implements OnInit {
     for (let i = 0; i < files.length; i++) {
       formData.append("file", files[i], files[i]['name']);
     }
-    //  console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
     this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
       .subscribe(res => {
-        //  console.log('response files res', res);
+        this.fgImage = res.toString();
+        this.slide.image.url = this.fgImage;
+        this.loading = false;
+      }, error => {
+
+        this.fgImage = error.error.text;
+        this.slide.image.url = this.fgImage;
+        this.loading = false;
+      });
+
+    console.log(this.slide);
+
+  }
+
+  public onChangeImage(event) {
+    const files: Array<File> = event.target.files;
+    const formData: any = new FormData();
+    var headers = new Headers();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+
+    formData.append("item_type", 'SLIDE_EDITOR');
+    formData.append("item_id", this.lessonId);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i]['name']);
+    }
+    this.loading = true;
+
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+      .subscribe(res => {
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
         this.loading = false;
       }, error => {
-        //  console.log('response files error', error);
-        //  console.log('response files error', error.error.text);
+
         this.bgImage = error.error.text;
         this.slide.bgImage = this.bgImage;
         this.loading = false;
@@ -172,13 +242,31 @@ export class PresentationTemplatesComponent implements OnInit {
     //  console.log("lessonId " + this.lessonId)
     this.bgcolor = this.slide.color;
 
+
+
+    if (this.slide.image != null && this.slide.image.url.trim() != '' && this.slide.image.url != 'null') {
+      this.fgImage = this.slide.image.url;
+    }
+
+
     if (this.slide.color != null && this.slide.color.trim() != '' && this.slide.color != 'null') {
       this.color = this.slide.color;
     }
 
+    if (this.slide.fontColor != null && this.slide.fontColor.trim() != '' && this.slide.fontColor != 'null') {
+      this.textcolor = this.slide.fontColor;
+    }
+
+
+
     if (this.slide.audioUrl != null && this.slide.audioUrl.trim() != '' && this.slide.audioUrl != 'null') {
       this.audio.src = this.slide.audioUrl;
     }
+    if (this.switchexpression === 'LESSON_INTRODUCTION_CARD') {
+      this.onPlayDisable = true;
+    }
+
+
   }
 
 }

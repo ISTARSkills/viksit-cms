@@ -44,6 +44,7 @@ import { PresentationTemplatesComponent } from './slide-editor/templates/present
 import { LessonBuilderServiceService } from './services/lesson_bulider/lesson-builder-service.service';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { LoadingModule } from 'ngx-loading';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,26 @@ import { LoadingModule } from 'ngx-loading';
 
   ],
   imports: [
-    BrowserModule, DropzoneModule, NgbModule.forRoot(), AppRoutingModule, FormsModule, ReactiveFormsModule, HttpClientModule, SlickModule.forRoot(), DndModule.forRoot(), Ng2GoogleChartsModule, ArchwizardModule, ContextMenuModule.forRoot(), NgxMyDatePickerModule.forRoot(), NgSelectModule, ColorPickerModule, BrowserAnimationsModule, BrowserModule, SwiperModule, LoadingModule
+    BrowserModule,
+    DropzoneModule,
+    NgbModule.forRoot(),
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    SlickModule.forRoot(),
+    DndModule.forRoot(),
+    Ng2GoogleChartsModule,
+    ArchwizardModule,
+    ContextMenuModule.forRoot(),
+    NgxMyDatePickerModule.forRoot(),
+    NgSelectModule,
+    ColorPickerModule,
+    BrowserAnimationsModule,
+    BrowserModule,
+    SwiperModule,
+    LoadingModule,
+    CKEditorModule
   ],
   providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService],
   bootstrap: [AppComponent]
