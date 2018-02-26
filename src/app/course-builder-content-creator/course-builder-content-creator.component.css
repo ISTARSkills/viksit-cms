@@ -23,7 +23,7 @@
       font-size: 12px;
 }
 
-.module-card-header{
+.lesson-card-header{
     background-color: #7ed321;
     color: #ffff;
 }
@@ -60,7 +60,7 @@ font-size: 16px;
 font-weight: 900;
 letter-spacing: 0.2px;
 text-align: left !important;
-color: #2196f2;
+color: #ffffff;
 }
 .custom-description {
 width: auto !important;
@@ -127,7 +127,7 @@ margin-bottom: 5px;
 
 .custom-scroll-holder::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: #ebeaea;
 }
 
