@@ -68,7 +68,9 @@ export class LessonWizardComponent implements OnInit {
     }
     this.showExisting = true;
     for (let course of this.courses) {
-      this.courseList.push({ id: course.id, name: course.name });
+      if (!course.isPublished) {
+        this.courseList.push({ id: course.id, name: course.name });
+      }
     }
   }
   @ViewChild('lessonSelectionInstance') lessonSelectionInstance: NgbTypeahead;

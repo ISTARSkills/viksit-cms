@@ -64,7 +64,9 @@ export class ModuleWizardComponent implements OnInit {
     this.showExisting = true;
     //console.log(this.courseList)
     for (let course of this.courses) {
-      this.courseList.push({ id: course.id, name: course.name });
+      if (!course.isPublished) {
+        this.courseList.push({ id: course.id, name: course.name });
+      }
     }
   }
   @ViewChild('moduleSelectionInstance') moduleSelectionInstance: NgbTypeahead;

@@ -94,7 +94,7 @@
                                 <div class="input-group">
                                   <input class="form-control" style="float:none" placeholder="Select a date" name="lessonList[i].id" ngx-mydatepicker [ngModel]="lessonList[i].dueDate"
                                     (ngModelChange)="lessonList[i].dueDate=setCustomModelDate($event)" [options]="myOptions"
-                                    #dp="ngx-mydatepicker" (dateChanged)="onDateChanged(lessonList[i],'lesson')" [value]="lessonList[i].dueDate != undefined && lessonList[i].dueDate != null ? lessonList[i].dueDate : (todaydate | date:'dd-MM-yyyy')"
+                                    #dp="ngx-mydatepicker" (dateChanged)="onDateChanged(lessonList[i],'lesson')" [value]="lessonList[i].dueDate != undefined && lessonList[i].dueDate != null ? lessonList[i].dueDate : null"
                                     required/>
                                   <span class="input-group-btn">
                                     <div class="row m-0">

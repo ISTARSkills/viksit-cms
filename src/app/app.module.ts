@@ -45,6 +45,7 @@ import { LessonBuilderServiceService } from './services/lesson_bulider/lesson-bu
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { LoadingModule } from 'ngx-loading';
 import { CKEditorModule } from 'ngx-ckeditor';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -67,8 +68,7 @@ import { CKEditorModule } from 'ngx-ckeditor';
     ModuleWizardComponent,
     ContentAdminReviewTaskComponent,
     SlideEditorComponent,
-    PresentationTemplatesComponent
-
+    PresentationTemplatesComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +90,8 @@ import { CKEditorModule } from 'ngx-ckeditor';
     BrowserModule,
     SwiperModule,
     LoadingModule,
-    CKEditorModule
+    CKEditorModule,
+    ImageCropperModule
   ],
   providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService],
   bootstrap: [AppComponent]

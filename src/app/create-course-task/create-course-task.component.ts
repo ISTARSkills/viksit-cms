@@ -15,6 +15,8 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import { Router, ActivatedRoute } from '@angular/router';
+declare var require: any;
+const swal = require('sweetalert2');
 
 @Component({
   selector: 'app-create-course-task',
@@ -22,6 +24,57 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./create-course-task.component.css']
 })
 export class CreateCourseTaskComponent implements OnInit {
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  disableUpload = false;
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+    this.disableUpload = false;
+    console.log(event);
+  }
+  imageCropped(image: string) {
+    this.croppedImage = image;
+    this.disableUpload = false;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  loadImageFailed() {
+    swal('Something went wrong. Try again!!');
+    // show message
+  }
+  uploadImage() {
+
+    var arr = this.croppedImage.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    var blob = new Blob([u8arr], { type: mime });
+    var fd = new FormData(document.forms[0]);
+    fd.append("item_type", this.item_type);
+    fd.append("file", blob, this.imageChangedEvent.target.files[0]['name'].replace(/\s/g, '_'));
+    var headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+    this.loading = true;
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', fd, {
+      headers: headers,
+      responseType: 'text'
+    }).subscribe(
+      res => {
+        console.log(res)
+        this.loading = false;
+        this.disableUpload = true;
+      }, error => {
+        this.loading = false;
+        swal('Something went wrong. Try again!!');
+        this.disableUpload = false;
+      }
+
+    );
+  }
 
   complex_object;
   progress = 50;
@@ -53,7 +106,6 @@ export class CreateCourseTaskComponent implements OnInit {
     errorReset: null,
     cancelReset: null,
     addRemoveLinks: true,
-    dictDefaultMessage: 'Upload Image',
     params: { 'item_type': this.item_type },
     init: function () {
 
@@ -62,9 +114,7 @@ export class CreateCourseTaskComponent implements OnInit {
   myOptions: INgxMyDpOptions = {
     // other options...
     dateFormat: 'dd/mm/yyyy',
-    closeSelectorOnDateSelect: false,
-    showSelectorArrow: false,
-    closeSelectorOnDocumentClick: false
+    closeSelectorOnDateSelect: true
   };
 
   // Initialized to specific date (09.10.2018)
@@ -72,9 +122,11 @@ export class CreateCourseTaskComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
+  }
 
   onDateChanged(event: IMyDateModel): void {
+
   }
 
 
@@ -122,6 +174,7 @@ export class CreateCourseTaskComponent implements OnInit {
       this.users = data['data'];
       console.log(this.users);
     });
+
   }
 
   isValidForm() {

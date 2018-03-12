@@ -155,7 +155,9 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     }
   }
   getColor(dueDate) {
-    if (dueDate <= new Date()) {
+    var dateCompare = new Date();
+    var compare = dateCompare.getDate() + '-' + (dateCompare.getMonth() + 1) + '-' + dateCompare.getFullYear();
+    if (dueDate <= compare) {
       return "red";
     } else {
       return "green";
@@ -170,7 +172,9 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   }
   getStatus(lesson) {
     //console.log(lesson)
-    if (lesson.dueDate <= new Date()) {
+    var dateCompare = new Date();
+    var compare = dateCompare.getDate() + '-' + ((dateCompare.getMonth() + 1) < 10 ? '0' : '') + (dateCompare.getMonth() + 1) + '-' + dateCompare.getFullYear();
+    if (lesson.dueDate <= compare || lesson.dueDate == "" || lesson.dueDate == null) {
       return "#c9302c";
     } else {
       return "#5cb85c";
@@ -205,7 +209,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     var flag = true;
     for (let lesson of this.lessonList) {
       if (flag) {
-        if (lesson.dueDate == "") {
+        if (lesson.dueDate == "" || lesson.dueDate == null) {
           isValid = true;
           break;
         } else if (lesson.assignee == null) {

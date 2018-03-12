@@ -8,10 +8,10 @@
     <div class="card-body">
       <div *ngIf="data?.modules != undefined && data?.modules.length > 0; else moduleElseBlock" class="row modules m-0 row-eq-height">
         <div *ngFor="let module of data?.modules; index as j " class="col-3 p-0">
-          <div class="card module_card row-eq-height">
-            <div class="card-header  p-0 pt-3 pb-3 module-card-header">
+          <div class="card module_card row-eq-height top-border-red">
+            <div class="card-header  p-0 pt-3 pb-3">
               <div class="row m-0 row-eq-height">
-                <div class="col-12 text-center custom-course-header module-card-header module-font-fize">
+                <div class="col-12 text-center custom-course-header module-font-fize">
                   {{module.name}}</div>
               </div>
             </div>
@@ -44,10 +44,10 @@
                             <h5 class="text-center">Lessons</h5>
                             <div *ngIf=" session.lessons != undefined &&session.lessons.length > 0; else lessonElseBlock">
                               <div *ngFor="let lesson of session.lessons; index as l ">
-                                <div class="card m-3 top-border-red">
-                                  <div class="card-header">
+                                <div class="card m-3 ">
+                                  <div class="card-header module-card-header">
                                     <div class="row m-0 row-eq-height">
-                                      <div class="col-10 lesson-header-size "> {{lesson.name}}</div>
+                                      <div class="col-10 lesson-header-size module-card-header"> {{lesson.name}}</div>
                                       <div class="col-2">
                                         <i class="far fa-play-circle"></i>
                                       </div>

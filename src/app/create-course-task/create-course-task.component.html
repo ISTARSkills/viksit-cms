@@ -47,45 +47,30 @@
                       rows="3"></textarea>
                   </div>
                 </div>
-
-
-                <!-- <fieldset class="form-group">
-                  <legend>Select</legend>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked> Foundation
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2"> Desired
-                    </label>
-                  </div>
-                </fieldset> -->
-                <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
-                  (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
-                </form>
+                <div class="custom-input-button">
+                  <input type="file" (change)="fileChangeEvent($event)" accept=".png,.PNG" />
+                </div>
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
+                  (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
               </div>
               <div class="col-6">
                 <div class="form-group-inline row mb-4">
 
                   <div class="col-8">
-                    <div class="row">
-                      <label class="col-sm-2 col-form-label">Assignee</label>
-                      <div class="col-sm-10">
-                        <ng-template #userTemplate let-r="result" let-t="term">
-                          {{r.id+' - '+r.email}}
-                        </ng-template>
-                        <input id="user-typeahead-focus" type="text" class="form-control" [(ngModel)]="selectedUser" [ngbTypeahead]="userSearch"
-                          (focus)="userSelectfocus$.next($event.target.value)" (click)="userSelectclick$.next($event.target.value)"
-                          #userSelectionInstance="ngbTypeahead" [class.is-invalid]="userFailed" placeholder="Select user" [inputFormatter]="userFormatter"
-                          [resultTemplate]="userTemplate" />
-                        <div class="invalid-feedback text-danger" *ngIf="userFailed">No user Selected.</div>
-                      </div>
+                    <label class="col-sm-2 col-form-label">Assignee</label>
+                    <div class="col-sm-10">
+                      <ng-template #userTemplate let-r="result" let-t="term">
+                        {{r.id+' - '+r.email}}
+                      </ng-template>
+                      <input id="user-typeahead-focus" type="text" class="form-control" [(ngModel)]="selectedUser" [ngbTypeahead]="userSearch"
+                        (focus)="userSelectfocus$.next($event.target.value)" (click)="userSelectclick$.next($event.target.value)"
+                        #userSelectionInstance="ngbTypeahead" [class.is-invalid]="userFailed" placeholder="Select user" [inputFormatter]="userFormatter"
+                        [resultTemplate]="userTemplate" />
+                      <div class="invalid-feedback text-danger" *ngIf="userFailed">No user Selected.</div>
                     </div>
                   </div>
                   <div class="col-4 my-auto">
-                    <fieldset class="form-group form-check-inline">
+                    <fieldset class="form-group form-check-inline mb-0">
                       <!-- <legend>Select</legend> -->
                       <div class="form-check-inline mb-0">
                         <label class="form-check-label">
@@ -100,9 +85,9 @@
                     </fieldset>
                   </div>
                 </div>
-                <div class="input-group">
-                  <label class="col-sm-2 col-form-label pl-0">Due Date: </label>
-                  <input class="form-control col-10" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="model"
+                <label class=" col-form-label p-3">Due Date: </label>
+                <div class="input-group pl-3">
+                  <input class="form-control" style="float:none" placeholder="Select a date" ngx-mydatepicker name="mydate" [(ngModel)]="model"
                     [options]="myOptions" #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)" />
 
                   <span class="input-group-btn">
@@ -116,6 +101,15 @@
                     </div>
                   </span>
                 </div>
+                <div style="margin-top: 5%">
+                  <div class="row m-0">
+                    <button class="btn btn-danger mb-1" (click)="uploadImage()" *ngIf="croppedImage" [disabled]="disableUpload">Save Image</button>
+                    <div class="my-auto ml-3" *ngIf="disableUpload" style="color: green;">File Uploaded</div>
+                  </div>
+                  <br/>
+                  <img [src]="croppedImage" *ngIf="croppedImage" style="width: 90%; height: 90%;" />
+                </div>
+
               </div>
             </div>
 
