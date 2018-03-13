@@ -67,6 +67,8 @@ export class CreateCourseTaskComponent implements OnInit {
         console.log(res)
         this.loading = false;
         this.disableUpload = true;
+        this.courseImage = res;
+        this.newCourse.imageURL = this.courseImage;
       }, error => {
         this.loading = false;
         swal('Something went wrong. Try again!!');
