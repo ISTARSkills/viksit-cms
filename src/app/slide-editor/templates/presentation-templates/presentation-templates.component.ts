@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Slide } from '../../../pojo/slide/slide';
 import { Title } from '../../../pojo/slide/title';
 import { Paragraph } from '../../../pojo/slide/paragraph';
+import { LessonBuilderServiceService } from '../../../services/lesson_bulider/lesson-builder-service.service';
 
 
 @Component({
@@ -49,7 +50,8 @@ export class PresentationTemplatesComponent implements OnInit {
   public onPlayDisable = false;
   someValue = 2;
   totalDuration = 0;
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient) { }
+  destinationslideIds: any;
+  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
 
 
 
@@ -157,9 +159,10 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log(event.target.files[0]);
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
-    var headers = new Headers();
+    var headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.set('Accept', 'application/json');
+    headers.set('responseType', 'text');
 
     formData.append("item_type", 'SLIDE_EDITOR');
     formData.append("item_id", this.lessonId);
@@ -169,7 +172,7 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
       .subscribe(res => {
         //  console.log('response files res', res);
         this.audioUrl = res.toString();
@@ -189,10 +192,10 @@ export class PresentationTemplatesComponent implements OnInit {
   public onChangeForgroundImage(event) {
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
-    var headers = new Headers();
+    var headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.set('Accept', 'application/json');
-
+    headers.set('responseType', 'text');
     formData.append("item_type", 'SLIDE_EDITOR');
     formData.append("item_id", this.lessonId);
     for (let i = 0; i < files.length; i++) {
@@ -200,7 +203,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
       .subscribe(res => {
         this.fgImage = res.toString();
         this.slide.image.url = this.fgImage;
@@ -219,10 +222,10 @@ export class PresentationTemplatesComponent implements OnInit {
   public onChangeImage(event) {
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
-    var headers = new Headers();
+    var headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.set('Accept', 'application/json');
-
+    headers.set('responseType', 'text');
     formData.append("item_type", 'SLIDE_EDITOR');
     formData.append("item_id", this.lessonId);
     for (let i = 0; i < files.length; i++) {
@@ -230,7 +233,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
       .subscribe(res => {
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
@@ -253,9 +256,10 @@ export class PresentationTemplatesComponent implements OnInit {
 
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
-    var headers = new Headers();
+    var headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.set('Accept', 'application/json');
+    headers.set('responseType', 'text');
 
     formData.append("item_type", 'SLIDE_EDITOR');
     formData.append("item_id", this.lessonId);
@@ -264,7 +268,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
       .subscribe(res => {
         this.getGridByIndexForImage(gridIndex, res.toString())
         this.loading = false;
@@ -280,9 +284,10 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log(event.target.files[0]);
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
-    var headers = new Headers();
+    var headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.set('Accept', 'application/json');
+    headers.set('responseType', 'text');
 
     formData.append("item_type", 'SLIDE_EDITOR');
     formData.append("item_id", this.lessonId);
@@ -292,7 +297,7 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData)
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
       .subscribe(res => {
         this.getGridByIndexForAudio(gridIndex, res.toString())
         this.loading = false;
@@ -389,12 +394,28 @@ export class PresentationTemplatesComponent implements OnInit {
     }
 
     if (this.switchexpression === 'INTERACTIVE_2_CROSS_2') {
-      this.slide.gridX = 2;
-      this.slide.gridY = 2;
+
+
+      this.lessonBuilderService.getAllSlide().subscribe(data => {
+        this.destinationslideIds = [];
+        var count = 1;
+        for (let stage of data.stages) {
+
+          for (let slide of stage.slides) {
+            console.log(slide.id);
+            if (slide.id != null) {
+              this.destinationslideIds.push({ id: slide.id, name: 'stage ' + count++ });
+            }
+
+          }
+        }
+        console.log(this.destinationslideIds);
+      });
+
+
 
     } else if (this.switchexpression === 'INTERACTIVE_3_CROSS_2') {
-      this.slide.gridX = 3;
-      this.slide.gridY = 2;
+
     }
     if (this.slide.interactivelist != null && this.slide.interactivelist[0].isMultiSelect != null) {
       this.isMultiSelect = this.slide.interactivelist[0].isMultiSelect;
@@ -402,6 +423,42 @@ export class PresentationTemplatesComponent implements OnInit {
 
 
   }
+
+  public onChangeDestinationslideId(event, gridIndex) {
+    console.log(event);
+    console.log(gridIndex);
+    this.getGridByIndexForDestinationSlide(gridIndex, event)
+  }
+
+  getGridByIndexForDestinationSlide(gridIndex, slideId) {
+
+    switch (gridIndex) {
+      case '1':
+        this.slide.interactivelist[0].destination_slide = slideId;
+        break;
+      case '2':
+        this.slide.interactivelist[1].destination_slide = slideId;
+        break;
+      case '3':
+        this.slide.interactivelist[2].destination_slide = slideId;
+        break;
+      case '4':
+        this.slide.interactivelist[3].destination_slide = slideId;
+        break;
+      case '5':
+        this.slide.interactivelist[4].destination_slide = slideId;
+        break;
+      case '6':
+        this.slide.interactivelist[5].destination_slide = slideId;
+        break;
+      default:
+        break;
+    }
+
+  }
+
+
+
 
   public isMultiSelectFunction() {
 
