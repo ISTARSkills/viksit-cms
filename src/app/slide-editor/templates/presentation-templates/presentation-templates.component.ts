@@ -317,6 +317,12 @@ export class PresentationTemplatesComponent implements OnInit {
       case '4':
         this.slide.interactivelist[3].image.url = imageUrl;
         break;
+      case '5':
+        this.slide.interactivelist[4].image.url = imageUrl;
+        break;
+      case '6':
+        this.slide.interactivelist[5].image.url = imageUrl;
+        break;
       default:
         break;
     }
@@ -338,6 +344,12 @@ export class PresentationTemplatesComponent implements OnInit {
       case '4':
         this.slide.interactivelist[3].fragmentAudioUrl = audioUrl;
         break;
+      case '5':
+        this.slide.interactivelist[4].fragmentAudioUrl = audioUrl;
+        break;
+      case '6':
+        this.slide.interactivelist[5].fragmentAudioUrl = audioUrl;
+        break;
       default:
         break;
     }
@@ -346,7 +358,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
 
   ngOnInit() {
-    // console.log("switchexpression " + this.switchexpression)
+    // console.log("switchexpression " + this.switchexpression);
     console.log(this.slide);
     this.bgImage = this.slide.bgImage;
     //  console.log("lessonId " + this.lessonId)
@@ -374,6 +386,15 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     if (this.switchexpression === 'LESSON_INTRODUCTION_CARD') {
       this.onPlayDisable = true;
+    }
+
+    if (this.switchexpression === 'INTERACTIVE_2_CROSS_2') {
+      this.slide.gridX = 2;
+      this.slide.gridY = 2;
+
+    } else if (this.switchexpression === 'INTERACTIVE_3_CROSS_2') {
+      this.slide.gridX = 3;
+      this.slide.gridY = 2;
     }
     if (this.slide.interactivelist != null && this.slide.interactivelist[0].isMultiSelect != null) {
       this.isMultiSelect = this.slide.interactivelist[0].isMultiSelect;
@@ -408,6 +429,10 @@ export class PresentationTemplatesComponent implements OnInit {
         this.slide.interactivelist[2].isCorrectOption = true;
       } else if (option === '4') {
         this.slide.interactivelist[3].isCorrectOption = true;
+      } else if (option === '5') {
+        this.slide.interactivelist[4].isCorrectOption = true;
+      } else if (option === '6') {
+        this.slide.interactivelist[5].isCorrectOption = true;
       }
 
     } else if (this.isMultiSelect === true) {
@@ -424,6 +449,10 @@ export class PresentationTemplatesComponent implements OnInit {
         this.slide.interactivelist[2].isCorrectOption = true;
       } else if (option === '4') {
         this.slide.interactivelist[3].isCorrectOption = true;
+      } else if (option === '5') {
+        this.slide.interactivelist[4].isCorrectOption = true;
+      } else if (option === '6') {
+        this.slide.interactivelist[5].isCorrectOption = true;
       }
 
     }

@@ -51,7 +51,7 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
 
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2"] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2"] },
       { interactive: [] },
       { assessment: [] }]
 
@@ -134,6 +134,8 @@ export class SlideEditorComponent implements OnInit {
         return 1;
       case 'INTERACTIVE_2_CROSS_2':
         return 1;
+      case 'INTERACTIVE_3_CROSS_2':
+        return 1;
       default:
         return 0;
     }
@@ -155,9 +157,6 @@ export class SlideEditorComponent implements OnInit {
       this.loading = false;
       this.router.navigate(['/lesson_builder/' + this.lesson.id], { relativeTo: this.route });
     });
-
-
-
   }
 
   isValidForm() {

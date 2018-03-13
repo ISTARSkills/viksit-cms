@@ -6,6 +6,8 @@ export class InteractiveList {
     description: string;
     id: number
     image: Image;
+    gridX: number;
+    gridY: number;
     isMultiSelect: boolean;
     fragmentAudioUrl: string;
     points: number;

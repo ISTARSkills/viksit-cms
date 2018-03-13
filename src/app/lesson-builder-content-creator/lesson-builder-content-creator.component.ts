@@ -189,9 +189,9 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     this.newTitle = new Title("", 1, "", 500);
     this.newParagraph = new Paragraph("", 2, "", 500);
     this.image = new Image("", 1, "", 500);
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i <= 6; i++) {
       this.newList = new List("", "", i);
-      this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, null)
+      this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, -1)
       lists.push(this.newList);
       interactivelists.push(this.newInteractiveList);
     }
