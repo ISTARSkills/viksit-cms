@@ -749,21 +749,21 @@
             </div>
             <div class="row">
               <div class=" col-6 my-auto" style="    padding: 5px;">
-                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%" [src]="slide.interactivelist[0].image.url"
+                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%;    max-height: 22vh;" [src]="slide.interactivelist[0].image.url"
                   alt=''>
               </div>
               <div class="col-6 my-auto" style="    padding: 5px;">
-                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%" [src]="slide.interactivelist[1].image.url"
+                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%;    max-height: 22vh;" [src]="slide.interactivelist[1].image.url"
                   alt=''> </div>
 
             </div>
 
             <div class="row ">
               <div class="col-6 my-auto" style="    padding: 5px;">
-                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%" [src]="slide.interactivelist[2].image.url"
+                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%;    max-height: 22vh;" [src]="slide.interactivelist[2].image.url"
                   alt=''> </div>
               <div class="col-6 my-auto" style="    padding: 5px;">
-                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%" [src]="slide.interactivelist[3].image.url"
+                <img class='card-img custom-notask-imgtag ' style="background-size: cover;width: 100%;    max-height: 22vh;" [src]="slide.interactivelist[3].image.url"
                   alt=''>
               </div>
             </div>
@@ -878,17 +878,15 @@
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[0].points" class="form-control" type="text" placeholder="Enter Points">
+                      <input [(ngModel)]="slide.interactivelist[4].points" class="form-control" type="text" placeholder="Enter Points">
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[0].xp" class="form-control" type="text" placeholder="Enter Xp">
+                      <input [(ngModel)]="slide.interactivelist[4].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select (change)="onChangeDestinationslideId($event.target.value,'1')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
-                        <option value="1">Stage One</option>
-                        <option value="2">Stage Two</option>
-                        <option value="3">Stage Three</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
 
@@ -944,11 +942,9 @@
                       <input [(ngModel)]="slide.interactivelist[1].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select (change)="onChangeDestinationslideId($event.target.value,'2')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
-                        <option value="1">Stage One</option>
-                        <option value="2">Stage Two</option>
-                        <option value="3">Stage Three</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
 
@@ -1004,11 +1000,9 @@
                       <input [(ngModel)]="slide.interactivelist[2].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select (change)="onChangeDestinationslideId($event.target.value,'3')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
-                        <option value="1">Stage One</option>
-                        <option value="2">Stage Two</option>
-                        <option value="3">Stage Three</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
 
@@ -1065,11 +1059,9 @@
                       <input [(ngModel)]="slide.interactivelist[3].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select (change)="onChangeDestinationslideId($event.target.value,'4')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
-                        <option value="1">Stage One</option>
-                        <option value="2">Stage Two</option>
-                        <option value="3">Stage Three</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
 
@@ -1125,11 +1117,9 @@
                       <input [(ngModel)]="slide.interactivelist[4].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select (change)="onChangeDestinationslideId($event.target.value,'5')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
-                        <option value="1">Stage One</option>
-                        <option value="2">Stage Two</option>
-                        <option value="3">Stage Three</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
 
@@ -1179,17 +1169,15 @@
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[6].points" class="form-control" type="text" placeholder="Enter Points">
+                      <input [(ngModel)]="slide.interactivelist[5].points" class="form-control" type="text" placeholder="Enter Points">
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[6].xp" class="form-control" type="text" placeholder="Enter Xp">
+                      <input [(ngModel)]="slide.interactivelist[5].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select (change)="onChangeDestinationslideId($event.target.value,'6')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
-                        <option value="1">Stage One</option>
-                        <option value="2">Stage Two</option>
-                        <option value="3">Stage Three</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
 

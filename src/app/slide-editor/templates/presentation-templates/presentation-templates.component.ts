@@ -416,6 +416,22 @@ export class PresentationTemplatesComponent implements OnInit {
 
     } else if (this.switchexpression === 'INTERACTIVE_3_CROSS_2') {
 
+      this.lessonBuilderService.getAllSlide().subscribe(data => {
+        this.destinationslideIds = [];
+        var count = 1;
+        for (let stage of data.stages) {
+
+          for (let slide of stage.slides) {
+            console.log(slide.id);
+            if (slide.id != null) {
+              this.destinationslideIds.push({ id: slide.id, name: 'stage ' + count++ });
+            }
+
+          }
+        }
+        console.log(this.destinationslideIds);
+      });
+
     }
     if (this.slide.interactivelist != null && this.slide.interactivelist[0].isMultiSelect != null) {
       this.isMultiSelect = this.slide.interactivelist[0].isMultiSelect;
