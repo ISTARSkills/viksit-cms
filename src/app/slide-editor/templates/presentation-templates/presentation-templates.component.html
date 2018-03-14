@@ -53,7 +53,6 @@
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
-                      <option value='fadeOutRight'>fadeOutRight</option>
                     </select>
                   </div>
                 </div>
@@ -89,7 +88,6 @@
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
-                      <option value='fadeOutRight'>fadeOutRight</option>
 
                     </select>
                   </div>
@@ -99,7 +97,7 @@
                   <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.paragraph.fragment_duration">
                     <option selected value='6000'>Low</option>
                     <option value='1000'>Medium</option>
-                    <option value='500'>Heigh</option>
+                    <option value='500'>High</option>
                   </select>
                   <!-- <input type="number" [(ngModel)]="slide.paragraph.fragment_duration" class="form-control" aria-describedby="" value="500"
                     placeholder="Enter Paragraph Duration.."> -->
@@ -313,7 +311,6 @@
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
-                      <option value='fadeOutRight'>fadeOutRight</option>
                     </select>
                   </div>
                 </div>
@@ -322,7 +319,7 @@
                   <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.fragment_duration">
                     <option selected value='6000'>Low</option>
                     <option value='1000'>Medium</option>
-                    <option value='500'>Heigh</option>
+                    <option value='500'>High</option>
                   </select>
                 </div>
               </div>
@@ -353,7 +350,6 @@
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
-                      <option value='fadeOutRight'>fadeOutRight</option>
                     </select>
                   </div>
                 </div>
@@ -362,7 +358,7 @@
                   <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.image.fragment_duration">
                     <option selected value='6000'>Low</option>
                     <option value='1000'>Medium</option>
-                    <option value='500'>Heigh</option>
+                    <option value='500'>High</option>
                   </select>
                 </div>
               </div>
@@ -390,7 +386,6 @@
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
-                      <option value='fadeOutRight'>fadeOutRight</option>
 
                     </select>
                   </div>
@@ -465,14 +460,23 @@
                   <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
                   />
                 </div>
+
                 <div class="col-4">
-                  <h6>Background Image</h6>
-                  <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                    (change)="onChangeImage($event)">
+
+                  <span class="btn btn-default btn-file">
+                    <h6>Background Image</h6>
+                    <i class="far fa-images"></i>
+                    <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                      (change)="onChangeImage($event)">
+                  </span>
                 </div>
                 <div class="col-4">
-                  <h6>Slide Audio</h6>
-                  <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+
+                  <span class="btn btn-default btn-file">
+                    <h6>Slide Audio</h6>
+                    <i class="fas fa-volume-up"></i>
+                    <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                  </span>
                 </div>
               </div>
             </ng-template>
@@ -503,15 +507,13 @@
                   Grid 1 Config </div>
 
                 <div class="col-6 my-auto pl-0">
-
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="1" [(ngModel)]="slide.interactivelist[0].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('1')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -523,15 +525,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'1')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'1')">
                       </span>
                     </div>
@@ -541,13 +543,25 @@
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[0].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
-                    <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'1')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[0].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'1')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[0].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -564,12 +578,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="2" [(ngModel)]="slide.interactivelist[1].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('2')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -581,15 +594,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'2')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'2')">
                       </span>
                     </div>
@@ -599,13 +612,25 @@
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[1].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
-                    <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'2')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[1].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'2')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[1].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -622,12 +647,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="3" [(ngModel)]="slide.interactivelist[2].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('3')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -639,15 +663,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'3')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'3')">
                       </span>
                     </div>
@@ -657,13 +681,25 @@
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[2].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
-                    <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'3')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[2].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'3')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[2].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -680,12 +716,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="4" [(ngModel)]="slide.interactivelist[3].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('4')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -697,16 +732,16 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
 
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'4')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file ">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'4')">
                       </span>
                     </div>
@@ -716,13 +751,25 @@
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[3].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
-                    <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'4')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[3].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'4')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[3].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -807,14 +854,23 @@
                   <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
                   />
                 </div>
+
                 <div class="col-4">
-                  <h6>Background Image</h6>
-                  <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                    (change)="onChangeImage($event)">
+
+                  <span class="btn btn-default btn-file">
+                    <h6>Background Image</h6>
+                    <i class="far fa-images"></i>
+                    <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                      (change)="onChangeImage($event)">
+                  </span>
                 </div>
                 <div class="col-4">
-                  <h6>Slide Audio</h6>
-                  <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+
+                  <span class="btn btn-default btn-file">
+                    <h6>Slide Audio</h6>
+                    <i class="fas fa-volume-up"></i>
+                    <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                  </span>
                 </div>
               </div>
             </ng-template>
@@ -848,12 +904,12 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="1" [(ngModel)]="slide.interactivelist[0].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('1')" (click)="ignore($event)">
-                    Correct Option:
+
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -865,31 +921,43 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'1')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'1')">
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[4].points" class="form-control" type="text" placeholder="Enter Points">
+                      <input [(ngModel)]="slide.interactivelist[0].points" class="form-control" type="text" placeholder="Enter Points">
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[4].xp" class="form-control" type="text" placeholder="Enter Xp">
+                      <input [(ngModel)]="slide.interactivelist[0].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
-                    <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'1')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[0].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'1')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[0].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -906,12 +974,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="2" [(ngModel)]="slide.interactivelist[1].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('2')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -923,15 +990,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'2')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'2')">
                       </span>
                     </div>
@@ -942,12 +1009,24 @@
                       <input [(ngModel)]="slide.interactivelist[1].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'2')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select [(ngModel)]="slide.interactivelist[1].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'2')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[1].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -964,12 +1043,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="3" [(ngModel)]="slide.interactivelist[2].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('3')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -981,15 +1059,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'3')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'3')">
                       </span>
                     </div>
@@ -1000,12 +1078,24 @@
                       <input [(ngModel)]="slide.interactivelist[2].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'3')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select [(ngModel)]="slide.interactivelist[2].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'3')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[2].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1022,12 +1112,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="4" [(ngModel)]="slide.interactivelist[3].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('4')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -1039,16 +1128,16 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
 
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'4')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file ">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'4')">
                       </span>
                     </div>
@@ -1059,12 +1148,24 @@
                       <input [(ngModel)]="slide.interactivelist[3].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'4')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select [(ngModel)]="slide.interactivelist[3].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'4')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[3].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1081,12 +1182,12 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="5" [(ngModel)]="slide.interactivelist[4].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('4')" (click)="ignore($event)">
-                    Correct Option:
+
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -1098,15 +1199,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'5')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'5')">
                       </span>
                     </div>
@@ -1117,12 +1218,24 @@
                       <input [(ngModel)]="slide.interactivelist[4].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'5')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select [(ngModel)]="slide.interactivelist[4].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'5')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[4].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1139,12 +1252,11 @@
 
                   <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="6" [(ngModel)]="slide.interactivelist[5].isCorrectOption"
                     (ngModelChange)="isCorrectOptionFunction('5')" (click)="ignore($event)">
-                    Correct Option:
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="true">True
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
                     </label>
                     <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-                      <input ngbButton type="radio" class="invisible" [value]="false">False
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
                     </label>
                   </div>
 
@@ -1156,15 +1268,15 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Image
+                        <i class="far fa-images"></i>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'6')">
                       </span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1">
                       <span class="btn btn-default btn-file">
-                        Browse Audio
+                        <i class="fas fa-volume-up"></i>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'6')">
                       </span>
                     </div>
@@ -1175,12 +1287,24 @@
                       <input [(ngModel)]="slide.interactivelist[5].xp" class="form-control" type="text" placeholder="Enter Xp">
                     </div>
                     <div class="col-4">
-                      <select (change)="onChangeDestinationslideId($event.target.value,'6')" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                      <select [(ngModel)]="slide.interactivelist[5].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'6')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
                         <option selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
-
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[5].transition_type">
+                        <option selected value='bounce'>bounce</option>
+                        <option value='shake'>shake</option>
+                        <option value='wobble'>wobble</option>
+                        <option value='flash'>flash</option>
+                        <option value='pulse'>pulse</option>
+                        <option value='rubberBand'>rubberBand</option>
+                        <option value='tada'>tada</option>
+                        <option value='swing'>swing</option>
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -13,9 +13,10 @@ export class InteractiveList {
     points: number;
     xp: number;
     isCorrectOption: boolean;
+    transition_type: string;
     destination_slide: number;
     constructor(text: string, description: string, id: number, image: Image, fragmentAudioUrl: string, isMultiSelect: boolean, points: number,
-        xp: number, isCorrectOption: boolean, destination_slide: number) {
+        xp: number, isCorrectOption: boolean, destination_slide: number, transition_type: string) {
         this.text = text;
         this.description = description;
         this.id = id;
@@ -26,6 +27,7 @@ export class InteractiveList {
         this.xp = xp;
         this.isCorrectOption = isCorrectOption;
         this.destination_slide = destination_slide;
+        this.transition_type = transition_type;
     }
 
 }
