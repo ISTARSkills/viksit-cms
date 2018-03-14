@@ -92,6 +92,64 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     }
   };
 
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  disableUpload = false;
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+    this.disableUpload = false;
+    console.log(event);
+  }
+  imageCropped(image: string) {
+    this.croppedImage = image;
+    this.disableUpload = false;
+  }
+  imageLoaded() {
+    console.log(this.item_type);
+    // show cropper
+  }
+  loadImageFailed() {
+    swal('Something went wrong. Try again!!');
+    // show message
+  }
+
+  uploadImage() {
+    var arr = this.croppedImage.split(','), mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    var blob = new Blob([u8arr], { type: mime });
+    var fd = new FormData(document.forms[0]);
+    fd.append("item_type", this.item_type);
+    fd.append("file", blob, this.imageChangedEvent.target.files[0]['name'].replace(/\s/g, '_'));
+    var headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+    this.loading = true;
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', fd, {
+      headers: headers,
+      responseType: 'text'
+    }).subscribe(
+      res => {
+        console.log(res)
+        this.loading = false;
+        this.disableUpload = true;
+        if (this.type.toLowerCase() === 'course') {
+          this.courseImage = res;
+        } else if (this.type.toLowerCase() === 'module') {
+          this.moduleImage = res;
+        } else if (this.type.toLowerCase() === 'lesson') {
+          this.lessonImage = res;
+        }
+      }, error => {
+        this.loading = false;
+        swal('Something went wrong. Try again!!');
+        this.disableUpload = false;
+      }
+
+    );
+  }
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService) {
     this.id = this.route.snapshot.params.id;
@@ -110,7 +168,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
   public addModuleComponent = function (course, content) {
-
+    this.imageChangedEvent = null;
+    this.croppedImage = null;
     this.idNew = true;
     this.title = "";
     this.desc = "";
@@ -222,7 +281,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   };
 
   public addLessonsComponent = function (module, session, content) {
-
+    this.imageChangedEvent = null;
+    this.croppedImage = null;
     this.module_index = this.course.modules.indexOf(module);
     this.session_index = this.course.modules[this.module_index].sessions.indexOf(session);
 
@@ -286,7 +346,8 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
 
   public open(type, value, content, module_index, session_index, lesson_index) {
-
+    this.imageChangedEvent = null;
+    this.croppedImage = null;
     //console.log(type);
     this.modalName = 'Edit ' + type;
     this.idNew = false;
@@ -294,6 +355,17 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.title = value.name;
     this.item_id = value.id;
     this.item_type = type;
+    this.croppedImage = null;
+    if (this.type.toLowerCase() === 'course' && value.imageURL != '') {
+      this.croppedImage = value.imageURL;
+      this.disableUpload = true;
+    } else if (this.type.toLowerCase() === 'module' && value.imageURL != '') {
+      this.croppedImage = value.imageURL;
+      this.disableUpload = true;
+    } else if (this.type.toLowerCase() === 'lesson' && value.imageURL != '') {
+      this.croppedImage = value.imageURL;
+      this.disableUpload = true;
+    }
     this.desc = value.description;
     this.module_index = module_index;
     this.session_index = session_index;

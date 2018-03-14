@@ -227,10 +227,27 @@
       </button>
     </div>
     <div class="modal-body">
-      <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
+      <!-- <form *ngIf=" type != 'Session';" enctype="multipart/form-data" class="dropzone course-modal m-auto" [dropzone]="config"
         (error)="onUploadError($event)" (success)="onUploadSuccess($event)">
         <input #itemType type="hidden" name="item_type" [(ngModel)]="item_type">
-      </form>
+      </form> -->
+      <div class="row m-0 " *ngIf=" type != 'Session';">
+        <div class="col-6">
+          <div class="custom-input-button">
+            <input type="file" (change)="fileChangeEvent($event)" accept=".png,.PNG" />
+            <input #itemType type="hidden" name="item_type" [(ngModel)]="item_type">
+          </div>
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+        </div>
+        <div class="col-6">
+          <div class="row m-0">
+            <button class="btn btn-danger btn-sm mb-1" (click)="uploadImage()" *ngIf="croppedImage" [disabled]="disableUpload">Save Image</button>
+            <div class="my-auto ml-3" *ngIf="disableUpload && croppedImage" style="color: green;">File Uploaded</div>
+          </div>
+          <img [src]="croppedImage" *ngIf="croppedImage" style="width: 80%; height: 80%;" />
+        </div>
+      </div>
       <label for="typeahead-format ">Name:</label>
       <input type="text " class="form-control" [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
