@@ -181,7 +181,7 @@ export class CreateCourseTaskComponent implements OnInit {
 
   isValidForm() {
     var isValid = false
-    if (this.newCourse.name.trim() != '' && this.newCourse.description.trim() != '') {
+    if (this.newCourse.name.trim() != '' && this.newCourse.description.trim() != '' && this.courseImage.trim() != '' && this.selectedUser != null && this.selectedUser != undefined && this.selectedUser != '' && this.model != null) {
       isValid = true;
     } else {
       isValid = false;
