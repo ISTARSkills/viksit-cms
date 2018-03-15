@@ -164,7 +164,13 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   isValidForm() {
     var isValid = false
     if (this.title.trim() != '' && this.desc.trim() != '') {
-      isValid = true;
+      if (this.item_type.toLowerCase() == 'session') {
+        isValid = true;
+      } else if (this.croppedImage != null && this.croppedImage != '' && this.disableUpload) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
     } else {
       isValid = false;
     }
