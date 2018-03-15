@@ -245,7 +245,7 @@
             <button class="btn btn-danger btn-sm mb-1" (click)="uploadImage()" *ngIf="croppedImage" [disabled]="disableUpload">Save Image</button>
             <div class="my-auto ml-3" *ngIf="disableUpload && croppedImage" style="color: green;">File Uploaded</div>
           </div>
-          <img [src]="croppedImage" *ngIf="croppedImage" style="width: 80%; height: 80%;" />
+          <img [src]="sanitize(croppedImage)" *ngIf="croppedImage" style="width: 80%; height: 80%;" />
         </div>
       </div>
       <label for="typeahead-format ">Name:</label>

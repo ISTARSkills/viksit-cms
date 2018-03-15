@@ -17,6 +17,7 @@ import { ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 import { CourseBuilderServiceService } from '../services/course_builder/course-builder-service.service';
 import { Subject } from 'rxjs/Subject';
+import { DomSanitizer } from '@angular/platform-browser';
 declare var require: any;
 const swal = require('sweetalert2');
 
@@ -151,9 +152,13 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     );
   }
 
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService) {
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService, private sanitizer: DomSanitizer) {
     this.id = this.route.snapshot.params.id;
 
+  }
+
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   isValidForm() {
