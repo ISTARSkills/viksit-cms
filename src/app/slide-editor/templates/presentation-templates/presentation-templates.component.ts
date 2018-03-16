@@ -137,8 +137,6 @@ export class PresentationTemplatesComponent implements OnInit {
 
   }
 
-
-
   onChangeColor(color) {
     this.bgcolor = color;
     this.slide.color = this.bgcolor;
@@ -148,6 +146,11 @@ export class PresentationTemplatesComponent implements OnInit {
     console.log(color);
     this.textcolor = color;
     this.slide.fontColor = this.textcolor;
+  }
+
+  onDestinationSlideChange(destination_slide) {
+    console.log(destination_slide);
+    this.slide.destination_slide = destination_slide;
   }
 
   public getParagraph(text) {
@@ -381,10 +384,10 @@ export class PresentationTemplatesComponent implements OnInit {
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
       this.destinationslideIds = [];
-      var count = 1;
+
       this.lessonType = data.type;
       for (let stage of data.stages) {
-
+        var count = 1;
         for (let slide of stage.slides) {
           // console.log(slide.id);
           if (slide.id != null) {

@@ -27,7 +27,8 @@
             </div>
 
             <div class="col-3" *ngIf="isDestinationSlideVisible()">
-              <select [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                id="inlineFormCustomSelect">
                 <option selected>Choose Destination Slide...</option>
                 <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
               </select>
@@ -286,12 +287,12 @@
       <div class="card">
         <div class="card-block">
           <div class="row ">
-            <div class="col-4">
+            <div class="col-3">
               <h6>Background Color</h6>
               <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
               />
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <span class="btn btn-default btn-file">
                 <label>Background Image</label>
                 <i class="far fa-images"></i>
@@ -300,13 +301,22 @@
               </span>
             </div>
 
-            <div class="col-4">
+            <div class="col-3">
               <span class="btn btn-default btn-file">
                 <label>Slide Audio</label>
                 <i class="fas fa-volume-up"></i>
                 <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
               </span>
             </div>
+
+            <div class="col-3" *ngIf="isDestinationSlideVisible()">
+              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                id="inlineFormCustomSelect">
+                <option selected>Choose Destination Slide...</option>
+                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+              </select>
+            </div>
+
 
           </div>
         </div>
