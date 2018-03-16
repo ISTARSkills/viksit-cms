@@ -25,6 +25,7 @@ export class PresentationTemplatesComponent implements OnInit {
   @ViewChild('imageview') imageview;
   item_id;
   item_type = "SLIDE_CREATION";
+  lessonType = "";
   state: string = '';
   audio = new Audio();
   public color: string = '#7e7970';
@@ -215,7 +216,7 @@ export class PresentationTemplatesComponent implements OnInit {
         this.loading = false;
       });
 
-    console.log(this.slide);
+    // console.log(this.slide);
 
   }
 
@@ -361,15 +362,39 @@ export class PresentationTemplatesComponent implements OnInit {
 
   }
 
+  public isDestinationSlideVisible() {
+
+    if (this.lessonType === 'PRESENTATION') {
+      return false;
+    } else {
+      return true;
+    }
+
+  }
 
   ngOnInit() {
     // console.log("switchexpression " + this.switchexpression);
-    console.log(this.slide);
+    // console.log(this.slide);
     this.bgImage = this.slide.bgImage;
     //  console.log("lessonId " + this.lessonId)
     this.bgcolor = this.slide.color;
 
+    this.lessonBuilderService.getAllSlide().subscribe(data => {
+      this.destinationslideIds = [];
+      var count = 1;
+      this.lessonType = data.type;
+      for (let stage of data.stages) {
 
+        for (let slide of stage.slides) {
+          // console.log(slide.id);
+          if (slide.id != null) {
+            this.destinationslideIds.push({ id: slide.id, name: 'stage ' + (slide.stage_id + 1) + '- slide ' + (count++) });
+          }
+
+        }
+      }
+      // console.log(this.destinationslideIds);
+    });
 
     if (this.slide.image != null && this.slide.image.url.trim() != '' && this.slide.image.url != 'null') {
       this.fgImage = this.slide.image.url;
@@ -396,41 +421,7 @@ export class PresentationTemplatesComponent implements OnInit {
     if (this.switchexpression === 'INTERACTIVE_2_CROSS_2') {
 
 
-      this.lessonBuilderService.getAllSlide().subscribe(data => {
-        this.destinationslideIds = [];
-        var count = 1;
-        for (let stage of data.stages) {
-
-          for (let slide of stage.slides) {
-            console.log(slide.id);
-            if (slide.id != null) {
-              this.destinationslideIds.push({ id: slide.id, name: 'stage ' + count++ });
-            }
-
-          }
-        }
-        console.log(this.destinationslideIds);
-      });
-
-
-
     } else if (this.switchexpression === 'INTERACTIVE_3_CROSS_2') {
-
-      this.lessonBuilderService.getAllSlide().subscribe(data => {
-        this.destinationslideIds = [];
-        var count = 1;
-        for (let stage of data.stages) {
-
-          for (let slide of stage.slides) {
-            console.log(slide.id);
-            if (slide.id != null) {
-              this.destinationslideIds.push({ id: slide.id, name: 'stage ' + count++ });
-            }
-
-          }
-        }
-        console.log(this.destinationslideIds);
-      });
 
     }
     if (this.slide.interactivelist != null && this.slide.interactivelist[0].isMultiSelect != null) {
@@ -529,7 +520,7 @@ export class PresentationTemplatesComponent implements OnInit {
       }
 
     }
-    console.log(this.slide);
+    // console.log(this.slide);
 
   }
 

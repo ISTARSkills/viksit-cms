@@ -18,9 +18,11 @@ export class Slide {
     fragmentcount: number;
     order_id: number;
     audioUrl: string;
+    stage_id: number;
     list: Array<List>
     interactivelist: Array<InteractiveList>
-    constructor(title: Title, paragraph: Paragraph, image: Image, bgImage: string, color: string, type: string, id: number, fragmentcount: number, order_id: number, audioUrl: string, list: Array<List>, subTitle: SubTitle, interactivelist: Array<InteractiveList>) {
+    destination_slide: number;
+    constructor(title: Title, paragraph: Paragraph, image: Image, bgImage: string, color: string, type: string, id: number, fragmentcount: number, order_id: number, audioUrl: string, list: Array<List>, subTitle: SubTitle, interactivelist: Array<InteractiveList>, stage_id: number) {
         this.title = title;
         this.paragraph = paragraph;
         this.image = image;
@@ -34,5 +36,6 @@ export class Slide {
         this.list = list;
         this.subTitle = subTitle;
         this.interactivelist = interactivelist;
+        this.stage_id = stage_id;
     }
 }

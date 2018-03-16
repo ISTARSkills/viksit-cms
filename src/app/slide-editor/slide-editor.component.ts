@@ -39,47 +39,64 @@ export class SlideEditorComponent implements OnInit {
   slide: Slide;
   slides: any;
   index;
+  stage;
   lesson;
   public loading = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
-    this.index = this.route.snapshot.params.id;
+    this.index = this.route.snapshot.params.index;
+    this.stage = this.route.snapshot.params.id;
   }
 
   ngOnInit() {
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
-
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2"] },
-      { interactive: [] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD"] },
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2"] },
       { assessment: [] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
       this.lesson = data;
       this.slides = [];
-      for (let stage of this.lesson.stages) {
-        for (let slide of stage.slides) {
-          // console.log(slide);
-          this.slides.push(slide);
-        }
-      }
+      this.slide = this.lesson.stages[this.stage].slides[this.index]
+
+      // for (let stage of this.lesson.stages) {
+      //   for (let slide of stage.slides) {
+      //     //console.log(slide);
+      //     this.slides.push(slide);
+      //   }
+      // }
 
 
 
       // this.slides = data;
-      this.slide = this.slides[this.index];
+      // this.slide = this.slides[this.index];
 
-      // console.log(this.slide.type);
+      // console.log(this.slide);
       var count = 0;
-      for (let list of this.templateTypePreviewList[0].presentation) {
+      if (this.lesson.type === 'PRESENTATION_INTERACTIVE' || this.lesson.type === 'INTERACTIVE') {
 
-        if (this.slide != null && this.slide.type === list) {
-          this.isClassVisible(count, this.slide.type)
+        for (let list of this.templateTypePreviewList[1].interactive) {
+          if (this.slide != null && this.slide.type === list) {
+            this.isClassVisible(count, this.slide.type)
+          }
+          count++;
+          this.templateList.push(list)
         }
-        count++;
-        this.templateList.push(list)
+
+      } else if (this.lesson.type === 'PRESENTATION') {
+
+        for (let list of this.templateTypePreviewList[0].presentation) {
+          if (this.slide != null && this.slide.type === list) {
+            this.isClassVisible(count, this.slide.type)
+          }
+          count++;
+          this.templateList.push(list)
+        }
+
       }
+
 
 
     });
@@ -97,13 +114,13 @@ export class SlideEditorComponent implements OnInit {
       }
     } else if ($event.target.value === "INTERACTIVE") {
 
-      for (let list of this.templateTypePreviewList[0].interactive) {
+      for (let list of this.templateTypePreviewList[1].interactive) {
         this.templateList.push(list)
       }
 
     } else if ($event.target.value === "ASSESSMENT") {
 
-      for (let list of this.templateTypePreviewList[0].assessment) {
+      for (let list of this.templateTypePreviewList[2].assessment) {
         this.templateList.push(list)
       }
     }
@@ -161,7 +178,7 @@ export class SlideEditorComponent implements OnInit {
 
   isValidForm() {
     var isValid = false;
-    // console.log(this.slide);
+    //console.log(this.slide);
     if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
       isValid = true;
     } else {

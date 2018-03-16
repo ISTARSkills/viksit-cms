@@ -4,23 +4,35 @@
       <div class="card">
         <div class="card-block">
           <div class="row ">
-            <div class="col-4">
+            <div class="col-3">
               <h6>Background Color</h6>
               <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
               />
             </div>
-            <div class="col-4">
-              <h6>Background Image</h6>
-              <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                (change)="onChangeImage($event)">
+            <div class="col-3">
+              <span class="btn btn-default btn-file">
+                <label>Background Image</label>
+                <i class="far fa-images"></i>
+                <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeImage($event)">
+              </span>
             </div>
-            <div class="col-4">
-              <h6>Slide Audio</h6>
-              <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+
+            <div class="col-3">
+              <span class="btn btn-default btn-file">
+                <label>Slide Audio</label>
+                <i class="fas fa-volume-up"></i>
+                <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+              </span>
             </div>
-            <!-- <div class="col-2 m-auto text-right">
-              <button [disabled]="onPlayDisable" (click)="animateMe()" type="button" style="border-radius: 25px;" class="btn btn-outline-danger">Play</button>
-            </div> -->
+
+            <div class="col-3" *ngIf="isDestinationSlideVisible()">
+              <select [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                <option selected>Choose Destination Slide...</option>
+                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+              </select>
+            </div>
+
           </div>
         </div>
       </div>
@@ -69,7 +81,10 @@
             </div>
             <div class="col-12">
               <label>Paragraph Text</label>
-              <textarea class="form-control" [(ngModel)]="slide.paragraph.text" id="exampleTextarea" placeholder="Enter Paragraph..." rows="3"></textarea>
+              <!-- <textarea class="form-control" [(ngModel)]="slide.paragraph.text" id="exampleTextarea" placeholder="Enter Paragraph..." rows="3"></textarea> -->
+              <ck-editor name="editor1" [config]="{height:'100px',removeButtons:'Subscript,Superscript,Source,NewPage,Preview,Print,Save,Copy,Cut,Paste,Templates,Undo,Redo,Find,SelectAll,Replace,Form,Checkbox,Radio,TextField,Textarea,Selectionfield,HiddenField,Button,ImageButton,CopyFormatting,RemoveFormat,PasteFromWord,PasteText,Select,CreateDiv,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,About,ShowBlocks,Strike,Outdent,Indent,Blockquote,Font,BGColor,TextColor,JustifyCenter,JustifyLeft,JustifyRight,JustifyJustify,FontSize,Styles,Format,CheckSpelling'}"
+                [(ngModel)]=" this.slide.paragraph.text" skin="moono-lisa" lang="en" [fullPage]="true"></ck-editor>
+
               <div class="row ">
                 <div class="col-4">
                   <div class="form-group">
@@ -117,10 +132,8 @@
           <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%" src='../../assets/image/play.png'
             alt=''>
           <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="slide.title.fragment_duration" #titleview class="title-text text-center animated">{{slide.title.text}}</div>
-          <div [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration" #paragraphview
-            class="paragraph-text animated">
-            {{slide.paragraph.text}}
-
+          <div [innerHTML]=" this.slide.paragraph.text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration"
+            #paragraphview class="paragraph-text animated">
           </div>
         </div>
       </div>
@@ -136,19 +149,24 @@
               <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
               />
             </div>
-            <div class="col-4">
-              <h6>Background Image</h6>
-              <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                (change)="onChangeImage($event)">
-            </div>
+
+
+
             <div class="col-4">
               <h6>Text Color</h6>
               <input [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
               />
             </div>
-            <!-- <div class="col-2 m-auto text-right">
-                <button [disabled]="onPlayDisable" (click)="animateMe()" type="button" style="border-radius: 25px;" class="btn btn-outline-danger">Play</button>
-              </div> -->
+
+            <div class="col-4">
+              <span class="btn btn-default btn-file">
+                <label>Background Image</label>
+                <i class="far fa-images"></i>
+                <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeImage($event)">
+              </span>
+            </div>
+
           </div>
         </div>
       </div>
@@ -156,12 +174,18 @@
       <div class="card">
         <div class="card-block">
           <div class="row ">
+
+
+
+
             <div class="col-4">
 
-
-              <label>Forground Image</label>
-              <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                (change)="onChangeForgroundImage($event)">
+              <span class="btn btn-default btn-file">
+                <label>Forground Image</label>
+                <i class="far fa-images"></i>
+                <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeForgroundImage($event)">
+              </span>
             </div>
             <div class="col-4">
 
@@ -268,14 +292,20 @@
               />
             </div>
             <div class="col-4">
-              <h6>Background Image</h6>
-              <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                (change)="onChangeImage($event)">
-
+              <span class="btn btn-default btn-file">
+                <label>Background Image</label>
+                <i class="far fa-images"></i>
+                <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeImage($event)">
+              </span>
             </div>
+
             <div class="col-4">
-              <h6>Slide Audio</h6>
-              <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+              <span class="btn btn-default btn-file">
+                <label>Slide Audio</label>
+                <i class="fas fa-volume-up"></i>
+                <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+              </span>
             </div>
 
           </div>
@@ -328,9 +358,12 @@
             <div class="col-12">
               <div class="row ">
                 <div class="col-3">
-                  <label>Forground Image</label>
-                  <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                    (change)="onChangeForgroundImage($event)">
+                  <span class="btn btn-default btn-file">
+                    <label>Forground Image</label>
+                    <i class="far fa-images"></i>
+                    <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                      (change)="onChangeForgroundImage($event)">
+                  </span>
                 </div>
                 <div class="col-3">
                   <div class="form-group">
@@ -464,7 +497,7 @@
                 <div class="col-4">
 
                   <span class="btn btn-default btn-file">
-                    <h6>Background Image</h6>
+                    <label>Background Image</label>
                     <i class="far fa-images"></i>
                     <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                       (change)="onChangeImage($event)">
@@ -473,7 +506,7 @@
                 <div class="col-4">
 
                   <span class="btn btn-default btn-file">
-                    <h6>Slide Audio</h6>
+                    <label>Slide Audio</label>
                     <i class="fas fa-volume-up"></i>
                     <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
@@ -552,14 +585,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[0].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -621,14 +654,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[1].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -690,14 +723,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[2].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -760,14 +793,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[3].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -786,7 +819,7 @@
         <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
           <div class="card-block">
             <div class="row " style="min-height:15vh">
-              <div #titleview class="title-text text-center animated">{{slide.title.text}}</div>
+              <div #titleview class="m-auto title-text text-center animated">{{slide.title.text}}</div>
 
 
               <div [innerHTML]=" this.slide.paragraph.text" #paragraphview class="paragraph-text2 animated">
@@ -858,7 +891,7 @@
                 <div class="col-4">
 
                   <span class="btn btn-default btn-file">
-                    <h6>Background Image</h6>
+                    <label>Background Image</label>
                     <i class="far fa-images"></i>
                     <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                       (change)="onChangeImage($event)">
@@ -867,7 +900,7 @@
                 <div class="col-4">
 
                   <span class="btn btn-default btn-file">
-                    <h6>Slide Audio</h6>
+                    <label>Slide Audio</label>
                     <i class="fas fa-volume-up"></i>
                     <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
@@ -948,14 +981,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[0].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -1017,14 +1050,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[1].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -1086,14 +1119,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[2].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -1156,14 +1189,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[3].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -1226,14 +1259,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[4].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
@@ -1295,14 +1328,14 @@
                     </div>
                     <div class="col-2">
                       <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[5].transition_type">
-                        <option selected value='bounce'>bounce</option>
-                        <option value='shake'>shake</option>
-                        <option value='wobble'>wobble</option>
-                        <option value='flash'>flash</option>
-                        <option value='pulse'>pulse</option>
-                        <option value='rubberBand'>rubberBand</option>
-                        <option value='tada'>tada</option>
-                        <option value='swing'>swing</option>
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
                       </select>
                     </div>
                   </div>
