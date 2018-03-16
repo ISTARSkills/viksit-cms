@@ -6,7 +6,7 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-dashboard',
@@ -35,8 +35,11 @@ export class DashboardComponent implements OnInit {
   };
 
 
-  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) {
+  constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
 
+  }
+  sanitize(url: string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   ngOnInit() {

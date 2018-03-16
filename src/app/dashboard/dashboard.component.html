@@ -51,7 +51,7 @@
                     <i class="fa fa-info-circle" aria-hidden="true" placement="bottom" ngbPopover="{{task.title}}" triggers="mouseenter:mouseleave"></i>
                   </div>
                 </div>
-                <img class="card-img-top " src="{{ task.imageURL }} " alt="Card image cap ">
+                <img class="card-img-top " [src]="sanitize(task.imageURL)" alt="Card image cap ">
                 <div class="card-block">
                   <h5 class="card-title text-muted">Description</h5>
                   <p class="card-text">{{task.description}}</p>
