@@ -54,14 +54,14 @@ export class SlideBuilderServiceService {
 
 
     } else if (slide.type === 'INTERACTIVE_2_CROSS_2') {
-
+      console.log(slide);
       if (slide.title != null && slide.title.text.trim() != ''
         && slide.paragraph != null && slide.paragraph.text.trim() != ''
         && slide.bgImage != null && slide.bgImage.trim() != ''
         && slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != ''
         && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != ''
-        && slide.interactivelist[2] != null && slide.interactivelist[0].image.url.trim() != ''
-        && slide.interactivelist[3] != null && slide.interactivelist[1].image.url.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
       ) {
         isValid = true;
       } else {
@@ -71,13 +71,14 @@ export class SlideBuilderServiceService {
 
     } else if (slide.type === 'INTERACTIVE_3_CROSS_2') {
 
+      console.log(slide);
       if (slide.title != null && slide.title.text.trim() != ''
         && slide.paragraph != null && slide.paragraph.text.trim() != ''
         && slide.bgImage != null && slide.bgImage.trim() != ''
         && slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != ''
         && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != ''
-        && slide.interactivelist[2] != null && slide.interactivelist[0].image.url.trim() != ''
-        && slide.interactivelist[3] != null && slide.interactivelist[1].image.url.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
         && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != ''
         && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != ''
       ) {
