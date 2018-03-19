@@ -87,7 +87,7 @@ export class SlideBuilderServiceService {
         isValid = false;
       }
 
-    } else if (slide.type === 'VIDEO_CARD') {
+    } else if (slide.type === 'ONLY_VIDEO') {
 
       if (slide.videoUrl != null && slide.videoUrl.trim() != '') {
         isValid = true;

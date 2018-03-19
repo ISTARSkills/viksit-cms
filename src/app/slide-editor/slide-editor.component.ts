@@ -55,8 +55,8 @@ export class SlideEditorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "VIDEO_CARD", "VIDEO_TITLE_PARA_CARD"] },
-      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "VIDEO_CARD", "VIDEO_TITLE_PARA_CARD"] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD"] },
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD"] },
       { assessment: [] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
@@ -157,7 +157,7 @@ export class SlideEditorComponent implements OnInit {
         return 1;
       case 'INTERACTIVE_3_CROSS_2':
         return 1;
-      case 'VIDEO_CARD':
+      case 'ONLY_VIDEO':
         return 0;
       case 'VIDEO_TITLE_PARA_CARD':
         return 2;
