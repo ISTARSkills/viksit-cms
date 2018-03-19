@@ -54,7 +54,6 @@ export class SlideBuilderServiceService {
 
 
     } else if (slide.type === 'INTERACTIVE_2_CROSS_2') {
-      console.log(slide);
       if (slide.title != null && slide.title.text.trim() != ''
         && slide.paragraph != null && slide.paragraph.text.trim() != ''
         && slide.bgImage != null && slide.bgImage.trim() != ''
@@ -71,7 +70,6 @@ export class SlideBuilderServiceService {
 
     } else if (slide.type === 'INTERACTIVE_3_CROSS_2') {
 
-      console.log(slide);
       if (slide.title != null && slide.title.text.trim() != ''
         && slide.paragraph != null && slide.paragraph.text.trim() != ''
         && slide.bgImage != null && slide.bgImage.trim() != ''
