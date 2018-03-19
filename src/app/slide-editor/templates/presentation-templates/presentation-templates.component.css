@@ -252,3 +252,21 @@
     cursor: inherit;
     display: block;
 }
+
+
+#input_container { 
+    position:relative;
+    padding:0;
+    margin:0;
+}
+.coin_icon { 
+    margin:0;
+    padding-left:35px;
+}
+#input_img {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+}

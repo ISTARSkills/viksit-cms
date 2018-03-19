@@ -5,23 +5,27 @@
         <div class="card-block">
           <div class="row ">
             <div class="col-3">
-              <h6>Background Color</h6>
-              <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-              />
+              <div class="row ">
+                <label class="col-7 p-0">Background Color</label>
+                <input class="col-5 p-0" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                />
+              </div>
             </div>
             <div class="col-3">
-              <span class="btn btn-default btn-file">
-                <label>Background Image</label>
-                <i class="far fa-images"></i>
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Background Image
+                  <i class="far fa-images"></i>
+                </label>
                 <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                   (change)="onChangeImage($event)">
               </span>
             </div>
 
             <div class="col-3">
-              <span class="btn btn-default btn-file">
-                <label>Slide Audio</label>
-                <i class="fas fa-volume-up"></i>
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Slide Audio
+                  <i class="fas fa-volume-up"></i>
+                </label>
                 <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
               </span>
             </div>
@@ -29,7 +33,7 @@
             <div class="col-3" *ngIf="isDestinationSlideVisible()">
               <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
                 id="inlineFormCustomSelect">
-                <option selected>Choose Destination Slide...</option>
+                <option value="-1" selected>Choose Destination Slide...</option>
                 <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
               </select>
             </div>
@@ -44,25 +48,26 @@
             <div class="col-12">
 
               <div class="row ">
-                <div class="col-3">
+                <div class="col-5">
                   <label>Title Text</label>
                   <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
 
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                   <div class="form-group">
-                    <label>Title Fragment Order</label>
+                    <label>Fragment Order</label>
                     <select class="form-control" [(ngModel)]="slide.title.fragment_order">
                       <option selected value='1'>1</option>
                       <option value='2'>2</option>
                     </select>
                   </div>
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                   <div class="form-group">
-                    <label>Title Transition Style</label>
+                    <label>Transition Style</label>
                     <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.transition_type">
-                      <option selected value='fadeInDown'>fadeInDown</option>
+                      <option selected value='none'>No Transition</option>
+                      <option value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
@@ -70,7 +75,7 @@
                   </div>
                 </div>
                 <div class="col-3">
-                  <label>Title Transition Duration</label>
+                  <label>Transition Duration</label>
                   <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.fragment_duration">
                     <option selected value='6000'>Low</option>
                     <option value='1000'>Medium</option>
@@ -100,6 +105,7 @@
                   <div class="form-group">
                     <label>Paragraph Transition Style</label>
                     <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.paragraph.transition_type">
+                      <option selected value='none'>No Transition</option>
                       <option selected value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
@@ -145,24 +151,25 @@
       <div class="card">
         <div class="card-block">
           <div class="row ">
-            <div class="col-4">
-              <h6>Background Color</h6>
+            <!-- <div class="col-4">
+              <label>Background Color</label>
               <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
               />
+            </div> -->
+
+            <div class="col-3">
+              <div class="row ">
+                <label class="col-4 p-0">Font Color</label>
+                <input class="col-8 p-0" [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
+                />
+              </div>
             </div>
 
-
-
             <div class="col-4">
-              <h6>Text Color</h6>
-              <input [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
-              />
-            </div>
-
-            <div class="col-4">
-              <span class="btn btn-default btn-file">
-                <label>Background Image</label>
-                <i class="far fa-images"></i>
+              <span class="btn btn-default btn-file  p-1">
+                <label class="m-auto">Background Image
+                  <i class="far fa-images"></i>
+                </label>
                 <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                   (change)="onChangeImage($event)">
               </span>
@@ -175,25 +182,19 @@
       <div class="card">
         <div class="card-block">
           <div class="row ">
+            <div class="col-3 m-auto text-center">
 
-
-
-
-            <div class="col-4">
-
-              <span class="btn btn-default btn-file">
-                <label>Forground Image</label>
-                <i class="far fa-images"></i>
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Forground Image
+                  <i class="far fa-images"></i>
+                </label>
                 <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                   (change)="onChangeForgroundImage($event)">
               </span>
             </div>
-            <div class="col-4">
-
-
+            <div class="col-5">
               <label>Title Text</label>
               <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
-
             </div>
             <div class="col-4">
 
@@ -288,23 +289,26 @@
         <div class="card-block">
           <div class="row ">
             <div class="col-3">
-              <h6>Background Color</h6>
-              <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-              />
+              <div class="row ">
+                <label class="col-8 p-0">Background Color</label>
+                <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                />
+              </div>
             </div>
-            <div class="col-3">
+            <!-- <div class="col-3">
               <span class="btn btn-default btn-file">
                 <label>Background Image</label>
                 <i class="far fa-images"></i>
                 <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                   (change)="onChangeImage($event)">
               </span>
-            </div>
+            </div> -->
 
             <div class="col-3">
-              <span class="btn btn-default btn-file">
-                <label>Slide Audio</label>
-                <i class="fas fa-volume-up"></i>
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Slide Audio
+                  <i class="fas fa-volume-up"></i>
+                </label>
                 <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
               </span>
             </div>
@@ -312,7 +316,7 @@
             <div class="col-3" *ngIf="isDestinationSlideVisible()">
               <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
                 id="inlineFormCustomSelect">
-                <option selected>Choose Destination Slide...</option>
+                <option value="-1" selected>Choose Destination Slide...</option>
                 <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
               </select>
             </div>
@@ -328,14 +332,14 @@
             <div class="col-12">
 
               <div class="row ">
-                <div class="col-3">
+                <div class="col-4">
                   <label>Title Text</label>
                   <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
 
                 </div>
-                <div class="col-3">
+                <div class="col-2">
                   <div class="form-group">
-                    <label>Title Fragment Order</label>
+                    <label>Fragment Order</label>
                     <select class="form-control" [(ngModel)]="slide.title.fragment_order">
                       <option selected value='1'>1</option>
                       <option value='2'>2</option>
@@ -345,9 +349,10 @@
                 </div>
                 <div class="col-3">
                   <div class="form-group">
-                    <label>Title Transition Style</label>
+                    <label>Transition Style</label>
                     <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.transition_type">
-                      <option selected value='fadeInDown'>fadeInDown</option>
+                      <option selected value='none'>No Transition</option>
+                      <option value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
@@ -355,7 +360,7 @@
                   </div>
                 </div>
                 <div class="col-3">
-                  <label>Title Transition Duration</label>
+                  <label>Transition Duration</label>
                   <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.fragment_duration">
                     <option selected value='6000'>Low</option>
                     <option value='1000'>Medium</option>
@@ -367,10 +372,11 @@
 
             <div class="col-12">
               <div class="row ">
-                <div class="col-3">
-                  <span class="btn btn-default btn-file">
-                    <label>Forground Image</label>
-                    <i class="far fa-images"></i>
+                <div class="col-3 m-auto text-center">
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Forground Image
+                      <i class="far fa-images"></i>
+                    </label>
                     <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                       (change)="onChangeForgroundImage($event)">
                   </span>
@@ -389,7 +395,8 @@
                   <div class="form-group">
                     <label>Image Transition Style</label>
                     <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.image.transition_type">
-                      <option selected value='fadeInDown'>fadeInDown</option>
+                      <option selected value='none'>No Transition</option>
+                      <option value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
@@ -425,7 +432,8 @@
                   <div class="form-group">
                     <label>Paragraph Transition Style</label>
                     <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.paragraph.transition_type">
-                      <option selected value='fadeInDown'>fadeInDown</option>
+                      <option selected value='none'>No Transition</option>
+                      <option value='fadeInDown'>fadeInDown</option>
                       <option value='fadeInRight'>fadeInRight</option>
                       <option value='fadeIn'>fadeIn</option>
                       <option value='fadeInLeft'>fadeInLeft</option>
@@ -499,25 +507,29 @@
             <ng-template ngbPanelContent>
               <div class="row m-2">
                 <div class="col-4">
-                  <h6>Background Color</h6>
-                  <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-                  />
+                  <div class="row">
+                    <label class="col-8">Background Color</label>
+                    <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                    />
+                  </div>
                 </div>
 
-                <div class="col-4">
+                <div class="col-4 m-auto text-center">
 
-                  <span class="btn btn-default btn-file">
-                    <label>Background Image</label>
-                    <i class="far fa-images"></i>
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Background Image
+                      <i class="far fa-images"></i>
+                    </label>
                     <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                       (change)="onChangeImage($event)">
                   </span>
                 </div>
-                <div class="col-4">
+                <div class="col-4 m-auto text-center">
 
-                  <span class="btn btn-default btn-file">
-                    <label>Slide Audio</label>
-                    <i class="fas fa-volume-up"></i>
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Slide Audio
+                      <i class="fas fa-volume-up"></i>
+                    </label>
                     <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
@@ -568,20 +580,28 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file">
-                        <i class="far fa-images"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'1')">
                       </span>
                     </div>
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file">
-                        <i class="fas fa-volume-up"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'1')">
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[0].points" class="form-control" type="text" placeholder="Enter Points">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[0].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+
                     </div>
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[0].xp" class="form-control" type="text" placeholder="Enter Xp">
@@ -589,7 +609,7 @@
                     <div class="col-2">
                       <select [(ngModel)]="slide.interactivelist[0].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'1')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -637,20 +657,27 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file">
-                        <i class="far fa-images"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'2')">
                       </span>
                     </div>
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file">
-                        <i class="fas fa-volume-up"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'2')">
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[1].points" class="form-control" type="text" placeholder="Enter Points">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[1].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
                     </div>
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[1].xp" class="form-control" type="text" placeholder="Enter Xp">
@@ -658,7 +685,7 @@
                     <div class="col-2">
                       <select [(ngModel)]="slide.interactivelist[1].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'2')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -706,20 +733,28 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file">
-                        <i class="far fa-images"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'3')">
                       </span>
                     </div>
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file">
-                        <i class="fas fa-volume-up"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'3')">
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[2].points" class="form-control" type="text" placeholder="Enter Points">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[2].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+
                     </div>
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[2].xp" class="form-control" type="text" placeholder="Enter Xp">
@@ -727,7 +762,7 @@
                     <div class="col-2">
                       <select [(ngModel)]="slide.interactivelist[2].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'3')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -775,21 +810,27 @@
               <div class="row m-2">
                 <div class="col-12">
                   <div class="row ">
-                    <div class="col-1">
-
-                      <span class="btn btn-default btn-file">
-                        <i class="far fa-images"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
                         <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'4')">
                       </span>
                     </div>
-                    <div class="col-1">
-                      <span class="btn btn-default btn-file ">
-                        <i class="fas fa-volume-up"></i>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
                         <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'4')">
                       </span>
                     </div>
                     <div class="col-2">
-                      <input [(ngModel)]="slide.interactivelist[3].points" class="form-control" type="text" placeholder="Enter Points">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[3].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
                     </div>
                     <div class="col-2">
                       <input [(ngModel)]="slide.interactivelist[3].xp" class="form-control" type="text" placeholder="Enter Xp">
@@ -797,7 +838,7 @@
                     <div class="col-2">
                       <select [(ngModel)]="slide.interactivelist[3].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'4')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -936,7 +977,7 @@
             </ng-template>
           </ngb-panel>
 
-          <ngb-panel class='mt-2'>
+          <!-- <ngb-panel class='mt-2'>
             <ng-template ngbPanelTitle>
               <div class="row m-0 remove-focus">
                 <div class="col-6 my-auto pl-0">
@@ -985,7 +1026,7 @@
                     <div class="col-2">
                       <select [(ngModel)]="slide.interactivelist[0].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'1')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -1054,7 +1095,7 @@
                     <div class="col-4">
                       <select [(ngModel)]="slide.interactivelist[1].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'2')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -1123,7 +1164,7 @@
                     <div class="col-4">
                       <select [(ngModel)]="slide.interactivelist[2].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'3')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -1193,7 +1234,7 @@
                     <div class="col-4">
                       <select [(ngModel)]="slide.interactivelist[3].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'4')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -1263,7 +1304,7 @@
                     <div class="col-4">
                       <select [(ngModel)]="slide.interactivelist[4].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'5')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -1332,7 +1373,467 @@
                     <div class="col-4">
                       <select [(ngModel)]="slide.interactivelist[5].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'6')"
                         class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                        <option selected>Choose Destination Slide...</option>
+                        <option value="-1" selected>Choose Destination Slide...</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[5].transition_type">
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel> -->
+
+          <ngb-panel class='mt-2'>
+            <ng-template ngbPanelTitle>
+              <div class="row m-0 remove-focus">
+                <div class="col-6 my-auto pl-0">
+
+                  Grid 1 Config </div>
+
+                <div class="col-6 my-auto pl-0">
+                  <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="1" [(ngModel)]="slide.interactivelist[0].isCorrectOption"
+                    (ngModelChange)="isCorrectOptionFunction('1')" (click)="ignore($event)">
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                    </label>
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="row m-2">
+                <div class="col-12">
+                  <div class="row ">
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
+                        <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'1')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
+                        <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'1')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[0].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+
+                    </div>
+                    <div class="col-2">
+                      <input [(ngModel)]="slide.interactivelist[0].xp" class="form-control" type="text" placeholder="Enter Xp">
+                    </div>
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[0].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'1')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="-1" selected>Choose Destination Slide...</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[0].transition_type">
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel class='mt-2'>
+            <ng-template ngbPanelTitle>
+              <div class="row m-0 remove-focus">
+                <div class="col-6 my-auto pl-0">
+
+                  Grid 2 Config </div>
+
+                <div class="col-6 my-auto pl-0">
+
+                  <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="2" [(ngModel)]="slide.interactivelist[1].isCorrectOption"
+                    (ngModelChange)="isCorrectOptionFunction('2')" (click)="ignore($event)">
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                    </label>
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="row m-2">
+                <div class="col-12">
+                  <div class="row ">
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
+                        <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'2')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
+                        <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'2')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[1].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <input [(ngModel)]="slide.interactivelist[1].xp" class="form-control" type="text" placeholder="Enter Xp">
+                    </div>
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[1].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'2')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="-1" selected>Choose Destination Slide...</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[1].transition_type">
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel class='mt-2'>
+            <ng-template ngbPanelTitle>
+              <div class="row m-0 remove-focus">
+                <div class="col-6 my-auto pl-0">
+
+                  Grid 3 Config </div>
+
+                <div class="col-6 my-auto pl-0">
+
+                  <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="3" [(ngModel)]="slide.interactivelist[2].isCorrectOption"
+                    (ngModelChange)="isCorrectOptionFunction('3')" (click)="ignore($event)">
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                    </label>
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="row m-2">
+                <div class="col-12">
+                  <div class="row ">
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
+                        <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'3')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
+                        <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'3')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[2].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+
+                    </div>
+                    <div class="col-2">
+                      <input [(ngModel)]="slide.interactivelist[2].xp" class="form-control" type="text" placeholder="Enter Xp">
+                    </div>
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[2].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'3')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="-1" selected>Choose Destination Slide...</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[2].transition_type">
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel class='mt-2'>
+            <ng-template ngbPanelTitle>
+              <div class="row m-0 remove-focus">
+                <div class="col-6 my-auto pl-0">
+
+                  Grid 4 Config </div>
+
+                <div class="col-6 my-auto pl-0">
+
+                  <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="4" [(ngModel)]="slide.interactivelist[3].isCorrectOption"
+                    (ngModelChange)="isCorrectOptionFunction('4')" (click)="ignore($event)">
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                    </label>
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="row m-2">
+                <div class="col-12">
+                  <div class="row ">
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
+                        <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'4')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
+                        <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'4')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[3].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <input [(ngModel)]="slide.interactivelist[3].xp" class="form-control" type="text" placeholder="Enter Xp">
+                    </div>
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[3].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'4')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="-1" selected>Choose Destination Slide...</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[3].transition_type">
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+
+          <ngb-panel class='mt-2'>
+            <ng-template ngbPanelTitle>
+              <div class="row m-0 remove-focus">
+                <div class="col-6 my-auto pl-0">
+
+                  Grid 5 Config </div>
+
+                <div class="col-6 my-auto pl-0">
+
+                  <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="5" [(ngModel)]="slide.interactivelist[4].isCorrectOption"
+                    (ngModelChange)="isCorrectOptionFunction('5')" (click)="ignore($event)">
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                    </label>
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="row m-2">
+                <div class="col-12">
+                  <div class="row ">
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
+                        <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'5')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
+                        <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'5')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[4].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <input [(ngModel)]="slide.interactivelist[4].xp" class="form-control" type="text" placeholder="Enter Xp">
+                    </div>
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[4].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'5')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="-1" selected>Choose Destination Slide...</option>
+                        <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                      </select>
+                    </div>
+                    <div class="col-2">
+                      <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.interactivelist[4].transition_type">
+                        <option selected value='Bounce'>bounce</option>
+                        <option value='Shake'>shake</option>
+                        <option value='Wobble'>wobble</option>
+                        <option value='Flash'>flash</option>
+                        <option value='Pulse'>pulse</option>
+                        <option value='RubberBand'>rubberBand</option>
+                        <option value='Tada'>tada</option>
+                        <option value='Swing'>swing</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-panel>
+
+          <ngb-panel class='mt-2'>
+            <ng-template ngbPanelTitle>
+              <div class="row m-0 remove-focus">
+                <div class="col-6 my-auto pl-0">
+
+                  Grid 6 Config </div>
+
+                <div class="col-6 my-auto pl-0">
+
+                  <div class="btn-group btn-group-toggle float-right mr-3" ngbRadioGroup name="6" [(ngModel)]="slide.interactivelist[5].isCorrectOption"
+                    (ngModelChange)="isCorrectOptionFunction('6')" (click)="ignore($event)">
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                    </label>
+                    <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                      <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <div class="row m-2">
+                <div class="col-12">
+                  <div class="row ">
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Image
+                          <i class="far fa-images"></i>
+                        </label>
+                        <input type="file" accept=".png,.PNG,image/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridImage($event,'6')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <span class="btn btn-default btn-file p-1">
+                        <label class="m-auto">Grid Audio
+                          <i class="fa fa-volume-up"></i>
+                        </label>
+                        <input type="file" accept=".wav,audio/*" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,'6')">
+                      </span>
+                    </div>
+                    <div class="col-2">
+                      <div id="input_container">
+                        <input [(ngModel)]="slide.interactivelist[5].points" class="form-control coin_icon" type="text" placeholder="Enter Coins">
+                        <img src="/assets/image/coin-icon.png" id="input_img">
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <input [(ngModel)]="slide.interactivelist[5].xp" class="form-control" type="text" placeholder="Enter Xp">
+                    </div>
+                    <div class="col-2">
+                      <select [(ngModel)]="slide.interactivelist[4].destination_slide" (change)="onChangeDestinationslideId($event.target.value,'5')"
+                        class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+                        <option value="-1" selected>Choose Destination Slide...</option>
                         <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
                       </select>
                     </div>
@@ -1353,6 +1854,7 @@
               </div>
             </ng-template>
           </ngb-panel>
+
         </ngb-accordion>
 
 
@@ -1395,6 +1897,172 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'VIDEO_CARD'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+
+            <div class="col-3">
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Video
+                  <i class="far fa-images"></i>
+                </label>
+                <input type="file" accept=".mp4,.MP4,video/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeVideo($event)">
+              </span>
+            </div>
+            <div class="col-3" *ngIf="isDestinationSlideVisible()">
+              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                id="inlineFormCustomSelect">
+                <option value="-1" selected>Choose Destination Slide...</option>
+                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-0">
+          <video width="100%" [src]="this.slide.videoUrl" height="100%" controls>
+          </video>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'VIDEO_TITLE_PARA_CARD'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+
+            <div class="col-3">
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Video
+                  <i class="far fa-images"></i>
+                </label>
+                <input type="file" accept=".mp4,.MP4,video/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeVideo($event)">
+              </span>
+            </div>
+            <div class="col-3" *ngIf="isDestinationSlideVisible()">
+              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                id="inlineFormCustomSelect">
+                <option value="-1" selected>Choose Destination Slide...</option>
+                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-4">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label>Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.title.fragment_order">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <div class="form-group">
+                    <label>Transition Style</label>
+                    <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.transition_type">
+                      <option selected value='none'>No Transition</option>
+                      <option value='fadeInDown'>fadeInDown</option>
+                      <option value='fadeInRight'>fadeInRight</option>
+                      <option value='fadeIn'>fadeIn</option>
+                      <option value='fadeInLeft'>fadeInLeft</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-3">
+                  <label>Transition Duration</label>
+                  <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.title.fragment_duration">
+                    <option selected value='6000'>Low</option>
+                    <option value='1000'>Medium</option>
+                    <option value='500'>High</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Paragraph Text</label>
+              <ck-editor name="editor1" [config]="{height:'100px',removeButtons:'Subscript,Superscript,Source,NewPage,Preview,Print,Save,Copy,Cut,Paste,Templates,Undo,Redo,Find,SelectAll,Replace,Form,Checkbox,Radio,TextField,Textarea,Selectionfield,HiddenField,Button,ImageButton,CopyFormatting,RemoveFormat,PasteFromWord,PasteText,Select,CreateDiv,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,About,ShowBlocks,Strike,Outdent,Indent,Blockquote,Font,BGColor,TextColor,JustifyCenter,JustifyLeft,JustifyRight,JustifyJustify,FontSize,Styles,Format,CheckSpelling'}"
+                [(ngModel)]=" this.slide.paragraph.text" skin="moono-lisa" lang="en" [fullPage]="true"></ck-editor>
+              <div class="row ">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Paragraph Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.paragraph.fragment_order">
+                      <option value='1'>1</option>
+                      <option selected value='2'>2</option>
+                      <option value='3'>3</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Paragraph Transition Style</label>
+                    <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.paragraph.transition_type">
+                      <option selected value='none'>No Transition</option>
+                      <option value='fadeInDown'>fadeInDown</option>
+                      <option value='fadeInRight'>fadeInRight</option>
+                      <option value='fadeIn'>fadeIn</option>
+                      <option value='fadeInLeft'>fadeInLeft</option>
+
+                    </select>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <label>Paragraph Transition Duration</label>
+                  <select [disabled]="onPlayDisable" class="form-control" [(ngModel)]="slide.paragraph.fragment_duration">
+                    <option selected value='6000'>Low</option>
+                    <option value='1000'>Medium</option>
+                    <option value='500'>High</option>
+                  </select>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-0">
+          <video width="100%" [src]="this.slide.videoUrl" height="40%" controls>
+          </video>
+          <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="slide.title.fragment_duration" #titleview class="title-text text-center animated">{{slide.title.text}}</div>
+          <div [innerHTML]=" this.slide.paragraph.text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration"
+            #paragraphview class="paragraph-text2 animated"></div>
         </div>
       </div>
     </div>

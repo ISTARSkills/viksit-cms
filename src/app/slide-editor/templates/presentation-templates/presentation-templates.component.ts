@@ -32,6 +32,7 @@ export class PresentationTemplatesComponent implements OnInit {
   public bgcolor: string = '#FFFFFF';
   public audioUrl: string = "";
   public bgImage: string = "";
+  public videoUrl: string = '';
   public g1Image: string = "";
   public g2gImage: string = "";
   public g3Image: string = "";
@@ -43,7 +44,7 @@ export class PresentationTemplatesComponent implements OnInit {
   isCorrect3Option = false;
   isCorrect4Option = false;
   isMultiSelect = false;
-  textcolor = '#FFFFFF'
+  textcolor = '#7e7970'
   paragraph_delay = 0;
   image_delay = 0;
   editorValue;
@@ -53,8 +54,6 @@ export class PresentationTemplatesComponent implements OnInit {
   totalDuration = 0;
   destinationslideIds: any;
   constructor(private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
-
-
 
   getFragmentOrdering() {
 
@@ -220,6 +219,36 @@ export class PresentationTemplatesComponent implements OnInit {
       });
 
     // console.log(this.slide);
+
+  }
+
+
+  public onChangeVideo(event) {
+    const files: Array<File> = event.target.files;
+    const formData: any = new FormData();
+    var headers = new HttpHeaders();
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.set('Accept', 'application/json');
+    headers.set('responseType', 'text');
+    formData.append("item_type", 'SLIDE_EDITOR');
+    formData.append("item_id", this.lessonId);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i], files[i]['name']);
+    }
+    this.loading = true;
+
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+      .subscribe(res => {
+        this.videoUrl = res.toString();
+        this.slide.videoUrl = this.videoUrl;
+        this.loading = false;
+      }, error => {
+
+        this.videoUrl = error.error.text;
+        this.slide.videoUrl = this.videoUrl;
+        this.loading = false;
+      });
+    console.log(this.slide);
 
   }
 

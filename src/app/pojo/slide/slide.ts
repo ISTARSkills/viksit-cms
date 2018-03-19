@@ -11,6 +11,7 @@ export class Slide {
     paragraph: Paragraph;
     image: Image;
     bgImage: string;
+    videoUrl: string;
     color: string;
     fontColor: string;
     type: string;

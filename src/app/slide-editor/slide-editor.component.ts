@@ -9,6 +9,7 @@ import { Paragraph } from '../pojo/slide/paragraph';
 import { Slide } from '../pojo/slide/slide';
 import { LessonBuilderServiceService } from '../services/lesson_bulider/lesson-builder-service.service';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
+import { SlideBuilderServiceService } from '../services/slide_builder/slide-builder-service.service';
 
 @Component({
   selector: 'app-slide-editor',
@@ -43,17 +44,19 @@ export class SlideEditorComponent implements OnInit {
   lesson;
   public loading = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+  constructor(private sideValidator: SlideBuilderServiceService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.index = this.route.snapshot.params.index;
     this.stage = this.route.snapshot.params.id;
   }
 
   ngOnInit() {
+
+
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD"] },
-      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2"] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "VIDEO_CARD", "VIDEO_TITLE_PARA_CARD"] },
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "VIDEO_CARD", "VIDEO_TITLE_PARA_CARD"] },
       { assessment: [] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
@@ -129,12 +132,13 @@ export class SlideEditorComponent implements OnInit {
   }
 
   isClassVisible(newValue: number, template_type: string) {
+    console.log(template_type);
     this.switchexpression = template_type
     this.isVisible = true;
     this.highlightedDiv = newValue;
     this.slide.type = template_type
     this.slide.fragmentcount = this.getFragmentCount(template_type);
-    // console.log(this.slide);
+    console.log(this.slide);
     //  console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
   }
 
@@ -153,6 +157,10 @@ export class SlideEditorComponent implements OnInit {
         return 1;
       case 'INTERACTIVE_3_CROSS_2':
         return 1;
+      case 'VIDEO_CARD':
+        return 0;
+      case 'VIDEO_TITLE_PARA_CARD':
+        return 2;
       default:
         return 0;
     }
@@ -177,14 +185,18 @@ export class SlideEditorComponent implements OnInit {
   }
 
   isValidForm() {
-    var isValid = false;
-    //console.log(this.slide);
-    if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
-      isValid = true;
-    } else {
-      isValid = false;
-    }
-    return true;
+
+
+    return this.sideValidator.isValidateSlide(this.slide);
+
+    // var isValid = false;
+    // //console.log(this.slide);
+    // if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
+    //   isValid = true;
+    // } else {
+    //   isValid = false;
+    // }
+    // return true;
   }
 
   enterSecondStep($event) {

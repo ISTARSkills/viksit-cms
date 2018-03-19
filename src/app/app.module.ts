@@ -46,6 +46,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { LoadingModule } from 'ngx-loading';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { SlideBuilderServiceService } from './services/slide_builder/slide-builder-service.service';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     CKEditorModule,
     ImageCropperModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService],
+  providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService, SlideBuilderServiceService],
   bootstrap: [AppComponent]
 })
 
