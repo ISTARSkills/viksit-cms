@@ -103,6 +103,20 @@ export class SlideBuilderServiceService {
         isValid = false;
       }
 
+    } else if (slide.type === 'INTERACTIVE_CARDS_LIST') {
+
+      if (slide.title != null && slide.title.text.trim() != ''
+        && slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != '' && slide.interactivelist[0].text.trim() != '' && slide.interactivelist[0].description.trim() != ''
+        && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != '' && slide.interactivelist[1].text.trim() != '' && slide.interactivelist[1].description.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != '' && slide.interactivelist[2].text.trim() != '' && slide.interactivelist[2].description.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != '' && slide.interactivelist[3].text.trim() != '' && slide.interactivelist[3].description.trim() != ''
+        && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != '' && slide.interactivelist[4].text.trim() != '' && slide.interactivelist[4].description.trim() != ''
+        && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != '' && slide.interactivelist[5].text.trim() != '' && slide.interactivelist[5].description.trim() != '') {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
+
     }
     return isValid;
 

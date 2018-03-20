@@ -141,3 +141,8 @@ display: block !important;
     padding-left: 22px;
     border-radius: 3px;
 }
+
+.para_align > p{
+    text-align: justify;
+    line-height: 0.9;
+}

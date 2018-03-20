@@ -56,7 +56,7 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
     this.templateTypePreviewList = [
       { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD"] },
-      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD"] },
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST"] },
       { assessment: [] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
@@ -64,19 +64,7 @@ export class SlideEditorComponent implements OnInit {
       this.slides = [];
       this.slide = this.lesson.stages[this.stage].slides[this.index]
 
-      // for (let stage of this.lesson.stages) {
-      //   for (let slide of stage.slides) {
-      //     //console.log(slide);
-      //     this.slides.push(slide);
-      //   }
-      // }
 
-
-
-      // this.slides = data;
-      // this.slide = this.slides[this.index];
-
-      // console.log(this.slide);
       var count = 0;
       if (this.lesson.type === 'PRESENTATION_INTERACTIVE' || this.lesson.type === 'INTERACTIVE') {
 
@@ -161,6 +149,8 @@ export class SlideEditorComponent implements OnInit {
         return 0;
       case 'VIDEO_TITLE_PARA_CARD':
         return 2;
+      case 'INTERACTIVE_CARDS_LIST':
+        return 0;
       default:
         return 0;
     }
@@ -189,14 +179,6 @@ export class SlideEditorComponent implements OnInit {
 
     return this.sideValidator.isValidateSlide(this.slide);
 
-    // var isValid = false;
-    // //console.log(this.slide);
-    // if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
-    //   isValid = true;
-    // } else {
-    //   isValid = false;
-    // }
-    // return true;
   }
 
   enterSecondStep($event) {
