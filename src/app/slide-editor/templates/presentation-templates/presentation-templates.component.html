@@ -1993,4 +1993,48 @@
       </div>
     </div>
   </ng-container>
+  <ng-container *ngSwitchCase="'NO_CONTENT'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+
+            <div class="col-3">
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Background Image
+                  <i class="far fa-images"></i>
+                </label>
+                <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
+                  (change)="onChangeImage($event)">
+              </span>
+            </div>
+
+            <div class="col-3">
+              <span class="btn btn-default btn-file p-1">
+                <label class="m-auto">Slide Audio
+                  <i class="fas fa-volume-up"></i>
+                </label>
+                <input type="file" accept=".wav,audio/*" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+              </span>
+            </div>
+
+            <div class="col-3" *ngIf="isDestinationSlideVisible()">
+              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                id="inlineFormCustomSelect">
+                <option value="-1" selected>Choose Destination Slide...</option>
+                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+              </select>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+      </div>
+    </div>
+  </ng-container>
 </div>

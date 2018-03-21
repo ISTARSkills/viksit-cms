@@ -117,6 +117,14 @@ export class SlideBuilderServiceService {
         isValid = false;
       }
 
+    } else if (slide.type === 'NO_CONTENT') {
+
+      if (slide.bgImage != null && slide.bgImage.trim() != '') {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
+
     }
     return isValid;
 
