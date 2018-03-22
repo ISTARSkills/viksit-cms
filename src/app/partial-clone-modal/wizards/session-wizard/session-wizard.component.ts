@@ -263,7 +263,7 @@ export class SessionWizardComponent implements OnInit {
         if (session.id == this.sessionSelectModel.id) {
           var lessons = Array();
           for (let lesson of session.lessons) {
-            var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
+            var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageURL, null, lesson.type);
             lessons.push(newLesson);
             oldlessonIds.push(lesson.id);
           }

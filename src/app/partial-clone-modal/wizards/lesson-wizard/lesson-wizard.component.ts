@@ -296,7 +296,7 @@ export class LessonWizardComponent implements OnInit {
       for (let session of module.sessions) {
         for (let lesson of session.lessons) {
           if (lesson.id == this.lessonSelectModel.id) {
-            var newLesson = new Lesson(this.newLessonNameModel, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
+            var newLesson = new Lesson(this.newLessonNameModel, lesson.description, lesson.status, lesson.imageURL, null, lesson.type);
             lessons.push(newLesson);
             oldlessonIds.push(lesson.id);
           }

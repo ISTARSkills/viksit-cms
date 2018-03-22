@@ -219,14 +219,14 @@ export class ModuleWizardComponent implements OnInit {
         for (let session of module.sessions) {
           var lessons = Array();
           for (let lesson of session.lessons) {
-            var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageUrl, null, lesson.type);
+            var newLesson = new Lesson(lesson.name, lesson.description, lesson.status, lesson.imageURL, null, lesson.type);
             lessons.push(newLesson);
             oldlessonIds.push(lesson.id);
           }
           var newSession = new Session(session.name, session.description, 0, lessons, null);
           sessions.push(newSession);
         }
-        var newModule = new Module(this.newModuleNameModel, module.description, 0, sessions, module.imageUrl, module.status, null)
+        var newModule = new Module(this.newModuleNameModel, module.description, 0, sessions, module.imageURL, module.status, null)
         modules.push(newModule);
       }
     }
