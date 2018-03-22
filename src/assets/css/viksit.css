@@ -141,3 +141,22 @@ display: block !important;
     padding-left: 22px;
     border-radius: 3px;
 }
+
+.para_align > p{
+    text-align: justify;
+    line-height: 0.9;
+}
+
+
+.paragraph-text > ul{
+    padding: 0;
+    padding-left: 15px;
+}
+
+.paragraph-text > p{
+    padding: 0;
+  margin: 0;
+}
+.remove_scrollbar::-webkit-scrollbar {
+    display: none;
+    }

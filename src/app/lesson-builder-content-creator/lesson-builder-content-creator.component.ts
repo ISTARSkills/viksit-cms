@@ -184,25 +184,32 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   public getNewSlide(index) {
 
+    console.log("this.lesson.stages[index].slides.length")
+    console.log(this.lesson.stages[index].slides.length);
+
+
     var lists = Array();
     var interactivelists = Array();
-    this.newTitle = new Title("", 1, "", 500);
-    this.newParagraph = new Paragraph("", 2, "", 500);
-    this.image = new Image("", 1, "", 500);
+    this.newTitle = new Title("", 1, "none", 500);
+    this.newParagraph = new Paragraph("", 2, "none", 500);
+    this.image = new Image("", 3, "none", 500);
     for (let i = 0; i <= 6; i++) {
       this.newList = new List("", "", i);
-      this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, -1, "")
+      this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, -1, "Bounce")
       lists.push(this.newList);
       interactivelists.push(this.newInteractiveList);
     }
 
 
-    this.subTitle = new SubTitle("", 1, "", 500)
-    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle, interactivelists);
+    this.subTitle = new SubTitle("", 1, "none", 500)
+    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle, interactivelists, index);
     this.lesson.stages[index].slides.push(this.slide);
-    //console.log(this.lesson)
+    console.log("this.lesson.stages[index].slides.length")
+    console.log(this.lesson.stages[index].slides.length)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
     // this.currentModalInstance.close();
+
+    return this.lesson.stages[index].slides.length - 1;
   }
 
   saveEndExitClicked() {
@@ -249,8 +256,8 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   public addSlideComponent = function (index) {
 
     console.log(index);
-    this.getNewSlide(index)
-    this.router.navigate(['/slide_editor/' + index], { relativeTo: this.route });
+    let currentIndx = this.getNewSlide(index)
+    this.router.navigate(['/slide_editor/' + index + '/' + currentIndx], { relativeTo: this.route });
     // this.modalName = "Create " + "Slide";
     // this.type = "PRESENTATION";
     // this.stageindex = this.lesson.stages.indexOf(stage);

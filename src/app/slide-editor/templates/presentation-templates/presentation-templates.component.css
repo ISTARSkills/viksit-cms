@@ -178,11 +178,9 @@
   
 
   .paragraph-text{
-    white-space: pre-line;
     font-size: 14px; 
-    bottom: 5rem;
     color: rgb(3, 3, 3);
-    position: absolute;
+    text-align: justify
   } 
 
   .paragraph-text2{
@@ -252,3 +250,38 @@
     cursor: inherit;
     display: block;
 }
+
+
+#input_container { 
+    position:relative;
+    padding:0;
+    margin:0;
+}
+.coin_icon { 
+    margin:0;
+    padding-left:35px;
+}
+#input_img {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+.custom_cards_row{
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+    max-height: 12vh;
+    overflow: hidden;
+}
+
+.remove_scrollbar::-webkit-scrollbar {
+    display: none;
+    }
+
+.para_align > p{
+    text-align: justify;
+    line-height: 0.9;
+}    

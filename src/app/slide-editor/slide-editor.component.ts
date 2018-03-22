@@ -9,6 +9,7 @@ import { Paragraph } from '../pojo/slide/paragraph';
 import { Slide } from '../pojo/slide/slide';
 import { LessonBuilderServiceService } from '../services/lesson_bulider/lesson-builder-service.service';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
+import { SlideBuilderServiceService } from '../services/slide_builder/slide-builder-service.service';
 
 @Component({
   selector: 'app-slide-editor',
@@ -39,47 +40,54 @@ export class SlideEditorComponent implements OnInit {
   slide: Slide;
   slides: any;
   index;
+  stage;
   lesson;
   public loading = false;
 
-  constructor(private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
-    this.index = this.route.snapshot.params.id;
+  constructor(private sideValidator: SlideBuilderServiceService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+    this.index = this.route.snapshot.params.index;
+    this.stage = this.route.snapshot.params.id;
   }
 
   ngOnInit() {
+
+
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
-
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2"] },
-      { interactive: [] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD"] },
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_1"] },
       { assessment: [] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
       this.lesson = data;
       this.slides = [];
-      for (let stage of this.lesson.stages) {
-        for (let slide of stage.slides) {
-          // console.log(slide);
-          this.slides.push(slide);
-        }
-      }
+      this.slide = this.lesson.stages[this.stage].slides[this.index]
 
 
-
-      // this.slides = data;
-      this.slide = this.slides[this.index];
-
-      // console.log(this.slide.type);
       var count = 0;
-      for (let list of this.templateTypePreviewList[0].presentation) {
+      if (this.lesson.type === 'PRESENTATION_INTERACTIVE' || this.lesson.type === 'INTERACTIVE') {
 
-        if (this.slide != null && this.slide.type === list) {
-          this.isClassVisible(count, this.slide.type)
+        for (let list of this.templateTypePreviewList[1].interactive) {
+          if (this.slide != null && this.slide.type === list) {
+            this.isClassVisible(count, this.slide.type)
+          }
+          count++;
+          this.templateList.push(list)
         }
-        count++;
-        this.templateList.push(list)
+
+      } else if (this.lesson.type === 'PRESENTATION') {
+
+        for (let list of this.templateTypePreviewList[0].presentation) {
+          if (this.slide != null && this.slide.type === list) {
+            this.isClassVisible(count, this.slide.type)
+          }
+          count++;
+          this.templateList.push(list)
+        }
+
       }
+
 
 
     });
@@ -97,13 +105,13 @@ export class SlideEditorComponent implements OnInit {
       }
     } else if ($event.target.value === "INTERACTIVE") {
 
-      for (let list of this.templateTypePreviewList[0].interactive) {
+      for (let list of this.templateTypePreviewList[1].interactive) {
         this.templateList.push(list)
       }
 
     } else if ($event.target.value === "ASSESSMENT") {
 
-      for (let list of this.templateTypePreviewList[0].assessment) {
+      for (let list of this.templateTypePreviewList[2].assessment) {
         this.templateList.push(list)
       }
     }
@@ -112,12 +120,13 @@ export class SlideEditorComponent implements OnInit {
   }
 
   isClassVisible(newValue: number, template_type: string) {
+    console.log(template_type);
     this.switchexpression = template_type
     this.isVisible = true;
     this.highlightedDiv = newValue;
     this.slide.type = template_type
     this.slide.fragmentcount = this.getFragmentCount(template_type);
-    // console.log(this.slide);
+    console.log(this.slide);
     //  console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
   }
 
@@ -135,6 +144,20 @@ export class SlideEditorComponent implements OnInit {
       case 'INTERACTIVE_2_CROSS_2':
         return 1;
       case 'INTERACTIVE_3_CROSS_2':
+        return 1;
+      case 'ONLY_VIDEO':
+        return 0;
+      case 'VIDEO_TITLE_PARA_CARD':
+        return 0;
+      case 'INTERACTIVE_CARDS_LIST':
+        return 0;
+      case 'NO_CONTENT':
+        return 0;
+      case 'TITLE_IMAGE_PARAGRAPH_CARD':
+        return 2;
+      case 'IMAGE_PARAGRAPH_CARD':
+        return 1;
+      case 'INTERACTIVE_2_CROSS_1':
         return 1;
       default:
         return 0;
@@ -160,14 +183,10 @@ export class SlideEditorComponent implements OnInit {
   }
 
   isValidForm() {
-    var isValid = false;
-    // console.log(this.slide);
-    if (this.slide.title != null && this.slide.title.text.trim() != '' && this.slide.paragraph != null && this.slide.paragraph.text.trim() != '') {
-      isValid = true;
-    } else {
-      isValid = false;
-    }
-    return true;
+
+
+    return this.sideValidator.isValidateSlide(this.slide);
+
   }
 
   enterSecondStep($event) {
