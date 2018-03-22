@@ -55,8 +55,8 @@ export class SlideEditorComponent implements OnInit {
     const local_complex_object = localStorage.getItem('currentUser')
     this.complex_object = JSON.parse(local_complex_object);
     this.templateTypePreviewList = [
-      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "NO_CONTENT"] },
-      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST", "NO_CONTENT"] },
+      { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD"] },
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_1"] },
       { assessment: [] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
@@ -153,6 +153,12 @@ export class SlideEditorComponent implements OnInit {
         return 0;
       case 'NO_CONTENT':
         return 0;
+      case 'TITLE_IMAGE_PARAGRAPH_CARD':
+        return 2;
+      case 'IMAGE_PARAGRAPH_CARD':
+        return 1;
+      case 'INTERACTIVE_2_CROSS_1':
+        return 1;
       default:
         return 0;
     }

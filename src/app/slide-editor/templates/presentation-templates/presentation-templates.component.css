@@ -178,11 +178,9 @@
   
 
   .paragraph-text{
-    white-space: pre-line;
     font-size: 14px; 
-    bottom: 5rem;
     color: rgb(3, 3, 3);
-    position: absolute;
+    text-align: justify
   } 
 
   .paragraph-text2{
