@@ -12,6 +12,8 @@ import { List } from '../pojo/slide/list';
 import { SubTitle } from '../pojo/slide/subtitle';
 import { Image } from '../pojo/slide/image';
 import { InteractiveList } from '../pojo/slide/interactivelist';
+declare var require: any;
+const swal = require('sweetalert2');
 
 @Component({
   selector: 'app-lesson-builder-content-creator',
@@ -240,10 +242,54 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   }
 
   public removeStageFunction = function (stage) {
-    var index = this.lesson.stages.indexOf(stage);
-    this.lesson.stages.splice(index, 1);
-    sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+    swal({
+      title: 'Are you sure?',
+      text: "Do you want to delete this stage?",
+      type: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success ml-2',
+      cancelButtonClass: 'btn btn-danger mr-2',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var index = this.lesson.stages.indexOf(stage);
+        this.lesson.stages.splice(index, 1);
+        if ((this.lesson.stages.length - 1) > index) {
+          this.setAllStageIndex(this.lesson.stages);
+        }
+        sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+        swal(
+          'Done',
+          'Stage deleted successfully',
+          'success'
+        )
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelled',
+          'Your stage is safe!',
+          'error'
+        )
+      }
+    });
   };
+
+  public setAllStageIndex(stages) {
+    for (var i = 0; i < stages.length; i++) {
+      for (let slide of stages[i].slides) {
+        slide.stage_id = i;
+        stages[i].name = 'Stage ' + (i + 1);
+      }
+    }
+  }
 
   public removeSlideFunction(stage, slide) {
 
