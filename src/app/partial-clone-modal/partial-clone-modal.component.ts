@@ -78,7 +78,7 @@ export class PartialCloneModalComponent implements OnInit {
       var newModule = new Module(module.name, module.description, 0, sessions, module.imageURL, module.status, null);
       modules.push(newModule);
     }
-    var newCourse = new Course(this.createCourseClone, null, "", "NA", "IT/ITES", "", modules);
+    var newCourse = new Course(this.createCourseClone, null, this.selectedCourseModal.imageURL, this.selectedCourseModal.description, "IT/ITES", "", modules);
     var assignee_object = {
       "userAssingedTo": [this.complex_object.id],
       "dueDate": this.getTodayDate(),
