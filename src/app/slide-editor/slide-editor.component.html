@@ -45,9 +45,9 @@
 
             </div>
             <div class="row m-3" *ngIf="templateList != null && templateList.length != 0">
-              <div class="col-3 mb-2" *ngFor="let template of templateList; index as i ">
+              <div class="col-2 mb-2" *ngFor="let template of templateList; index as i ">
                 <div class="card" (click)="isClassVisible(i,template)" [ngClass]="{'my-class': i === highlightedDiv && isVisible === true}">
-                  <h5 class="card-header" style="font-size: 14px;">{{template}}</h5>
+                  <h5 class="card-header" style="font-size: 10px;">{{template}}</h5>
                   <div class="card-body py-3 text-center">
                     <!-- <h5 class="card-title"></h5>
                     <p class="card-text"></p>  -->

@@ -7,6 +7,7 @@ import { Slide } from '../../../pojo/slide/slide';
 import { Title } from '../../../pojo/slide/title';
 import { Paragraph } from '../../../pojo/slide/paragraph';
 import { LessonBuilderServiceService } from '../../../services/lesson_bulider/lesson-builder-service.service';
+import { PlayPresentationService } from '../../../services/playpresentation/play-presentation-service';
 
 
 @Component({
@@ -46,6 +47,7 @@ export class PresentationTemplatesComponent implements OnInit {
   isMultiSelect = false;
   textcolor = '#7e7970'
   paragraph_delay = 0;
+  audio_delay = 0;
   image_delay = 0;
   editorValue;
   title_delay = 0;
@@ -53,7 +55,7 @@ export class PresentationTemplatesComponent implements OnInit {
   someValue = 2;
   totalDuration = 0;
   destinationslideIds: any;
-  constructor(private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
+  constructor(private playppt: PlayPresentationService, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
 
   getFragmentOrdering() {
 
@@ -89,43 +91,59 @@ export class PresentationTemplatesComponent implements OnInit {
         break;
       case 'LESSON_INTRODUCTION_CARD':
         break;
+      case 'NO_CONTENT':
+        console.log("this.audio_delay" + this.audio_delay)
+        this.totalDuration = this.audio_delay;
+        break;
+      case 'INTERACTIVE_2_CROSS_2':
+        break;
       default:
         break;
     }
 
   }
 
+  playFragmentAudio(value: string) {
+    var index = parseInt(value);
+    this.playppt.playPresentation(this.slide.interactivelist[index])
+
+  }
   animateMe() {
     this.onPlayDisable = true;
-    if (this.audio != null && this.audio != undefined && this.audio.src != '') {
+    if (this.slide.audioUrl != null && this.slide.audioUrl != undefined && this.slide.audioUrl != '') {
+      this.audio.src = this.slide.audioUrl;
       this.audio.load();
       this.audio.play();
+      this.audio.ontimeupdate = () => {
+        this.audio_delay = this.audio.duration * 1000;
+      }
     }
+
 
     this.getFragmentOrdering();
 
 
 
-    if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '') {
+    if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '' && this.slide.paragraph.transition_type != 'none') {
       this.paragraphview.nativeElement.classList.add(this.slide.paragraph.transition_type);
     }
-    if (this.slide.title != null && this.slide.title.transition_type != '') {
+    if (this.slide.title != null && this.slide.title.transition_type != '' && this.slide.title.transition_type != 'none') {
       this.titleview.nativeElement.classList.add(this.slide.title.transition_type);
     }
-    if (this.slide.image != null && this.slide.image.transition_type != '') {
+    if (this.slide.image != null && this.slide.image.transition_type != '' && this.slide.image.transition_type != 'none') {
       this.imageview.nativeElement.classList.add(this.slide.image.transition_type);
     }
 
-    console.log(this.totalDuration);
+    console.log("<<<<<<<<<<<<<<<<<" + this.totalDuration);
     setTimeout(() => {
-      if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '') {
+      if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '' && this.slide.paragraph.transition_type != 'none') {
         this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
       }
-      if (this.slide.title != null && this.slide.title.transition_type != '') {
+      if (this.slide.title != null && this.slide.title.transition_type != '' && this.slide.title.transition_type != 'none') {
         this.titleview.nativeElement.classList.remove(this.slide.title.transition_type);
       }
 
-      if (this.slide.image != null && this.slide.image.transition_type != '') {
+      if (this.slide.image != null && this.slide.image.transition_type != '' && this.slide.image.transition_type != 'none') {
         this.imageview.nativeElement.classList.remove(this.slide.image.transition_type);
       }
 
@@ -180,14 +198,14 @@ export class PresentationTemplatesComponent implements OnInit {
         //  console.log('response files res', res);
         this.audioUrl = res.toString();
         this.slide.audioUrl = this.bgImage;
-        this.audio.src = this.slide.audioUrl;
+        // this.audio.src = this.slide.audioUrl;
         this.loading = false;
       }, error => {
         //  console.log('response files error', error);
         //   console.log('response files error', error.error.text);
         this.audioUrl = error.error.text;
         this.slide.audioUrl = this.audioUrl;
-        this.audio.src = this.slide.audioUrl;
+        // this.audio.src = this.slide.audioUrl;
         this.loading = false;
       });
 
@@ -443,9 +461,9 @@ export class PresentationTemplatesComponent implements OnInit {
 
 
 
-    if (this.slide.audioUrl != null && this.slide.audioUrl.trim() != '' && this.slide.audioUrl != 'null') {
-      this.audio.src = this.slide.audioUrl;
-    }
+    /*   if (this.slide.audioUrl != null && this.slide.audioUrl.trim() != '' && this.slide.audioUrl != 'null') {
+        this.audio.src = this.slide.audioUrl;
+      } */
     if (this.switchexpression === 'LESSON_INTRODUCTION_CARD') {
       this.onPlayDisable = true;
     }

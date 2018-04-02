@@ -95,7 +95,7 @@
         <div *ngIf="lesson?.stages != undefined && lesson?.stages.length > 0; else stageElseBlock" class="row modules m-0 row-eq-height"
           dnd-sortable-container [sortableData]="lesson?.stages" [dropZones]="['container-dropZone']">
           <div *ngFor="let stage of lesson?.stages; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'stage'"
-            class="col-3 p-0 ml-1 mr-1 ">
+            class="col-2 p-0 ml-1 mr-1 ">
             <div dnd-sortable-container [sortableData]="lesson?.stages[j].slides" [dropZones]="['widget-dropZone']">
               <div class="card module_card row-eq-height mb-1">
 
@@ -116,20 +116,20 @@
                 <div *ngIf=" stage.slides != undefined && stage.slides.length > 0; else slideElseBlock">
                   <div class="card mt-2" *ngFor="let slide of stage.slides; index as k;" dnd-sortable [sortableIndex]="k" [dragEnabled]="dragOperation == 'slide'"
                     [dragData]="lesson?.stages[j].slides[k]">
-                    <div class="card-header abc">
+                    <div class="card-header p-1">
 
                       <div class="row m-0 row-eq-height">
                         <!-- <div (click)="open()" class="col-2 text-left">
                           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </div> -->
-                        <div class="col-2 ">
+                        <div class="col-2 pl-1">
                           <a href="/slide_editor/{{j}}/{{k}}">
                             <i class="fas fa-edit"></i>
                           </a>
 
                         </div>
                         <div class="col-8 text-center">
-                          <span style="font-size: 14px;"> {{slide.type}}</span>
+                          <span style="font-size: 10px;"> {{slide.type}}</span>
                         </div>
                         <div class="col-2 text-right">
                           <i (click)="removeSlideFunction(stage,slide)" class="fa fa-times" aria-hidden="true"></i>

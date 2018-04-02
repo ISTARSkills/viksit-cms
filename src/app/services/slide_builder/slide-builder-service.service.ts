@@ -4,8 +4,6 @@ import { Slide } from '../../pojo/slide/slide';
 @Injectable()
 export class SlideBuilderServiceService {
 
-  slide: Slide;
-
   constructor() { }
 
 
@@ -41,7 +39,7 @@ export class SlideBuilderServiceService {
       }
 
 
-    } else if (slide.type === 'IMAGE_TITLE_PARAGRAPH_CARD' || slide.type === 'TITLE_IMAGE_PARAGRAPH_CARD') {
+    } else if (slide.type === 'IMAGE_TITLE_PARAGRAPH_CARD' || slide.type === 'TITLE_IMAGE_PARAGRAPH_CARD' || slide.type === 'AUDIO_TITLE_IMAGE_PARAGRAPH_CARD') {
 
       if (slide.title != null && slide.title.text.trim() != ''
         && slide.paragraph != null && slide.paragraph.text.trim() != ''
@@ -147,7 +145,18 @@ export class SlideBuilderServiceService {
       }
 
 
+    } else if (slide.type === 'AUDIO_SPEECH_CARD') {
+      if (slide.interactivelist[0] != null && slide.interactivelist[0].text.trim() != ''
+        && slide.interactivelist[1] != null && slide.interactivelist[1].text.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].text.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].text.trim() != ''
+      ) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
     }
+
     return isValid;
 
   }

@@ -186,10 +186,6 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   public getNewSlide(index) {
 
-    console.log("this.lesson.stages[index].slides.length")
-    console.log(this.lesson.stages[index].slides.length);
-
-
     var lists = Array();
     var interactivelists = Array();
     this.newTitle = new Title("", 1, "none", 500);
@@ -206,7 +202,6 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     this.subTitle = new SubTitle("", 1, "none", 500)
     this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle, interactivelists, index);
     this.lesson.stages[index].slides.push(this.slide);
-    console.log("this.lesson.stages[index].slides.length")
     console.log(this.lesson.stages[index].slides.length)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
     // this.currentModalInstance.close();

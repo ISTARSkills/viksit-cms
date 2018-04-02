@@ -47,6 +47,7 @@ import { LoadingModule } from 'ngx-loading';
 import { CKEditorModule } from 'ngx-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { SlideBuilderServiceService } from './services/slide_builder/slide-builder-service.service';
+import { PlayPresentationService } from './services/playpresentation/play-presentation-service';
 
 @NgModule({
   declarations: [
@@ -94,7 +95,14 @@ import { SlideBuilderServiceService } from './services/slide_builder/slide-build
     CKEditorModule,
     ImageCropperModule
   ],
-  providers: [AuthService, AuthGuard, AppConfiguration, DatePipe, CourseBuilderServiceService, LessonBuilderServiceService, SlideBuilderServiceService],
+  providers: [AuthService,
+    AuthGuard,
+    AppConfiguration,
+    DatePipe,
+    CourseBuilderServiceService,
+    LessonBuilderServiceService,
+    SlideBuilderServiceService,
+    PlayPresentationService],
   bootstrap: [AppComponent]
 })
 
