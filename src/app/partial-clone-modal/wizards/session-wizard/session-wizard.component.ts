@@ -145,7 +145,9 @@ export class SessionWizardComponent implements OnInit {
       this.moduleFiltered = [];
 
     }
-
+    if (courseSelected == this.courseSelectModel) {
+      this.moduleFiltered = [];
+    }
     for (let course of this.courses) {
       if (course.id == courseSelected.id) {
         for (let module of course.modules) {

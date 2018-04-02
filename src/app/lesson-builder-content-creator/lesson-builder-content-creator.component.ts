@@ -287,11 +287,42 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   }
 
   public removeSlideFunction(stage, slide) {
-
-    var stageIndex = this.lesson.stages.indexOf(stage);
-    var slideIndex = this.lesson.stages[stageIndex].slides.indexOf(slide);
-    this.lesson.stages[stageIndex].slides.splice(slideIndex, 1);
-    sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+    swal({
+      title: 'Are you sure?',
+      text: "Do you want to delete this slide?",
+      type: 'warning',
+      showCancelButton: true,
+      allowOutsideClick: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success ml-2',
+      cancelButtonClass: 'btn btn-danger mr-2',
+      buttonsStyling: false,
+      reverseButtons: true
+    }).then((result) => {
+      if (result.value) {
+        var stageIndex = this.lesson.stages.indexOf(stage);
+        var slideIndex = this.lesson.stages[stageIndex].slides.indexOf(slide);
+        this.lesson.stages[stageIndex].slides.splice(slideIndex, 1);
+        sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+        swal(
+          'Done',
+          'Slide deleted successfully',
+          'success'
+        )
+      } else if (
+        // Read more about handling dismissals
+        result.dismiss === swal.DismissReason.cancel
+      ) {
+        swal(
+          'Cancelled',
+          'Your slide is safe!',
+          'error'
+        )
+      }
+    });
   };
 
   public addSlideComponent = function (index) {

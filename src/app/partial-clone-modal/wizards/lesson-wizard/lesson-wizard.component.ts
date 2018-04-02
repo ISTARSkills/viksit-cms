@@ -163,11 +163,15 @@ export class LessonWizardComponent implements OnInit {
   onCourseChange(courseSelected: any) {
     //console.log('course sekected ' + this.courseSelectModel.name + ' jjjj ' + courseSelected.name);
     this.moduleSelectModel = null;
+    this.sessionSelectModel = null;
     if (courseSelected == "") {
       this.moduleFiltered = [];
 
     }
-
+    if (courseSelected == this.courseSelectModel) {
+      this.moduleFiltered = [];
+      this.sessionFiltered = [];
+    }
     for (let course of this.courses) {
       if (course.id == courseSelected.id) {
         for (let module of course.modules) {
@@ -183,7 +187,9 @@ export class LessonWizardComponent implements OnInit {
     if (moduleSelected == "") {
       this.sessionFiltered = [];
     }
-
+    if (moduleSelected = this.moduleSelectModel) {
+      this.sessionFiltered = [];
+    }
     for (let course of this.courses) {
       if (course.id == this.courseSelectModel.id) {
         for (let module of course.modules) {
