@@ -28,10 +28,10 @@
                     <button class="btn custom-btn-dropdown" ngbDropdownToggle (click)="ignore($event);$event.preventDefault()"></button>
                     <div class="dropdown-menu" ngbDropdownMenu>
                       <button class="dropdown-item" *ngIf="!course.isPublished" (click)="ignore($event);$event.preventDefault();redirectToAssignPage(course)">Assign Task</button>
-                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'course',course)">Clone Course</button>
-                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'module',course)">Clone Module</button>
-                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content,'session',course)">Clone Session</button>
-                      <button class="dropdown-item" (click)="ignore($event);$event.preventDefault();open(content, 'lesson',course)">Clone Lesson</button>
+                      <button class="dropdown-item" *ngIf="course.modules.length" (click)="ignore($event);$event.preventDefault();open(content, 'course',course)">Clone Course</button>
+                      <button class="dropdown-item" *ngIf="course.modules.length" (click)="ignore($event);$event.preventDefault();open(content, 'module',course)">Clone Module</button>
+                      <button class="dropdown-item" *ngIf="course.modules.length" (click)="ignore($event);$event.preventDefault();open(content,'session',course)">Clone Session</button>
+                      <button class="dropdown-item" *ngIf="course.modules.length" (click)="ignore($event);$event.preventDefault();open(content, 'lesson',course)">Clone Lesson</button>
                     </div>
                   </div>
                 </div>
