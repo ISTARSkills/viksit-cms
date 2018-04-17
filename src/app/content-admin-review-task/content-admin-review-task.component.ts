@@ -119,6 +119,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       }
       if (this.wizard.model.currentStepIndex == 1) {
         this.lessonUpdateList();
+        this.getCourseAssignee();
         this.progressWidth1 = 33;
         this.progressWidth2 = 0;
         this.isOn = true;
@@ -181,6 +182,8 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     }
   }
   completeReview() {
+    this.newCourse.dueDate = this.model.formatted;
+    this.newCourse.assignee = this.selectedUser;
     this.loading = true;
     const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/' + this.task_id, body, {
