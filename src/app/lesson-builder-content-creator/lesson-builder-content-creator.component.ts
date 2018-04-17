@@ -334,8 +334,15 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         var index = this.lesson.stages.indexOf(stage);
+        var stagelength = this.lesson.stages.length - 1;
         this.lesson.stages.splice(index, 1);
-        this.setAllStageIndex();
+
+        if (stagelength > index) {
+
+          this.setAllStageIndex();
+        }
+
+        // 
 
 
 
@@ -361,15 +368,16 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   public setAllStageIndex() {
     var slide_order_id = 1;
+    var slide_stage_id = 0;
     for (var i = 0; i < this.lesson.stages.length; i++) {
       this.lesson.stages[i].name = 'Stage ' + (i + 1);
+
       for (let slide of this.lesson.stages[i].slides) {
         slide.order_id = slide_order_id;
-
-        slide.stage_id = slide_order_id;
-
+        slide.stage_id = slide_stage_id;
         slide_order_id++;
       }
+      slide_stage_id++;
     }
   }
 
@@ -392,8 +400,12 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
       if (result.value) {
         var stageIndex = this.lesson.stages.indexOf(stage);
         var slideIndex = this.lesson.stages[stageIndex].slides.indexOf(slide);
+        var stagelength = this.lesson.stages.length - 1;
         this.lesson.stages[stageIndex].slides.splice(slideIndex, 1);
-        this.setAllStageIndex();
+        if (stagelength > slideIndex) {
+
+          this.setAllStageIndex();
+        }
         sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
         swal(
           'Done',
