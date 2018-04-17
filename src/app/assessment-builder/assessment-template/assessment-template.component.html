@@ -1,0 +1,554 @@
+<div class="row m-3" [ngSwitch]="switchexpression">
+  <ng-container *ngSwitchCase="'SINGLE_CHOICE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <button class="btn btn-primary btn-sm float-right" (click)="openLg(content)">Add Skill</button>
+            </div>
+            <div *ngIf="question.learning_objectives != undefined &&  question.learning_objectives.length != 0;else skillElseBlock" class="col-12">
+              <label class="w-100">Skill List</label>
+              <span *ngFor="let learningObjective of question.learning_objectives; index as i " class="badge badge-pill badge-info">{{learningObjective.name}}</span>
+            </div>
+            <ng-template #skillElseBlock>
+              <p class="text-center">No Skill Present</p>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <label>Question Text</label>
+              <input type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question..">
+            </div>
+            <div class="col-6">
+              <label>Option 1 Text</label>
+              <input type="text" [(ngModel)]="question.options[0].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="1" [(ngModel)]="question.options[0].marking_schema" (ngModelChange)="isCorrectOptionFunction('1')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6 ">
+              <label>Option 2 Text</label>
+              <input type="text" [(ngModel)]="question.options[1].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="2" [(ngModel)]="question.options[1].marking_schema" (ngModelChange)="isCorrectOptionFunction('2')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 3 Text</label>
+              <input type="text" [(ngModel)]="question.options[2].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="3" [(ngModel)]="question.options[2].marking_schema" (ngModelChange)="isCorrectOptionFunction('3')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 4 Text</label>
+              <input type="text" [(ngModel)]="question.options[3].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="4" [(ngModel)]="question.options[3].marking_schema" (ngModelChange)="isCorrectOptionFunction('4')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Question Explanation</label>
+              <textarea type="text" [(ngModel)]="question.explanation" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <div class="row m-0">
+
+            <div class="mx-auto title-text text-center animated">{{question.text}}</div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[0].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[0].text}}
+            </div>
+          </div>
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[1].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[1].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[2].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[2].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[3].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[3].text}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'MULTIPLE_CHOICE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <label>Question Text</label>
+              <input type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question..">
+            </div>
+            <div class="col-6">
+              <label>Option 1 Text</label>
+              <input type="text" [(ngModel)]="question.options[0].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="1" [(ngModel)]="question.options[0].marking_schema" (ngModelChange)="isCorrectOptionFunction('1')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6 ">
+              <label>Option 2 Text</label>
+              <input type="text" [(ngModel)]="question.options[1].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="2" [(ngModel)]="question.options[1].marking_schema" (ngModelChange)="isCorrectOptionFunction('2')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 3 Text</label>
+              <input type="text" [(ngModel)]="question.options[2].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="3" [(ngModel)]="question.options[2].marking_schema" (ngModelChange)="isCorrectOptionFunction('3')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 4 Text</label>
+              <input type="text" [(ngModel)]="question.options[3].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="4" [(ngModel)]="question.options[3].marking_schema" (ngModelChange)="isCorrectOptionFunction('4')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Question Explanation</label>
+              <textarea type="text" [(ngModel)]="question.explanation" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <div class="row m-0">
+            <div class="mx-auto title-text text-center animated">{{question.text}}</div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[0].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[0].text}}
+            </div>
+          </div>
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[1].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[1].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[2].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[2].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[3].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[3].text}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'MULTIPLE_CHOICE_WITH_PARA'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <label>Question Text</label>
+              <input type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question..">
+            </div>
+            <div class="col-12">
+              <label>Question Comprehensive Passage</label>
+              <textarea type="text" [(ngModel)]="question.comprehensive_passage" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+            <div class="col-6">
+              <label>Option 1 Text</label>
+              <input type="text" [(ngModel)]="question.options[0].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="1" [(ngModel)]="question.options[0].marking_schema" (ngModelChange)="isCorrectOptionFunction('1')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6 ">
+              <label>Option 2 Text</label>
+              <input type="text" [(ngModel)]="question.options[1].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="2" [(ngModel)]="question.options[1].marking_schema" (ngModelChange)="isCorrectOptionFunction('2')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 3 Text</label>
+              <input type="text" [(ngModel)]="question.options[2].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="3" [(ngModel)]="question.options[2].marking_schema" (ngModelChange)="isCorrectOptionFunction('3')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 4 Text</label>
+              <input type="text" [(ngModel)]="question.options[3].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="4" [(ngModel)]="question.options[3].marking_schema" (ngModelChange)="isCorrectOptionFunction('4')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Question Explanation</label>
+              <textarea type="text" [(ngModel)]="question.explanation" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <div class="row m-0">
+            <div class="mx-auto title3-text text-center animated">{{question.comprehensive_passage}}</div>
+            <div class="mx-auto title2-text text-center animated">{{question.text}}</div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[0].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[0].text}}
+            </div>
+          </div>
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[1].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[1].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[2].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[2].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[3].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[3].text}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'SINGLE_CHOICE_WITH_PARA'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <label>Question Text</label>
+              <input type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question..">
+            </div>
+
+            <div class="col-12">
+              <label>Question Comprehensive Passage</label>
+              <textarea type="text" [(ngModel)]="question.comprehensive_passage" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+            <div class="col-6">
+              <label>Option 1 Text</label>
+              <input type="text" [(ngModel)]="question.options[0].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="1" [(ngModel)]="question.options[0].marking_schema" (ngModelChange)="isCorrectOptionFunction('1')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6 ">
+              <label>Option 2 Text</label>
+              <input type="text" [(ngModel)]="question.options[1].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle  mr-3" ngbRadioGroup name="2" [(ngModel)]="question.options[1].marking_schema" (ngModelChange)="isCorrectOptionFunction('2')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 3 Text</label>
+              <input type="text" [(ngModel)]="question.options[2].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="3" [(ngModel)]="question.options[2].marking_schema" (ngModelChange)="isCorrectOptionFunction('3')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-6">
+              <label>Option 4 Text</label>
+              <input type="text" [(ngModel)]="question.options[3].text" class="form-control" aria-describedby="" placeholder="Enter Option..">
+            </div>
+            <div class="col-6 m-auto text-center">
+              <div class="btn-group btn-group-toggle mr-3" ngbRadioGroup name="4" [(ngModel)]="question.options[3].marking_schema" (ngModelChange)="isCorrectOptionFunction('4')"
+                (click)="ignore($event)">
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="true">Correct
+                </label>
+                <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+                  <input ngbButton type="radio" class="invisible" [value]="false">InCorrect
+                </label>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Question Explanation</label>
+              <textarea type="text" [(ngModel)]="question.explanation" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <div class="row m-0">
+            <div class="mx-auto title3-text text-center animated">{{question.comprehensive_passage}}</div>
+            <div class="mx-auto title2-text text-center animated">{{question.text}}</div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[0].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[0].text}}
+            </div>
+          </div>
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[1].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[1].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[2].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[2].text}}
+            </div>
+          </div>
+
+
+          <div class="card w-100 mt-2" [ngClass]="{'correct-option': question.options[3].marking_schema === true}">
+            <div class="card-body">
+              {{question.options[3].text}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+</div>
+
+
+<ng-template #content let-c="close" let-d="dismiss" class="custom_modalcss">
+  <div class="modal-header">
+    <h4 class="modal-title">Modal title</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+
+      <div class="col-4">
+        <label class="w-100">Add Skill</label>
+        <ng-select [items]="skills$ | async" bindLabel="name" [(ngModel)]="selectedskillId" (change)="onChangeSkill($event)">
+        </ng-select>
+        <label class="w-100">Add New Skill</label>
+        <input (keyup.enter)="addSkill(box.value)" #box type="text" class="form-control" aria-describedby="" placeholder="Enter Skill Name..">
+      </div>
+      <div class="col-8">
+        <div *ngIf="question.learning_objectives != undefined && question.learning_objectives.length != 0;else skillElseBlock" class="col-12">
+          <label class="w-100">Skill List</label>
+          <ul>
+            <li *ngFor="let learningObjective of question.learning_objectives; index as i " class="badge badge-pill badge-info">{{learningObjective.name}}</li>
+          </ul>
+        </div>
+        <ng-template #skillElseBlock>
+          <p class="text-center">No Skill Present</p>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+  </div>
+</ng-template>

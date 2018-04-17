@@ -233,13 +233,6 @@ margin-bottom: 5px;
   }
 
     
-  .title-text {
-    font-size: 24px;
-    color: rgb(3, 3, 3);
-    font-weight: bold;
-    text-align: center;
-    margin-top: 30px;
-  }
  
    .paragraph-text{
     white-space: pre-line;
@@ -248,3 +241,31 @@ margin-bottom: 5px;
     color: rgb(3, 3, 3);
     position: absolute;
   } 
+
+  .title-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 50px;
+    text-align: justify !important;
+  }
+
+  .title3-text {
+    font-size: 12px;
+    font-weight: bold;
+    margin-top: 50px;
+    text-align: justify !important;
+  }
+
+  .title2-text {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+    text-align: justify !important;
+  }
+
+
+  .correct-option{
+    border: solid 1px #23b6f9;
+    color: #23b6f9;
+    font-weight: bolder;
+  }

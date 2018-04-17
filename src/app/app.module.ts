@@ -48,6 +48,8 @@ import { CKEditorModule } from 'ngx-ckeditor';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { SlideBuilderServiceService } from './services/slide_builder/slide-builder-service.service';
 import { PlayPresentationService } from './services/playpresentation/play-presentation-service';
+import { AssessmentBuilderComponent } from './assessment-builder/assessment-builder.component';
+import { AssessmentTemplateComponent } from './assessment-builder/assessment-template/assessment-template.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +73,8 @@ import { PlayPresentationService } from './services/playpresentation/play-presen
     ContentAdminReviewTaskComponent,
     SlideEditorComponent,
     PresentationTemplatesComponent,
+    AssessmentBuilderComponent,
+    AssessmentTemplateComponent,
   ],
   imports: [
     BrowserModule,

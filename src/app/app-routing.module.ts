@@ -11,6 +11,7 @@ import { CreateCourseTaskComponent } from './create-course-task/create-course-ta
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
 import { ContentAdminReviewTaskComponent } from './content-admin-review-task/content-admin-review-task.component';
 import { SlideEditorComponent } from './slide-editor/slide-editor.component';
+import { AssessmentBuilderComponent } from './assessment-builder/assessment-builder.component';
 
 
 const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', canActivate: [AuthGuard] },
@@ -21,7 +22,8 @@ const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', can
 { path: 'create_course_task', component: CreateCourseTaskComponent, canActivate: [AuthGuard] },
 { path: 'lesson_builder/:id', component: LessonBuilderContentCreatorComponent, canActivate: [AuthGuard] },
 { path: 'review_task/:task_id', component: ContentAdminReviewTaskComponent, canActivate: [AuthGuard] },
-{ path: 'slide_editor/:id/:index', component: SlideEditorComponent, canActivate: [AuthGuard] }
+{ path: 'slide_editor/:id/:index', component: SlideEditorComponent, canActivate: [AuthGuard] },
+{ path: 'assessment_editor/:id', component: AssessmentBuilderComponent, canActivate: [AuthGuard] }
 
 
 ];

@@ -155,7 +155,92 @@ export class SlideBuilderServiceService {
       } else {
         isValid = false;
       }
+    } else if (slide.type === 'DRAGGABLE_CARD_2') {
+      if (slide.title != null && slide.title.text.trim() != '' && slide.paragraph != null && slide.paragraph.text.trim() != ''
+        && slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != ''
+        && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
+        && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != ''
+        && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != ''
+        && slide.interactivelist[6] != null && slide.interactivelist[6].image.url.trim() != ''
+        && slide.interactivelist[7] != null && slide.interactivelist[7].image.url.trim() != ''
+      ) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
+
+      // console.log(slide);
+    } else if (slide.type === 'DRAGGABLE_CARD_1') {
+      if (slide.title != null && slide.title.text.trim() != '' && slide.interactivelist != null) {
+
+        for (let interactive of slide.interactivelist) {
+          if (interactive.image.url != null && interactive.image.url.trim() != '') {
+            isValid = true;
+          } else {
+            isValid = false;
+            break;
+          }
+        }
+      } else {
+        isValid = false;
+      }
+
+      // console.log(slide);
+    } else if (slide.type === 'DRAGGABLE_CARD_3') {
+      if (slide.image.url != null && slide.image.url.trim() != ''
+        && slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != ''
+        && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
+        && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != ''
+        && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != ''
+        && slide.interactivelist[6] != null && slide.interactivelist[6].image.url.trim() != ''
+        && slide.interactivelist[7] != null && slide.interactivelist[7].image.url.trim() != ''
+      ) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
+
+      // console.log(slide);
+    } else if (slide.type === 'DRAGGABLE_CARD_4') {
+      if (slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != ''
+        && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
+        && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != ''
+        && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != ''
+        && slide.interactivelist[6] != null && slide.interactivelist[6].image.url.trim() != ''
+        && slide.interactivelist[7] != null && slide.interactivelist[7].image.url.trim() != ''
+      ) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
+
+      // console.log(slide);
+    } else if (slide.type === 'DRAGGABLE_CARD_5') {
+      if (slide.image.url != null && slide.image.url.trim() != ''
+        && slide.interactivelist[0] != null && slide.interactivelist[0].image.url.trim() != ''
+        && slide.interactivelist[1] != null && slide.interactivelist[1].image.url.trim() != ''
+        && slide.interactivelist[2] != null && slide.interactivelist[2].image.url.trim() != ''
+        && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
+        && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != ''
+        && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != ''
+        && slide.interactivelist[6] != null && slide.interactivelist[6].image.url.trim() != ''
+        && slide.interactivelist[7] != null && slide.interactivelist[7].image.url.trim() != ''
+      ) {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
+
+      // console.log(slide);
     }
+
+    //draggable_card_1
 
     return isValid;
 

@@ -7,7 +7,8 @@
 
   <div class="row mb-2">
     <div class="col-6">
-      <h4> Lesson Builder </h4>
+      <h4 *ngIf="lesson?.type != 'ASSESSMENT'"> Lesson Builder </h4>
+      <h4 *ngIf="lesson?.type === 'ASSESSMENT'"> Assessment Builder </h4>
       <!-- Sort By:
       <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBasic" [(ngModel)]="dragOperation">
         <label ngbButtonLabel class="btn btn-danger">
@@ -29,7 +30,8 @@
       <i class="fas fa-times"></i>
     </div>
     <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
-    <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+    <div *ngIf="lesson?.type != 'ASSESSMENT'" [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover"
+      [style.background-image]="'url('+bgImage+')'">
       <div class="card-block p-0">
         <div class="text-center">
           <img #imageview class='card-img custom-notask-imgtag animated' style="background-size: cover;width: 100%" [src]="fgImage"
@@ -43,20 +45,107 @@
         </div>
       </div>
     </div>
+
+    <div *ngIf="lesson?.type === 'ASSESSMENT'" [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover"
+      [style.background-image]="'url('+bgImage+')'">
+
+      <!--  <img [hidden]="onPlayDisable" (click)="playAssessmentPreview('next')" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 99999;"
+        src='../../assets/image/play.png' alt=''> -->
+
+      <div class="row ">
+        <div class="col-12  ">
+          <i [hidden]="slidePreviewPosition == (lesson.stages.length - 1)" style="position: absolute;top: 282px;right: 14px;font-size: 25px;z-index: 999999;"
+            class="fas fa-arrow-circle-right float-right mr-1" (click)="nextAssessmentPreview()"></i>
+          <i [hidden]="slidePreviewPosition == 0" style="position: absolute;top: 282px;left: 14px;font-size: 25px;z-index: 999999;"
+            class="fas fa-arrow-circle-left float-right" (click)="previewAssessmentPreview()"></i>
+
+        </div>
+
+      </div>
+
+      <div class="card-block p-2">
+        <div class="row m-0">
+          <div class="mx-auto title3-text text-center animated">{{question?.comprehensive_passage.replace('null','')}}</div>
+          <div class="mx-auto title2-text text-center animated">{{question?.text}}</div>
+        </div>
+
+
+        <div class="card w-100 mt-2" [ngClass]="{'correct-option': question?.options[0].marking_schema === true}">
+          <div class="card-body text-center">
+            {{question?.options[0].text}}
+          </div>
+        </div>
+
+        <div class="card w-100 mt-2" [ngClass]="{'correct-option': question?.options[1].marking_schema === true}">
+          <div class="card-body text-center">
+            {{question?.options[1].text}}
+          </div>
+        </div>
+
+
+        <div class="card w-100 mt-2" [ngClass]="{'correct-option': question?.options[2].marking_schema === true}">
+          <div class="card-body text-center">
+            {{question?.options[2].text}}
+          </div>
+        </div>
+
+
+        <div class="card w-100 mt-2" [ngClass]="{'correct-option': question?.options[3].marking_schema === true}">
+          <div class="card-body text-center">
+            {{question?.options[3].text}}
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+
   </div>
+
+
+
+
+
+
+
+
+
+
+
   <div class="row course">
     <div class="card course_card">
       <div class="card-header">
         <span>
           {{lesson?.name}} </span>
         <i ngbPopover="{{lesson?.description}}" triggers="mouseenter:mouseleave" class="fa fa-info-circle" aria-hidden="true"></i>
-        <button (click)="addStageComponent(lesson)" type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2">
+
+
+
+        <button *ngIf="lesson?.type != 'ASSESSMENT'" (click)="addStageComponent(lesson)" type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2">
           <i class="fas fa-plus-circle"></i> Add Stage</button>
+        <button *ngIf="lesson?.type === 'ASSESSMENT'" (click)="addStageForQuestionComponent(lesson)" type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2">
+          <i class="fas fa-plus-circle"></i> Add Question</button>
         <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
           <i class="fas fa-comments"></i> Comments</button>
         <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="mobilePreviewFunction('show')">
           <i class="far fa-play-circle"></i> Preview </button>
+
+        <div *ngIf="lesson?.type === 'ASSESSMENT'" class="btn-group btn-group-toggle  mr-3 float-right" ngbRadioGroup [(ngModel)]="lesson.isRetryable">
+          <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+            <input ngbButton type="radio" class="invisible" [value]="true">Retriable
+          </label>
+          <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+            <input ngbButton type="radio" class="invisible" [value]="false">Non-Retriable
+          </label>
+        </div>
+        <div *ngIf="lesson != null" class=" col-3 float-right">
+          <label class=" col-5">Lesson Duration</label>
+          <input type="number" [(ngModel)]="lesson.duration" class=" col-6" aria-describedby="" placeholder="Duration in min..">
+        </div>
+
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
           <div class="card custom-chat">
             <div class="card-body m-2">
@@ -97,7 +186,7 @@
           <div *ngFor="let stage of lesson?.stages; index as j " dnd-sortable [sortableIndex]="j" [dragEnabled]="dragOperation == 'stage'"
             class="col-2 p-0 ml-1 mr-1 ">
             <div dnd-sortable-container [sortableData]="lesson?.stages[j].slides" [dropZones]="['widget-dropZone']">
-              <div class="card module_card row-eq-height mb-1">
+              <div *ngIf="lesson?.type != 'ASSESSMENT'" class="card module_card row-eq-height mb-1">
 
                 <div class="card-header  p-0 pt-3 pb-3">
                   <div class="row m-0 row-eq-height">
@@ -119,9 +208,7 @@
                     <div class="card-header p-1">
 
                       <div class="row m-0 row-eq-height">
-                        <!-- <div (click)="open()" class="col-2 text-left">
-                          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </div> -->
+
                         <div class="col-2 pl-1">
                           <a href="/slide_editor/{{j}}/{{k}}">
                             <i class="fas fa-edit"></i>
@@ -143,24 +230,6 @@
                             alt=''>
                         </div>
                       </div>
-                      <!-- <div class="row m-0 row-eq-height">
-                        <div class="col-12">
-                          <b>Description:</b> {{slide.description}}</div>
-
-                      </div>
-                      <div class="row m-0 row-eq-height">
-
-                        <div class="col-12">
-                          <b>From:</b> {{slide.from}}</div>
-
-                      </div>
-                      <div class="row m-0 row-eq-height">
-
-                        <div class="col-12">
-                          <b>To:</b> {{slide.to}}</div>
-                      </div> -->
-
-
                     </div>
                   </div>
                 </div>
@@ -168,34 +237,64 @@
                   <p class="text-center">No Slides Present</p>
                 </ng-template>
               </div>
+              <div *ngIf="lesson?.type == 'ASSESSMENT'" class="card module_card row-eq-height mb-1">
+
+                <div class="card-header  p-0 pt-3 pb-3">
+                  <div class="row m-0 row-eq-height">
+                    <div class="col-2 pl-1">
+                      <a href="/assessment_editor/{{j}}">
+                        <i class="fas fa-edit"></i>
+                      </a>
+
+                    </div>
+                    <div class="col-8 text-left custom-course-header module-font-fize">
+                      Question {{j}} </div>
+                    <div class="col-2 text-right">
+                      <i (click)="removeStageFunction(stage)" class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-block custom-course-cardblock p-0 pt-1">
+                  <div class="row m-0 p-0 mt-2">
+                    <p class="col-9 pl-1" style="font-size: 10px">
+                      <i class="fas fa-tag " style="color: #eb384f;"></i> {{stage.type}}</p>
+                    <p class="col-3 px-0 pr-1  text-right" style="font-size: 12px">
+                      <i class="far fa-clock" style="color: #eb384f;"></i> {{stage.duration}} ms </p>
+                  </div>
+                  <div class="row m-3 p-0" style="min-height: 160px;max-height: 160px;">
+                    <b class="w-100">Question:</b>
+
+                    <p>{{stage.text}}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+          <ng-template #stageElseBlock>
+            <p class="text-center">No Stages Present</p>
+          </ng-template>
         </div>
-        <ng-template #stageElseBlock>
-          <p class="text-center">No Stages Present</p>
-        </ng-template>
-      </div>
 
-    </div>
-  </div>
-  <ng-template #content let-c="close" let-d="dismiss">
-    <div class="modal-header">
-      <h4 class="modal-title m-auto">{{modalName}}</h4>
-      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div *ngIf=" type == 'PRESENTATION';">
-        <label for="typeahead-format ">Slide Type:</label>
-        <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectSlideType">
-          <option value="ONLY_TITLE_PARAGRAPH_NEW">ONLY_TITLE_PARAGRAPH_NEW</option>
-        </select>
       </div>
     </div>
-    <div class="modal-footer ">
-      <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
-      <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
-    </div>
-  </ng-template>
-</div>
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="modal-title m-auto">{{modalName}}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf=" type == 'PRESENTATION';">
+          <label for="typeahead-format ">Slide Type:</label>
+          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectSlideType">
+            <option value="ONLY_TITLE_PARAGRAPH_NEW">ONLY_TITLE_PARAGRAPH_NEW</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
+        <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
+      </div>
+    </ng-template>
+  </div>
