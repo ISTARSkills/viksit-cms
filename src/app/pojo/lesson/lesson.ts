@@ -6,6 +6,8 @@ export class Lesson {
     imageURL: string;
     id: number;
     type: string;
+    isRetryable: boolean;
+    duration: number;
     constructor(name: string, description: string, status: string, imageURL: string, id: number, type: string) {
         this.name = name;
         this.description = description;

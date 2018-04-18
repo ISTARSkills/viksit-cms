@@ -8,7 +8,12 @@ import { Title } from '../../../pojo/slide/title';
 import { Paragraph } from '../../../pojo/slide/paragraph';
 import { LessonBuilderServiceService } from '../../../services/lesson_bulider/lesson-builder-service.service';
 import { PlayPresentationService } from '../../../services/playpresentation/play-presentation-service';
-
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
+import { Skill } from '../../../pojo/skill/skill';
+import { List } from '../../../pojo/slide/list';
+import { InteractiveList } from '../../../pojo/slide/interactivelist';
+import { Image } from '../../../pojo/slide/image';
 
 @Component({
   selector: 'app-presentation-templates',
@@ -55,7 +60,10 @@ export class PresentationTemplatesComponent implements OnInit {
   someValue = 2;
   totalDuration = 0;
   destinationslideIds: any;
-  constructor(private playppt: PlayPresentationService, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
+  skills$: Observable<Skill[]>;
+  selectedskillId;
+  selectGrid = 4;
+  constructor(private modalService: NgbModal, private playppt: PlayPresentationService, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
 
   getFragmentOrdering() {
 
@@ -134,7 +142,7 @@ export class PresentationTemplatesComponent implements OnInit {
       this.imageview.nativeElement.classList.add(this.slide.image.transition_type);
     }
 
-    console.log("<<<<<<<<<<<<<<<<<" + this.totalDuration);
+    //console.log("<<<<<<<<<<<<<<<<<" + this.totalDuration);
     setTimeout(() => {
       if (this.slide.paragraph != null && this.slide.paragraph.transition_type != '' && this.slide.paragraph.transition_type != 'none') {
         this.paragraphview.nativeElement.classList.remove(this.slide.paragraph.transition_type);
@@ -330,6 +338,14 @@ export class PresentationTemplatesComponent implements OnInit {
 
   }
 
+  getitems() {
+    let temp = Array<any>();
+    for (let i = 0; i < this.selectGrid; i++) {
+      temp.push(i);
+    }
+    return temp;
+  }
+
   onChangeGridAudio(event, gridIndex) {
 
     // console.log(event.target.files[0]);
@@ -360,55 +376,13 @@ export class PresentationTemplatesComponent implements OnInit {
   }
   getGridByIndexForImage(gridIndex, imageUrl) {
 
-    switch (gridIndex) {
-      case '1':
-        this.slide.interactivelist[0].image.url = imageUrl;
-        break;
-      case '2':
-        this.slide.interactivelist[1].image.url = imageUrl;
-        break;
-      case '3':
-        this.slide.interactivelist[2].image.url = imageUrl;
-        break;
-      case '4':
-        this.slide.interactivelist[3].image.url = imageUrl;
-        break;
-      case '5':
-        this.slide.interactivelist[4].image.url = imageUrl;
-        break;
-      case '6':
-        this.slide.interactivelist[5].image.url = imageUrl;
-        break;
-      default:
-        break;
-    }
+    this.slide.interactivelist[gridIndex].image.url = imageUrl;
 
   }
 
   getGridByIndexForAudio(gridIndex, audioUrl) {
 
-    switch (gridIndex) {
-      case '1':
-        this.slide.interactivelist[0].fragmentAudioUrl = audioUrl;
-        break;
-      case '2':
-        this.slide.interactivelist[1].fragmentAudioUrl = audioUrl;
-        break;
-      case '3':
-        this.slide.interactivelist[2].fragmentAudioUrl = audioUrl;
-        break;
-      case '4':
-        this.slide.interactivelist[3].fragmentAudioUrl = audioUrl;
-        break;
-      case '5':
-        this.slide.interactivelist[4].fragmentAudioUrl = audioUrl;
-        break;
-      case '6':
-        this.slide.interactivelist[5].fragmentAudioUrl = audioUrl;
-        break;
-      default:
-        break;
-    }
+    this.slide.interactivelist[gridIndex].fragmentAudioUrl = audioUrl;
 
   }
 
@@ -425,9 +399,12 @@ export class PresentationTemplatesComponent implements OnInit {
   ngOnInit() {
     // console.log("switchexpression " + this.switchexpression);
     // console.log(this.slide);
+    this.lessonBuilderService.getSkill();
     this.bgImage = this.slide.bgImage;
     //  console.log("lessonId " + this.lessonId)
     this.bgcolor = this.slide.color;
+
+
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
       this.destinationslideIds = [];
@@ -476,6 +453,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     if (this.slide.interactivelist != null && this.slide.interactivelist[0].isMultiSelect != null) {
       this.isMultiSelect = this.slide.interactivelist[0].isMultiSelect;
+      this.selectGrid = Math.sqrt(this.slide.interactivelist.length);
     }
 
 
@@ -485,6 +463,25 @@ export class PresentationTemplatesComponent implements OnInit {
     console.log(event);
     console.log(gridIndex);
     this.getGridByIndexForDestinationSlide(gridIndex, event)
+  }
+
+  onChangeSkill(event) {
+
+    console.log(event);
+    if (event != null) {
+      this.slide.learning_objectives.push(event);
+
+    }
+  }
+
+  addSkill(skillName) {
+
+    console.log(skillName);
+    if (skillName.trim() != "") {
+      this.slide.learning_objectives.push({ id: null, name: skillName });
+
+    }
+
   }
 
   getGridByIndexForDestinationSlide(gridIndex, slideId) {
@@ -508,14 +505,60 @@ export class PresentationTemplatesComponent implements OnInit {
       case '6':
         this.slide.interactivelist[5].destination_slide = slideId;
         break;
+      case '7':
+        this.slide.interactivelist[6].destination_slide = slideId;
+        break;
+      case '8':
+        this.slide.interactivelist[7].destination_slide = slideId;
+        break;
+      case '9':
+        this.slide.interactivelist[8].destination_slide = slideId;
+        break;
       default:
         break;
     }
 
   }
 
+  selectGridFunction(event) {
 
+    console.log(event);
+    console.log(this.selectGrid);
+    this.slide.interactivelist = []
+    var interactivelists = Array();
 
+    if (event == 2) {
+      for (let i = 0; i < 4; i++) {
+        let image = new Image("", 3, "none", 500);
+        let newInteractiveList = new InteractiveList("", "", i, image, "", false, 0, 0, false, -1, "Bounce")
+        this.slide.interactivelist.push(newInteractiveList);
+      }
+    } else if (event == 3) {
+      for (let i = 0; i < 9; i++) {
+        let image = new Image("", 3, "none", 500);
+        let newInteractiveList = new InteractiveList("", "", i, image, "", false, 0, 0, false, -1, "Bounce")
+        this.slide.interactivelist.push(newInteractiveList);
+      }
+    } else if (event == 4) {
+      for (let i = 0; i < 16; i++) {
+        let image = new Image("", 3, "none", 500);
+        let newInteractiveList = new InteractiveList("", "", i, image, "", false, 0, 0, false, -1, "Bounce")
+        this.slide.interactivelist.push(newInteractiveList);
+      }
+    }
+    console.log(this.slide);
+
+  }
+
+  openLg(content) {
+
+    this.modalService.open(content, { size: 'lg' });
+
+    this.skills$ = this.lessonBuilderService.getSkillForQuestions();
+
+    console.log(this.skills$);
+
+  }
 
   public isMultiSelectFunction() {
 
@@ -534,19 +577,25 @@ export class PresentationTemplatesComponent implements OnInit {
         interactive.isMultiSelect = false;
       }
 
-      if (option === '1') {
+      if (option == '1') {
         this.slide.interactivelist[0].isCorrectOption = true;
         console.log(this.slide.interactivelist[1].isCorrectOption);
-      } else if (option === '2') {
+      } else if (option == '2') {
         this.slide.interactivelist[1].isCorrectOption = true;
-      } else if (option === '3') {
+      } else if (option == '3') {
         this.slide.interactivelist[2].isCorrectOption = true;
-      } else if (option === '4') {
+      } else if (option == '4') {
         this.slide.interactivelist[3].isCorrectOption = true;
-      } else if (option === '5') {
+      } else if (option == '5') {
         this.slide.interactivelist[4].isCorrectOption = true;
-      } else if (option === '6') {
+      } else if (option == '6') {
         this.slide.interactivelist[5].isCorrectOption = true;
+      } else if (option == '7') {
+        this.slide.interactivelist[6].isCorrectOption = true;
+      } else if (option == '8') {
+        this.slide.interactivelist[7].isCorrectOption = true;
+      } else if (option == '9') {
+        this.slide.interactivelist[8].isCorrectOption = true;
       }
 
     } else if (this.isMultiSelect === true) {
@@ -555,18 +604,24 @@ export class PresentationTemplatesComponent implements OnInit {
         interactive.isMultiSelect = true;
       }
 
-      if (option === '1') {
+      if (option == '1') {
         this.slide.interactivelist[0].isCorrectOption = true;
-      } else if (option === '2') {
+      } else if (option == '2') {
         this.slide.interactivelist[1].isCorrectOption = true;
-      } else if (option === '3') {
+      } else if (option == '3') {
         this.slide.interactivelist[2].isCorrectOption = true;
-      } else if (option === '4') {
+      } else if (option == '4') {
         this.slide.interactivelist[3].isCorrectOption = true;
-      } else if (option === '5') {
+      } else if (option == '5') {
         this.slide.interactivelist[4].isCorrectOption = true;
-      } else if (option === '6') {
+      } else if (option == '6') {
         this.slide.interactivelist[5].isCorrectOption = true;
+      } else if (option == '7') {
+        this.slide.interactivelist[6].isCorrectOption = true;
+      } else if (option == '8') {
+        this.slide.interactivelist[7].isCorrectOption = true;
+      } else if (option == '9') {
+        this.slide.interactivelist[8].isCorrectOption = true;
       }
 
     }

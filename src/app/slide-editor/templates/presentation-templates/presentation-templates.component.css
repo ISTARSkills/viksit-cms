@@ -9,7 +9,48 @@
         border-radius: 0;
     
     }
+
+    .custom-preview-drag{
+        background-size: cover;
+        width: 100%;
+        height: 7.5vh;
+    }
+
+    .custom-preview-drag1{
+        background-size: cover;
+        width: 100%;
+        height: 13vh;
+    }
+
+    .custom-preview-drag2{
+        background-size: cover;
+        width: 100%;
+        height: 9vh;
+
+    }
+.custom-preview-drag4{
+    background-size: cover;
+    width: 100%;
+    height: 12.7vh;
+}
    
+.custom-preview-drag5{
+
+    background-size: cover;
+    width: 100%;
+    height: 10vh;
+}
+
+.custom-preview-drag5-center{
+    background-size: cover;
+    width: 50%;
+    height: 16vh;
+}
+.custom-preview-3cross3{
+    background-size: cover;
+    width: 100%; 
+    max-height: 13vh;
+}
 }
 
 @media screen and (min-width: 401px) and (max-width: 720px) {
@@ -21,6 +62,47 @@
         height: 76%;
         border-radius: 0;
     
+    }
+
+    .custom-preview-drag{
+        background-size: cover;
+        width: 100%;
+        height: 7.5vh;
+    }
+
+    .custom-preview-drag1{
+        background-size: cover;
+        width: 100%;
+        height: 13vh;
+    }
+
+    .custom-preview-drag2{
+        background-size: cover;
+        width: 100%;
+        height: 9vh;
+
+    }
+
+    .custom-preview-drag4{
+        background-size: cover;
+        width: 100%;
+        height: 12.7vh;
+    }
+
+    .custom-preview-drag5{
+
+        background-size: cover;
+        width: 100%;
+        height: 10vh;
+    }
+
+    .custom-preview-drag5-center{
+        background-size: cover;width: 50%;height: 16vh;
+    }
+    .custom-preview-3cross3{
+        background-size: cover;
+        width: 100%; 
+        max-height: 13vh;
     }
    
 }
@@ -36,7 +118,47 @@
         border-radius: 0;
     
     }
+
+    .custom-preview-drag{
+        background-size: cover;
+        width: 100%;
+        height: 7.5vh;
+    }
+
+    .custom-preview-drag1{
+        background-size: cover;
+        width: 100%;
+        height: 13vh;
+    }
    
+    .custom-preview-drag2{
+        background-size: cover;
+        width: 100%;
+        height: 9vh;
+
+    }
+
+    .custom-preview-drag4{
+        background-size: cover;
+        width: 100%;
+        height: 12.7vh;
+    }
+
+    .custom-preview-drag5{
+
+        background-size: cover;
+        width: 100%;
+        height: 10vh;
+    }
+
+    .custom-preview-drag5-center{
+        background-size: cover;width: 50%;height: 16vh;
+    }
+    .custom-preview-3cross3{
+        background-size: cover;
+        width: 100%; 
+        max-height: 13vh;
+    }
 }
 
 @media screen and (min-width: 1281px) and (max-width: 1440px) {
@@ -50,8 +172,51 @@
         border-radius: 0;
     
     }
+
+    .custom-preview-drag{
+        background-size: cover;
+        width: 100%;
+        height: 7.5vh;
+    }
+
+    .custom-preview-drag1{
+        background-size: cover;
+        width: 100%;
+        height: 13vh;
+    }
+
+    .custom-preview-drag2{
+        background-size: cover;
+        width: 100%;
+        height: 9vh;
+
+    }
+
+    .custom-preview-drag4{
+        background-size: cover;
+        width: 100%;
+        height: 12.7vh;
+    }
+    .custom-preview-drag5{
+
+        background-size: cover;
+        width: 100%;
+        height: 10vh;
+    }
+
+    .custom-preview-drag5-center{
+        background-size: cover;width: 50%;height: 16vh;
+    }
+
+    .custom-preview-3cross3{
+        background-size: cover;
+        width: 100%; 
+        max-height: 13vh;
+    }
    
 }
+
+
 
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
    
@@ -64,9 +229,51 @@
         border-radius: 0;
     
     }
+
+    .custom-preview-drag{
+        background-size: cover;
+        width: 100%;
+        height: 8.7vh;
+    }
+
+    .custom-preview-drag1{
+        background-size: cover;
+        width: 100%;
+        height: 15vh;
+    }
+
+    .custom-preview-drag2{
+        background-size: cover;
+        width: 100%;
+        height: 11vh;
+
+    }
+
+    .custom-preview-drag4{
+        background-size: cover;
+        width: 100%;
+        height: 14vh;
+    }
+
+    .custom-preview-drag5{
+
+        background-size: cover;
+        width: 100%;
+        height: 12.7vh;
+    }
+
+    .custom-preview-drag5-center{
+        background-size: cover;width: 50%;    height: 19vh;
+    }
+
+    .custom-preview-3cross3{
+        background-size: cover;
+        width: 100%; 
+        max-height: 15vh;
+    }
 }
 
-@media screen and (min-width: 1921px) {
+@media screen and (min-width: 1921px) and (max-width: 2160px) {
 
     .custom_mobile-preview{
         position: absolute;
@@ -76,6 +283,48 @@
         height: 76%;
         border-radius: 0;
     
+    }
+
+    .custom-preview-drag{
+        background-size: cover;
+        width: 100%;
+        height: 8.7vh;
+    }
+
+    .custom-preview-drag1{
+        background-size: cover;
+        width: 100%;
+        height: 15vh;
+    }
+
+    .custom-preview-drag2{
+        background-size: cover;
+        width: 100%;
+        height: 11vh;
+
+    }
+
+    .custom-preview-drag4{
+        background-size: cover;
+        width: 100%;
+        height: 14vh;
+    }
+
+    .custom-preview-drag5{
+
+        background-size: cover;
+        width: 100%;
+        height: 12.7vh;
+    }
+
+    .custom-preview-drag5-center{
+        background-size: cover;width: 50%;    height: 19vh;
+    }
+
+    .custom-preview-3cross3{
+        background-size: cover;
+        width: 100%; 
+        max-height: 15vh;
     }
    
 }
@@ -188,6 +437,17 @@
     color: rgb(3, 3, 3);
   } 
 
+  .paragraph-text3{
+    font-size: 14px; 
+    color: rgb(3, 3, 3);
+    text-align: justify;
+  } 
+
+  .paragraph-text3 > .p{
+      margin: 0px !important;
+
+  }
+
   .subtitle-text {
     font-size: 20px;
     text-align: center;
@@ -285,3 +545,7 @@
     text-align: justify;
     line-height: 0.9;
 }    
+
+.custom-preview-padding{
+    padding: 0.04rem 0.04rem!important;
+}

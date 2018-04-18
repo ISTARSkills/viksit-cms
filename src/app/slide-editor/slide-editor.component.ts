@@ -56,8 +56,7 @@ export class SlideEditorComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
     this.templateTypePreviewList = [
       { presentation: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD"] },
-      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_1", "AUDIO_SPEECH_CARD", "AUDIO_TITLE_IMAGE_PARAGRAPH_CARD"] },
-      { assessment: [] }]
+      { interactive: ["TITLE_PARAGRAPH_CARD", "LESSON_INTRODUCTION_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_1", "AUDIO_SPEECH_CARD", "AUDIO_TITLE_IMAGE_PARAGRAPH_CARD", "SLIDE_EVALUATION_CARD", "DRAGGABLE_CARD_1", "DRAGGABLE_CARD_2", "DRAGGABLE_CARD_3", "DRAGGABLE_CARD_4", "DRAGGABLE_CARD_5"] }]
 
     this.lessonBuilderService.getAllSlide().subscribe(data => {
       this.lesson = data;
@@ -126,6 +125,7 @@ export class SlideEditorComponent implements OnInit {
     this.highlightedDiv = newValue;
     this.slide.type = template_type
     this.slide.fragmentcount = this.getFragmentCount(template_type);
+
     console.log(this.slide);
     //  console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
   }
@@ -162,6 +162,20 @@ export class SlideEditorComponent implements OnInit {
       case "AUDIO_SPEECH_CARD":
         return 0;
       case "AUDIO_TITLE_IMAGE_PARAGRAPH_CARD":
+        return 1;
+      case "SLIDE_EVALUATION_CARD":
+        return 1;
+      case "DRAGGABLE_CARD_1":
+        return 1;
+      case "DRAGGABLE_CARD_2":
+        return 1;
+      case "DRAGGABLE_CARD_3":
+        return 1;
+      case "DRAGGABLE_CARD_3":
+        return 1;
+      case "DRAGGABLE_CARD_4":
+        return 1;
+      case "DRAGGABLE_CARD_5":
         return 1;
       default:
         return 0;

@@ -12,6 +12,8 @@ import { List } from '../pojo/slide/list';
 import { SubTitle } from '../pojo/slide/subtitle';
 import { Image } from '../pojo/slide/image';
 import { InteractiveList } from '../pojo/slide/interactivelist';
+import { Question } from '../pojo/assessment/question';
+import { Option } from '../pojo/assessment/option';
 declare var require: any;
 const swal = require('sweetalert2');
 
@@ -36,6 +38,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   newInteractiveList: InteractiveList
   slide: Slide
   subTitle: SubTitle
+  question: Question;
   @ViewChild('imageview') imageview;
   @ViewChild('paragraphview') paragraphview;
   @ViewChild('titleview') titleview;
@@ -100,6 +103,10 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     } else {
       this.mobilePreviewIsVisible = true;
       this.mobilePreview.nativeElement.classList.remove("slideInRight");
+    }
+
+    if (this.lesson.type === 'ASSESSMENT') {
+      this.playAssessmentPreview()
     }
 
   }
@@ -171,7 +178,45 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     this.slidePreviewPosition = 0;
     this.onPlayDisable = true;
     this.startPreview(this.slidePreviewPosition);
+
+
   }
+
+  public startAssessmentPreview(slidePreviewPosition) {
+
+    console.log(slidePreviewPosition);
+    this.question = this.lesson.stages[slidePreviewPosition];
+
+  }
+
+  public nextAssessmentPreview() {
+
+    this.slidePreviewPosition = this.slidePreviewPosition + 1;
+
+    if (this.slidePreviewPosition <= (this.lesson.stages.length - 1)) {
+      this.startAssessmentPreview(this.slidePreviewPosition);
+    }
+
+  }
+
+  public previewAssessmentPreview() {
+
+    this.slidePreviewPosition = this.slidePreviewPosition - 1;
+
+    if (this.slidePreviewPosition >= 0) {
+      this.startAssessmentPreview(this.slidePreviewPosition);
+    }
+
+  }
+
+  public playAssessmentPreview() {
+    this.onPlayDisable = true;
+    this.slidePreviewPosition = 0;
+    this.startAssessmentPreview(this.slidePreviewPosition);
+
+  }
+
+
 
   public getFragmentCount(type) {
 
@@ -187,11 +232,12 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   public getNewSlide(index) {
 
     var lists = Array();
+    var learning_objectives = Array();
     var interactivelists = Array();
     this.newTitle = new Title("", 1, "none", 500);
     this.newParagraph = new Paragraph("", 2, "none", 500);
     this.image = new Image("", 3, "none", 500);
-    for (let i = 0; i <= 6; i++) {
+    for (let i = 0; i < 16; i++) {
       this.newList = new List("", "", i);
       this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, -1, "Bounce")
       lists.push(this.newList);
@@ -200,14 +246,34 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
 
     this.subTitle = new SubTitle("", 1, "none", 500)
-    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), this.lesson.stages.length, "", lists, this.subTitle, interactivelists, index);
+
+
+
+
+    this.slide = new Slide(this.newTitle, this.newParagraph, this.image, "", "", this.selectSlideType, null, this.getFragmentCount(this.selectSlideType), slide_order_id, "", lists, this.subTitle, interactivelists, index, learning_objectives);
     this.lesson.stages[index].slides.push(this.slide);
+
+    var slide_order_id = 1;
+    for (var i = 0; i < this.lesson.stages.length; i++) {
+      for (let slide of this.lesson.stages[i].slides) {
+        slide.order_id = slide_order_id;
+        slide_order_id++;
+      }
+    }
+
+
+
     console.log(this.lesson.stages[index].slides.length)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
     // this.currentModalInstance.close();
 
     return this.lesson.stages[index].slides.length - 1;
   }
+
+  ignore(event: Event) {
+    event.stopPropagation();
+  }
+
 
   saveEndExitClicked() {
 
@@ -236,6 +302,20 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
   }
 
+  public addStageForQuestionComponent(lesson) {
+
+    var options = Array();
+    var learning_objectives = Array();
+    for (let i = 0; i < 4; i++) {
+      let option = new Option(null, false, "");
+      options.push(option);
+    }
+    this.question = new Question(null, "", "", "60", options, learning_objectives);
+    this.lesson.stages.push(this.question);
+    sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
+    this.router.navigate(['/assessment_editor/' + (this.lesson.stages.length - 1)], { relativeTo: this.route });
+  }
+
   public removeStageFunction = function (stage) {
     swal({
       title: 'Are you sure?',
@@ -254,10 +334,19 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         var index = this.lesson.stages.indexOf(stage);
+        var stagelength = this.lesson.stages.length - 1;
         this.lesson.stages.splice(index, 1);
-        if ((this.lesson.stages.length - 1) > index) {
-          this.setAllStageIndex(this.lesson.stages);
+
+        if (stagelength > index) {
+
+          this.setAllStageIndex();
         }
+
+        // 
+
+
+
+
         sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
         swal(
           'Done',
@@ -277,12 +366,18 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     });
   };
 
-  public setAllStageIndex(stages) {
-    for (var i = 0; i < stages.length; i++) {
-      for (let slide of stages[i].slides) {
-        slide.stage_id = i;
-        stages[i].name = 'Stage ' + (i + 1);
+  public setAllStageIndex() {
+    var slide_order_id = 1;
+    var slide_stage_id = 0;
+    for (var i = 0; i < this.lesson.stages.length; i++) {
+      this.lesson.stages[i].name = 'Stage ' + (i + 1);
+
+      for (let slide of this.lesson.stages[i].slides) {
+        slide.order_id = slide_order_id;
+        slide.stage_id = slide_stage_id;
+        slide_order_id++;
       }
+      slide_stage_id++;
     }
   }
 
@@ -305,7 +400,12 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
       if (result.value) {
         var stageIndex = this.lesson.stages.indexOf(stage);
         var slideIndex = this.lesson.stages[stageIndex].slides.indexOf(slide);
+        var stagelength = this.lesson.stages.length - 1;
         this.lesson.stages[stageIndex].slides.splice(slideIndex, 1);
+        if (stagelength > slideIndex) {
+
+          this.setAllStageIndex();
+        }
         sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
         swal(
           'Done',
@@ -330,15 +430,6 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     console.log(index);
     let currentIndx = this.getNewSlide(index)
     this.router.navigate(['/slide_editor/' + index + '/' + currentIndx], { relativeTo: this.route });
-    // this.modalName = "Create " + "Slide";
-    // this.type = "PRESENTATION";
-    // this.stageindex = this.lesson.stages.indexOf(stage);
-    // this.currentModalInstance = this.modalService.open(content, this.options);
-    // this.currentModalInstance.result.then((result) => {
-    //   this.closeResult = `Closed with: ${result}`;
-    // }, (reason) => {
-    //   this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    // });
 
   };
 
