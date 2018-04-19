@@ -1,4 +1,4 @@
-<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+<app-navbar [userProfile]="complex_object.studentProfile"></app-navbar>
 <!-- You can now use your library component in app.component.html -->
 
 <div class="jumbotron p-0 mb-0" [ngStyle]="{'height': complex_object.studentProfile.userType =='CONTENT_ADMIN' ? '100%' : '95vh'}">
@@ -51,10 +51,14 @@
                     <i class="fa fa-info-circle" aria-hidden="true" placement="bottom" ngbPopover="{{task.title}}" triggers="mouseenter:mouseleave"></i>
                   </div>
                 </div>
-                <img class="card-img-top " [src]="sanitize(task.imageURL)" alt="Card image cap ">
+                <div style="position: relative;">
+                  <img class="card-img-top w-100" [src]="sanitize(task.imageURL)" alt="Card image cap ">
+                  <div class="corner-ribbon" [ngClass]="getType(task.lessonType)" *ngIf="task.itemType != 'COURSE_CREATION_TASK'">{{task.lessonType == 'PRESENTATION_INTERACTIVE' ? 'INTERACTIVE':task.lessonType}}</div>
+                </div>
+
                 <div class="card-block">
                   <h5 class="card-title text-muted">Description</h5>
-                  <p class="card-text">{{task.description}}</p>
+                  <p class="card-text">{{(task.description.length > 150) ? task.description.slice(0,150)+'...':task.description}}</p>
                 </div>
                 <button type="button " class="btn btn-danger btn-lg btn-block custom-btn-danger" (click)="goToTask(task)">
                   <div class="row m-0 custom-button-presentation justify-content-center">

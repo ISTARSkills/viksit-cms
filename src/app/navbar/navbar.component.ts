@@ -9,12 +9,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
   logoutString: String;
-  @Input() userName: String;
+  @Input() userProfile;
+  profilePic: string;
   complex_object;
+  username: string;
   constructor(private auth: AuthService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.logoutString = 'click to logout';
+    this.username = this.userProfile.firstName;
+    this.profilePic = this.userProfile.profileImage;
   }
 
   public logout() {

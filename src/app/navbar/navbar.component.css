@@ -29,3 +29,12 @@ nav{
 .nav-link.active{
 	color: #eb384f !important;
 }
+
+.custom-img {
+	height: 34px !important;
+    margin-top: 8px;
+    position: absolute;
+    right: 11%;
+    border-radius: 50%;
+    top: 0%;
+}

@@ -617,4 +617,11 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
   }
 
+  getRatio(type) {
+    var ratio = "1/1";
+    if (type.toLowerCase() == 'lesson') {
+      ratio = "1.85/1";
+    }
+    return ratio;
+  }
 }
