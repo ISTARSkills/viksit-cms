@@ -1,47 +1,64 @@
 <div class="row m-3" [ngSwitch]="switchexpression">
   <ng-container *ngSwitchCase="'TITLE_PARAGRAPH_CARD'">
     <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
-      <div class="card">
-        <div class="card-block">
-          <div class="row ">
-            <div class="col-3">
-              <div class="row ">
-                <label class="col-7 p-0">Background Color</label>
-                <input class="col-5 p-0" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-                />
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
               </div>
             </div>
-            <div class="col-3">
-              <span class="btn btn-default btn-file p-1">
-                <label class="m-auto">Background Image
-                  <i class="far fa-images"></i>
-                </label>
-                <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
-              </span>
-            </div>
 
-            <div class="col-3">
-              <span class="btn btn-default btn-file p-1">
-                <label class="m-auto">Slide Audio
-                  <i class="fas fa-volume-up"></i>
-                </label>
-                <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
-              </span>
-            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+              <div class="col-3">
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
 
-            <div class="col-3" *ngIf="isDestinationSlideVisible()">
-              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
-                id="inlineFormCustomSelect">
-                <option value="-1" selected>Choose Destination Slide...</option>
-                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
-              </select>
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
-            <div class="col-3">
-              <button class="btn btn-danger btn-sm float-right" (click)="openLg(content)">Add Skill</button>
-            </div>
-          </div>
-        </div>
-      </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
 
       <div class="card">
         <div class="card-block">
@@ -153,43 +170,64 @@
   </ng-container>
   <ng-container *ngSwitchCase="'LESSON_INTRODUCTION_CARD'">
     <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
-      <div class="card">
-        <div class="card-block">
-          <div class="row ">
-            <!-- <div class="col-4">
-              <label>Background Color</label>
-              <input [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-              />
-            </div> -->
 
-            <div class="col-3">
-              <div class="row ">
-                <label class="col-4 p-0">Font Color</label>
-                <input class="col-8 p-0" [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
-                />
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
               </div>
             </div>
 
-            <div class="col-4">
-              <span class="btn btn-default btn-file  p-1">
-                <label class="m-auto">Background Image
-                  <i class="far fa-images"></i>
-                </label>
-                <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
-              </span>
-            </div>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-3">
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+              <div class="col-3">
+                <div class="row ">
+                  <label class="col-4 p-0">Font Color</label>
+                  <input class="col-8 p-0" [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
+                  />
+                </div>
+              </div>
+              <div class="col-2">
 
-            <div class="col-3" *ngIf="isDestinationSlideVisible()">
-              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
-                id="inlineFormCustomSelect">
-                <option value="-1" selected>Choose Destination Slide...</option>
-                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
-              </select>
-            </div>
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
 
-          </div>
-        </div>
-      </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
 
       <div class="card">
         <div class="card-block">
@@ -296,46 +334,56 @@
   </ng-container>
   <ng-container *ngSwitchCase="'IMAGE_TITLE_PARAGRAPH_CARD'">
     <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
-      <div class="card">
-        <div class="card-block">
-          <div class="row ">
-            <div class="col-3">
-              <div class="row ">
-                <label class="col-8 p-0">Background Color</label>
-                <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-                />
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
               </div>
             </div>
-            <!-- <div class="col-3">
-              <span class="btn btn-default btn-file">
-                <label>Background Image</label>
-                <i class="far fa-images"></i>
-                <input type="file" accept=".png,.PNG,image/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
-                  (change)="onChangeImage($event)">
-              </span>
-            </div> -->
 
-            <div class="col-3">
-              <span class="btn btn-default btn-file p-1">
-                <label class="m-auto">Slide Audio
-                  <i class="fas fa-volume-up"></i>
-                </label>
-                <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
-              </span>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
-
-            <div class="col-3" *ngIf="isDestinationSlideVisible()">
-              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
-                id="inlineFormCustomSelect">
-                <option value="-1" selected>Choose Destination Slide...</option>
-                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
-              </select>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
 
       <div class="card">
         <div class="card-block">
@@ -541,7 +589,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
 
@@ -991,7 +1039,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
                 <div class="col-2" *ngIf="isDestinationSlideVisible()">
@@ -1555,6 +1603,9 @@
                   (change)="onChangeVideo($event)">
               </span>
             </div>
+            <div class="col-3">
+              <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+            </div>
             <div class="col-3" *ngIf="isDestinationSlideVisible()">
               <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
                 id="inlineFormCustomSelect">
@@ -1593,6 +1644,9 @@
                 <input type="file" accept=".mp4,.MP4,video/*" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp"
                   (change)="onChangeVideo($event)">
               </span>
+            </div>
+            <div class="col-3">
+              <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
             </div>
             <div class="col-3" *ngIf="isDestinationSlideVisible()">
               <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
@@ -1710,18 +1764,26 @@
     <div class="row w-100 ">
       <div class="col-8 w-100" style="overflow-y: auto; max-height: 78vh;">
 
-        <div class="row m-2">
-          <div class="col-7">
-            <label>Title Text</label>
-            <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
-          </div>
-          <div class="col-3">
-            <label>Choose Destination Slide</label>
-            <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
-              id="inlineFormCustomSelect">
-              <option value="-1" selected>Choose Destination Slide...</option>
-              <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
-            </select>
+        <div class="card mb-4">
+          <div class="card-block">
+            <div class="row m-2">
+              <div class="col-6">
+                <label>Title Text</label>
+                <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+              </div>
+              <div class="col-3">
+                <label>Choose Destination Slide</label>
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
+
+              <div class="col-3">
+                <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -2037,8 +2099,12 @@
                 <label class="m-auto">Slide Audio
                   <i class="fas fa-volume-up"></i>
                 </label>
-                <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
               </span>
+            </div>
+
+            <div class="col-2">
+              <button class="btn btn-danger btn-sm" (click)="openLg(content)">Add Skill</button>
             </div>
 
             <div class="col-3" *ngIf="isDestinationSlideVisible()">
@@ -2064,37 +2130,57 @@
   </ng-container>
   <ng-container *ngSwitchCase="'TITLE_IMAGE_PARAGRAPH_CARD'">
     <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
-      <div class="card">
-        <div class="card-block">
-          <div class="row ">
-            <div class="col-3">
-              <div class="row ">
-                <label class="col-8 p-0">Background Color</label>
-                <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-                />
+
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
               </div>
             </div>
-            <div class="col-3">
-              <span class="btn btn-default btn-file p-1">
-                <label class="m-auto">Slide Audio
-                  <i class="fas fa-volume-up"></i>
-                </label>
-                <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
-              </span>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
-
-            <div class="col-3" *ngIf="isDestinationSlideVisible()">
-              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
-                id="inlineFormCustomSelect">
-                <option value="-1" selected>Choose Destination Slide...</option>
-                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
-              </select>
-            </div>
-
-
-          </div>
-        </div>
-      </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
 
       <div class="card">
         <div class="card-block">
@@ -2253,44 +2339,64 @@
   </ng-container>
   <ng-container *ngSwitchCase="'IMAGE_PARAGRAPH_CARD'">
     <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
-      <div class="card">
-        <div class="card-block">
-          <div class="row ">
-            <div class="col-3">
-              <div class="row ">
-                <label class="col-8 p-0">Background Color</label>
-                <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
-                />
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
               </div>
-            </div>
-            <div class="col-3">
-              <span class="btn btn-default btn-file p-1">
-                <label class="m-auto">Slide Audio
-                  <i class="fas fa-volume-up"></i>
-                </label>
-                <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
-              </span>
-            </div>
-            <div class="col-3">
-              <div class="row ">
-                <label class="col-4 p-0">Font Color</label>
-                <input class="col-8 p-0" [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
-                />
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
               </div>
             </div>
 
-            <div class="col-3" *ngIf="isDestinationSlideVisible()">
-              <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
-                id="inlineFormCustomSelect">
-                <option value="-1" selected>Choose Destination Slide...</option>
-                <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
-              </select>
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3">
+                <div class="row ">
+                  <label class="col-4 p-0">Font Color</label>
+                  <input class="col-8 p-0" [(colorPicker)]="textcolor" [style.background]="textcolor" [value]="textcolor" (colorPickerChange)="cmyTextkColor=onTextChangeColor($event);textcolor=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
-
-
-          </div>
-        </div>
-      </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
 
       <div class="card">
         <div class="card-block">
@@ -2427,7 +2533,9 @@
                       <input ngbButton type="radio" class="invisible" [value]="true">Multi Select
                     </label>
                   </div>
-
+                  <div>
+                    <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                  </div>
                 </div>
               </div>
 
@@ -2457,7 +2565,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
 
@@ -3299,7 +3407,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
 
@@ -3500,7 +3608,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
               </div>
@@ -3730,7 +3838,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
               </div>
@@ -3914,7 +4022,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
               </div>
@@ -3948,7 +4056,7 @@
                         <label class="m-auto">Grid Audio
                           <i class="fa fa-volume-up"></i>
                         </label>
-                        <input type="file" accept=".mp3,.MP3" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,0)">
+                        <input type="file" accept=".wav,.WAV" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,0)">
                       </span>
                     </div>
                     <div class="col-3">
@@ -4007,7 +4115,7 @@
                         <label class="m-auto">Grid Audio
                           <i class="fa fa-volume-up"></i>
                         </label>
-                        <input type="file" accept=".mp3,.MP3" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,2)">
+                        <input type="file" accept=".wav,.WAV" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,2)">
                       </span>
                     </div>
                     <div class="col-3">
@@ -4067,7 +4175,7 @@
                         <label class="m-auto">Grid Audio
                           <i class="fa fa-volume-up"></i>
                         </label>
-                        <input type="file" accept=".mp3,.MP3" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,4)">
+                        <input type="file" accept=".wav,.WAV" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,4)">
                       </span>
                     </div>
                     <div class="col-3">
@@ -4128,7 +4236,7 @@
                         <label class="m-auto">Grid Audio
                           <i class="fa fa-volume-up"></i>
                         </label>
-                        <input type="file" accept=".mp3,.MP3" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,6)">
+                        <input type="file" accept=".wav,.WAV" class="form-control-file" aria-describedby="fileHelp" (change)="onChangeGridAudio($event,6)">
                       </span>
                     </div>
                     <div class="col-3">
@@ -4273,7 +4381,7 @@
                     <label class="m-auto">Slide Audio
                       <i class="fas fa-volume-up"></i>
                     </label>
-                    <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                    <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
               </div>
@@ -4396,7 +4504,1208 @@
       </div>
     </div>
   </ng-container>
+  <ng-container *ngSwitchCase="'ONLY_TITLE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
 
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-12">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-5" style="max-height: 40vh;min-height: 40vh;">
+          <div #titleview class="mx-auto title-text text-center animated">{{slide.title.text}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ONLY_2BOX'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-12">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+                <div class="col-12">
+                  <label>Title Description</label>
+                  <input type="text" [(ngModel)]="slide.list[0].text" class="form-control" aria-describedby="" placeholder="Enter Title Description..">
+                </div>
+                <div class="col-12">
+                  <label>Sub Title Text</label>
+                  <input type="text" [(ngModel)]="slide.subTitle.text" class="form-control" aria-describedby="" placeholder="Enter Sub Title..">
+                </div>
+                <div class="col-12">
+                  <label>Sub Title Description</label>
+                  <input type="text" [(ngModel)]="slide.list[1].text" class="form-control" aria-describedby="" placeholder="Enter Sub Title Description..">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-5" style="max-height: 40vh;min-height: 40vh;">
+          <div #titleview class="w-100 title-text text-left ml-1">{{slide.title.text}}</div>
+          <div #titleview class="w-100 title-text text-right mr-1">{{slide.list[0].text}}</div>
+          <div #titleview class="w-100 title-text text-left ml-1">{{slide.subTitle.text}}</div>
+          <div #titleview class="w-100 title-text text-right mr-1">{{slide.list[1].text}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'ONLY_2TITLE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-10">
+              <label>Title Text</label>
+              <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+            </div>
+
+            <div class="col-2">
+              <div class="form-group">
+                <label>Fragment Order</label>
+                <select class="form-control" [(ngModel)]="slide.title.fragment_order">
+                  <option selected value='1'>1</option>
+                  <option value='2'>2</option>
+                  <option value='3'>3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row ">
+
+            <div class="col-10">
+              <label>Sub Title Text</label>
+              <input type="text" [(ngModel)]="slide.subTitle.text" class="form-control" aria-describedby="" placeholder="Enter Sub Title..">
+
+            </div>
+            <div class="col-2">
+              <div class="form-group">
+                <label>Fragment Order</label>
+                <select class="form-control" [(ngModel)]="slide.subTitle.fragment_order">
+                  <option selected value='1'>1</option>
+                  <option value='2'>2</option>
+                  <option value='3'>3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-5" style="max-height: 40vh;min-height: 40vh;">
+          <div #titleview class="mx-auto title-text text-center mb-5 animated">{{slide.title.text}}</div>
+          <div #titleview class="mx-auto title-text text-center mt-5 animated">{{slide.subTitle.text}}</div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'ONLY_2TITLE_IMAGE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-10">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+
+                <div class="col-2">
+                  <div class="form-group">
+                    <label>Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.title.fragment_order">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row ">
+
+                <div class="col-10">
+                  <label>Sub Title Text</label>
+                  <input type="text" [(ngModel)]="slide.subTitle.text" class="form-control" aria-describedby="" placeholder="Enter Sub Title..">
+
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label>Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.subTitle.fragment_order">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row ">
+
+                <div class="col-3">
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Forground Image
+                      <i class="far fa-images"></i>
+                    </label>
+                    <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeForgroundImage($event)">
+                  </span>
+                </div>
+
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label>Fragment Order</label>
+                      </div>
+                      <div class="col-6">
+                        <select class="form-control" [(ngModel)]="slide.image.fragment_order">
+                          <option selected value='1'>1</option>
+                          <option value='2'>2</option>
+                          <option value='3'>3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-2" style="max-height: 30vh;min-height: 30vh;">
+          <div #titleview class="mx-auto title-text text-center  animated">{{slide.title.text}}</div>
+          <div #titleview class="mx-auto title-text text-center animated">{{slide.subTitle.text}}</div>
+          <img #imageview class='card-img custom-notask-imgtag title2_image animated' [src]="fgImage" alt=''>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ONLY_LIST'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+      </ngb-accordion>
+      <div class="card mb-2">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <div *ngFor="let list of slide.list; index as i ">
+                <div class="row mb-2" *ngIf="i < 6">
+
+
+                  <div class="col-2 ">
+                    <label>List Item {{i+1}}</label>
+                  </div>
+                  <div class="col-6 ">
+                    <input type="text" [(ngModel)]="list.text" class="form-control" aria-describedby="" placeholder="List text..">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-5">
+          <ul *ngFor="let list of slide.list; index as i ">
+            <li #titleview class="" *ngIf="list.text.trim() !=''">{{list.text}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="'ONLY_LIST_NUMBERED'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+
+      </ngb-accordion>
+      <div class="card mb-2">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <div *ngFor="let list of slide.list; index as i ">
+                <div class="row mb-2" *ngIf="i < 6">
+
+
+                  <div class="col-2 ">
+                    <label>List Item {{i+1}}</label>
+                  </div>
+                  <div class="col-6 ">
+                    <input type="text" [(ngModel)]="list.text" class="form-control" aria-describedby="" placeholder="List text..">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-5">
+          <ol>
+            <div *ngFor="let list of slide.list; index as i ">
+              <li #titleview class="" *ngIf="list.text.trim() !=''">
+                {{list.text}}
+              </li>
+            </div>
+
+          </ol>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ONLY_TITLE_IMAGE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 86vh;">
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-10">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+
+                <div class="col-2">
+                  <div class="form-group">
+                    <label>Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.title.fragment_order">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row ">
+
+                <div class="col-3">
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Forground Image
+                      <i class="far fa-images"></i>
+                    </label>
+                    <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeForgroundImage($event)">
+                  </span>
+                </div>
+
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label>Fragment Order</label>
+                      </div>
+                      <div class="col-6">
+                        <select class="form-control" [(ngModel)]="slide.image.fragment_order">
+                          <option selected value='1'>1</option>
+                          <option value='2'>2</option>
+                          <option value='3'>3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+        src='../../assets/image/play.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="row m-0 mt-2" style="max-height: 30vh;min-height: 30vh;">
+          <div #titleview class="mx-auto title-text text-center  animated">{{slide.title.text}}</div>
+          <img #imageview class='card-img custom-notask-imgtag title2_image animated' [src]="fgImage" alt=''>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ONLY_TITLE_PARAGRAPH_IMAGE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-5">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label>Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.title.fragment_order">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 ">
+              <div class="row ">
+
+                <div class="col-3">
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Forground Image
+                      <i class="far fa-images"></i>
+                    </label>
+                    <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeForgroundImage($event)">
+                  </span>
+                </div>
+
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label>Fragment Order</label>
+                      </div>
+                      <div class="col-6">
+                        <select class="form-control" [(ngModel)]="slide.image.fragment_order">
+                          <option selected value='1'>1</option>
+                          <option value='2'>2</option>
+                          <option value='3'>3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label>Paragraph Text</label>
+              <ck-editor name="editor1" [config]="{height:'100px',removeButtons:'Subscript,Superscript,Source,NewPage,Preview,Print,Save,Copy,Cut,Paste,Templates,Undo,Redo,Find,SelectAll,Replace,Form,Checkbox,Radio,TextField,Textarea,Selectionfield,HiddenField,Button,ImageButton,CopyFormatting,RemoveFormat,PasteFromWord,PasteText,Select,CreateDiv,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,About,ShowBlocks,Strike,Outdent,Indent,Blockquote,Font,BGColor,TextColor,JustifyCenter,JustifyLeft,JustifyRight,JustifyJustify,FontSize,Styles,Format,CheckSpelling'}"
+                [(ngModel)]=" this.slide.paragraph.text" skin="moono-lisa" lang="en" [fullPage]="true"></ck-editor>
+
+              <div class="row ">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Paragraph Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.paragraph.fragment_order">
+                      <option value='1'>1</option>
+                      <option selected value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+            src='../../assets/image/play.png' alt=''>
+          <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="slide.title.fragment_duration" #titleview class="mx-auto title-text text-center animated">{{slide.title.text}}</div>
+          <div [innerHTML]=" this.slide.paragraph.text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration"
+            #paragraphview class="paragraph-text animated">
+          </div>
+          <img #imageview class='card-img custom-notask-imgtag title2_image animated' [src]="fgImage" alt=''>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ONLY_TITLE_PARAGRAPH'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+
+              <div class="row ">
+                <div class="col-5">
+                  <label>Title Text</label>
+                  <input type="text" [(ngModel)]="slide.title.text" class="form-control" aria-describedby="" placeholder="Enter Title..">
+
+                </div>
+                <div class="col-2">
+                  <div class="form-group">
+                    <label>Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.title.fragment_order">
+                      <option selected value='1'>1</option>
+                      <option value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <label>Paragraph Text</label>
+              <ck-editor name="editor1" [config]="{height:'100px',removeButtons:'Subscript,Superscript,Source,NewPage,Preview,Print,Save,Copy,Cut,Paste,Templates,Undo,Redo,Find,SelectAll,Replace,Form,Checkbox,Radio,TextField,Textarea,Selectionfield,HiddenField,Button,ImageButton,CopyFormatting,RemoveFormat,PasteFromWord,PasteText,Select,CreateDiv,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,About,ShowBlocks,Strike,Outdent,Indent,Blockquote,Font,BGColor,TextColor,JustifyCenter,JustifyLeft,JustifyRight,JustifyJustify,FontSize,Styles,Format,CheckSpelling'}"
+                [(ngModel)]=" this.slide.paragraph.text" skin="moono-lisa" lang="en" [fullPage]="true"></ck-editor>
+
+              <div class="row ">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Paragraph Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.paragraph.fragment_order">
+                      <option value='1'>1</option>
+                      <option selected value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+            src='../../assets/image/play.png' alt=''>
+          <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="slide.title.fragment_duration" #titleview class="mx-auto mb-4 title-text text-center animated">{{slide.title.text}}</div>
+          <div [innerHTML]=" this.slide.paragraph.text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration"
+            #paragraphview class="paragraph-text animated">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <ng-container *ngSwitchCase="'ONLY_PARAGRAPH'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+              <div class="col-3 ">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Background Image
+                    <i class="far fa-images"></i>
+                  </label>
+                  <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeImage($event)">
+                </span>
+              </div>
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+            </div>
+            <div class="col-12">
+              <label>Paragraph Text</label>
+              <ck-editor name="editor1" [config]="{height:'100px',removeButtons:'Subscript,Superscript,Source,NewPage,Preview,Print,Save,Copy,Cut,Paste,Templates,Undo,Redo,Find,SelectAll,Replace,Form,Checkbox,Radio,TextField,Textarea,Selectionfield,HiddenField,Button,ImageButton,CopyFormatting,RemoveFormat,PasteFromWord,PasteText,Select,CreateDiv,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,About,ShowBlocks,Strike,Outdent,Indent,Blockquote,Font,BGColor,TextColor,JustifyCenter,JustifyLeft,JustifyRight,JustifyJustify,FontSize,Styles,Format,CheckSpelling'}"
+                [(ngModel)]=" this.slide.paragraph.text" skin="moono-lisa" lang="en" [fullPage]="true"></ck-editor>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+            src='../../assets/image/play.png' alt=''>
+          <div [style.animation-delay.ms]="title_delay" [style.animation-duration.ms]="slide.title.fragment_duration" #titleview class="mx-auto mb-4 title-text text-center animated">{{slide.title.text}}</div>
+          <div [innerHTML]=" this.slide.paragraph.text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration"
+            #paragraphview class="paragraph-text animated">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'ONLY_PARAGRAPH_IMAGE'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" class="interactive-panel">
+        <ngb-panel>
+          <ng-template ngbPanelTitle>
+            <div class="row m-0 remove-focus">
+              <div class="col-6 my-auto pl-0">
+
+                Slide Config
+              </div>
+
+              <div class="col-6 my-auto pl-0">
+
+
+                <div>
+                  <button class="btn btn-danger btn-sm float-right mr-2" (click)="openLg(content)">Add Skill</button>
+                </div>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="row m-2">
+              <div class="col-4 px-0">
+                <div class="row">
+                  <label class="col-6">Background Color</label>
+                  <input class="col-4" [(colorPicker)]="color" [style.background]="color" [value]="color" (colorPickerChange)="cmykColor=onChangeColor($event);color=$event"
+                  />
+                </div>
+              </div>
+
+
+              <div class="col-2">
+
+                <span class="btn btn-default btn-file p-1">
+                  <label class="m-auto">Slide Audio
+                    <i class="fas fa-volume-up"></i>
+                  </label>
+                  <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
+                </span>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      </ngb-accordion>
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+
+            <div class="col-12 ">
+              <div class="row ">
+
+                <div class="col-3">
+                  <span class="btn btn-default btn-file p-1">
+                    <label class="m-auto">Forground Image
+                      <i class="far fa-images"></i>
+                    </label>
+                    <input type="file" accept=".png,.PNG" class="form-control-file" id="bgimageInputFile" aria-describedby="fileHelp" (change)="onChangeForgroundImage($event)">
+                  </span>
+                </div>
+
+                <div class="col-4">
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-6">
+                        <label>Fragment Order</label>
+                      </div>
+                      <div class="col-6">
+                        <select class="form-control" [(ngModel)]="slide.image.fragment_order">
+                          <option selected value='1'>1</option>
+                          <option value='2'>2</option>
+                          <option value='3'>3</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12">
+              <label>Paragraph Text</label>
+              <ck-editor name="editor1" [config]="{height:'100px',removeButtons:'Subscript,Superscript,Source,NewPage,Preview,Print,Save,Copy,Cut,Paste,Templates,Undo,Redo,Find,SelectAll,Replace,Form,Checkbox,Radio,TextField,Textarea,Selectionfield,HiddenField,Button,ImageButton,CopyFormatting,RemoveFormat,PasteFromWord,PasteText,Select,CreateDiv,Unlink,Link,Anchor,Language,BidiRtl,BidiLtr,Image,Flash,Table,HorizontalRule,Smiley,SpecialChar,PageBreak,Iframe,Maximize,About,ShowBlocks,Strike,Outdent,Indent,Blockquote,Font,BGColor,TextColor,JustifyCenter,JustifyLeft,JustifyRight,JustifyJustify,FontSize,Styles,Format,CheckSpelling'}"
+                [(ngModel)]=" this.slide.paragraph.text" skin="moono-lisa" lang="en" [fullPage]="true"></ck-editor>
+
+              <div class="row ">
+                <div class="col-4">
+                  <div class="form-group">
+                    <label>Paragraph Fragment Order</label>
+                    <select class="form-control" [(ngModel)]="slide.paragraph.fragment_order">
+                      <option value='1'>1</option>
+                      <option selected value='2'>2</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <img [hidden]="onPlayDisable" (click)="animateMe()" class='card-img custom-notask-imgtag  paly-img' style="width: 30%;z-index: 999999;"
+            src='../../assets/image/play.png' alt=''>
+          <div [innerHTML]=" this.slide.paragraph.text" [style.animation-delay.ms]="paragraph_delay" [style.animation-duration.ms]="slide.paragraph.fragment_duration"
+            #paragraphview class="paragraph-text mt-4 animated">
+          </div>
+          <img #imageview class='card-img custom-notask-imgtag title2_image animated' [src]="fgImage" alt=''>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
 </div>
 
