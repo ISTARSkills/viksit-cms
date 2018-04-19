@@ -1,13 +1,13 @@
 body,input,button,select{
-font-family: avenir-light !important;
+font-family: Lato !important;
 }
 .popover-body{
     padding: 5px;
-    font-family: avenir-light;
+    font-family: Lato;
 }
 .popover-header{
     padding: 5px;
-    font-family: avenir-light;
+    font-family: Lato;
     background-color: #f7f7f7;
     border-top-left-radius: calc(.3rem - 1px);
     border-top-right-radius: calc(.3rem - 1px);   

@@ -1,4 +1,4 @@
-<app-navbar [userName]="complex_object.studentProfile.firstName"></app-navbar>
+<app-navbar [userProfile]="complex_object.studentProfile"></app-navbar>
 <div class="jumbotron mb-0">
   <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
   <div class="row m-0 mb-3">
@@ -31,7 +31,7 @@
                 <div class="form-group row">
                   <div class="col-6">
                     <label for="exampleInputEmail1">Course Name</label>
-                    <input type="text" [(ngModel)]="newCourse.name" class="form-control" placeholder="course name...">
+                    <input maxlength="50" type="text" [(ngModel)]="newCourse.name" class="form-control" placeholder="course name...">
                   </div>
                   <div class="col-6">
                     <label for="exampleSelect1">Context</label>
@@ -43,14 +43,14 @@
                 <div class="form-group row">
                   <div class="col-12">
                     <label for="exampleTextarea">Course Description</label>
-                    <textarea class="form-control" [(ngModel)]="newCourse.description" id="exampleTextarea" placeholder="course descripton..."
+                    <textarea maxlength="500" class="form-control" [(ngModel)]="newCourse.description" id="exampleTextarea" placeholder="course descripton..."
                       rows="3"></textarea>
                   </div>
                 </div>
                 <div class="custom-input-button">
                   <input type="file" (change)="fileChangeEvent($event)" accept=".png,.PNG" />
                 </div>
-                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1" format="png" (imageCropped)="imageCropped($event)"
                   (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
               </div>
               <div class="col-6">
@@ -107,7 +107,7 @@
                     <div class="my-auto ml-3" *ngIf="disableUpload" style="color: green;">File Uploaded</div>
                   </div>
                   <br/>
-                  <img [src]="croppedImage" *ngIf="croppedImage" style="width: 90%; height: 90%;" />
+                  <img [src]="croppedImage" *ngIf="croppedImage" style="width: 40%;" />
                 </div>
 
               </div>

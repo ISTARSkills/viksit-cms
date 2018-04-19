@@ -9,7 +9,7 @@
       "outDir": "dist",
       "assets": [
         "assets",
-        "favicon.ico"
+        "new_talentify_logo.png"
       ],
       "index": "index.html",
       "main": "main.ts",

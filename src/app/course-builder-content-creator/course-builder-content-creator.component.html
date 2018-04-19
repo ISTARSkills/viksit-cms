@@ -1,5 +1,4 @@
-<app-navbar *ngIf="navbarIsVisible" [userName]="complex_object.studentProfile.firstName"></app-navbar>
-
+<app-navbar *ngIf="navbarIsVisible" [userProfile]="complex_object.studentProfile"></app-navbar>
 <div #jumbotron class="jumbotron">
 
   <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
@@ -238,8 +237,10 @@
             <input type="file" (change)="fileChangeEvent($event)" accept=".png,.PNG" />
             <input #itemType type="hidden" name="item_type" [(ngModel)]="item_type">
           </div>
-          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3" format="png" (imageCropped)="imageCropped($event)"
-            (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1" format="png" *ngIf=" type == 'Module';"
+            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1.85/1" format="png" *ngIf=" type == 'Lesson';"
+            (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
         </div>
         <div class="col-6">
           <div class="row m-0">
@@ -250,9 +251,9 @@
         </div>
       </div>
       <label for="typeahead-format ">Name:</label>
-      <input type="text " class="form-control" [(ngModel)]="title" />
+      <input maxlength="50" type="text " class="form-control" [(ngModel)]="title" />
       <label for="typeahead-format ">Description:</label>
-      <textarea type="text " class="form-control" [(ngModel)]="desc"></textarea>
+      <textarea type="text " maxlength="500" class="form-control" [(ngModel)]="desc"></textarea>
       <div *ngIf=" type == 'Lesson';">
         <label for="typeahead-format ">Lesson Type:</label>
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectlessonType">

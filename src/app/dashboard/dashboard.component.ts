@@ -174,4 +174,10 @@ export class DashboardComponent implements OnInit {
 
     }
   }
+  getType(type) {
+    if (type.toLowerCase() == 'presentation_interactive') {
+      type = "interactive"
+    }
+    return type.toLowerCase();
+  }
 }

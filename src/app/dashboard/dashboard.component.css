@@ -59,3 +59,27 @@
 .swiper-button-next{
     background-image: url("../../assets/image/prev.png");
 }
+
+.corner-ribbon{
+    width: 130px;
+    position: absolute;
+    text-align: center;
+    letter-spacing: 1px;
+    color: #f0f0f0;
+    top: 84%;
+    border-top-right-radius: 65px;
+    font-size: 12px;
+    line-height: 2;
+  }
+
+.presentation{
+    background-color: #7ed321;
+}
+
+.interactive {
+    background-color:#35bdf0;
+}
+
+.assessment {
+    background-color: #df756a;
+}
