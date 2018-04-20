@@ -180,7 +180,7 @@ export class SlideEditorComponent implements OnInit {
       case "ONLY_TITLE":
         return 0;
       case "ONLY_2BOX":
-        return 1;
+        return 3;
       case "ONLY_2TITLE":
         return 1;
       case "ONLY_2TITLE_IMAGE":

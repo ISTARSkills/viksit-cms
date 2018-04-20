@@ -149,7 +149,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
         this.disableUpload = false;
       }
 
-    );
+      );
   }
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService, private sanitizer: DomSanitizer) {
@@ -374,6 +374,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       this.croppedImage = value.imageURL;
       this.disableUpload = true;
     } else if (this.type.toLowerCase() === 'lesson' && value.imageURL != '') {
+      this.selectlessonType = value.type;
       this.croppedImage = value.imageURL;
       this.disableUpload = true;
     }
