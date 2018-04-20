@@ -15,12 +15,12 @@
         </a>
       </li>
       <li ngbDropdown class="d-inline-block float-right">
+        <img [src]="profilePic" class="img-circle img-md custom-img">
         <a class=" nav-link dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle>Welcome {{username}}</a>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button class="dropdown-item" (click)="logout()">Logout</button>
         </div>
       </li>
-      <img [src]="profilePic" class="img-circle img-md custom-img">
     </ul>
   </div>
 </nav>
