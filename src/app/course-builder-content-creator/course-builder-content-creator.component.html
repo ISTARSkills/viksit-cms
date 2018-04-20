@@ -250,12 +250,12 @@
           <img [src]="sanitize(croppedImage)" *ngIf="croppedImage" style="width: 80%; height: 80%;" />
         </div>
       </div>
-      <label for="typeahead-format ">Name:</label>
+      <label for="typeahead-format ">Name *:</label>
       <input maxlength="50" type="text " class="form-control" [(ngModel)]="title" />
-      <label for="typeahead-format ">Description:</label>
+      <label for="typeahead-format ">Description *:</label>
       <textarea type="text " maxlength="500" class="form-control" [(ngModel)]="desc"></textarea>
       <div *ngIf=" type == 'Lesson';">
-        <label for="typeahead-format ">Lesson Type:</label>
+        <label for="typeahead-format ">Lesson Type *:</label>
         <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectlessonType">
           <option value="PRESENTATION">PRESENTATION</option>
           <option value="ASSESSMENT">ASSESSMENT</option>

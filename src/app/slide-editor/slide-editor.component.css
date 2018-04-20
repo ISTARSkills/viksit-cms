@@ -123,3 +123,7 @@
     animation-duration: 4s;
     animation-fill-mode: both;
   }
+  
+  .pointer-css{
+      cursor: pointer;
+  }

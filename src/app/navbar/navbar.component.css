@@ -32,9 +32,8 @@ nav{
 
 .custom-img {
 	height: 34px !important;
-    margin-top: 8px;
     position: absolute;
-    right: 11%;
+    left: -22%;
     border-radius: 50%;
-    top: 0%;
+	top: 7%;
 }
