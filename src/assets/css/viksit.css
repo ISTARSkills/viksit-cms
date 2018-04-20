@@ -183,3 +183,7 @@ display: block !important;
 .btn.disabled, .btn:disabled {
     cursor: not-allowed !important;
   }
+  
+.ngxmdp .ngxmdpicon:before { 
+    font-family: ngx-mydatepicker !important; 
+}
