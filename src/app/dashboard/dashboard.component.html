@@ -53,7 +53,7 @@
                 </div>
                 <div style="position: relative;">
                   <img class="card-img-top w-100" [src]="sanitize(task.imageURL)" alt="Card image cap ">
-                  <div class="corner-ribbon" [ngClass]="getType(task.lessonType)" *ngIf="task.itemType != 'COURSE_CREATION_TASK'">{{task.lessonType == 'PRESENTATION_INTERACTIVE' ? 'INTERACTIVE':task.lessonType}}</div>
+                  <div class="corner-ribbon" [ngClass]="getType(task.content_type)" *ngIf="task.itemType != 'COURSE_CREATION_TASK'">{{task.content_type == 'PRESENTATION_INTERACTIVE' ? 'INTERACTIVE':task.content_type}}</div>
                 </div>
 
                 <div class="card-block">
