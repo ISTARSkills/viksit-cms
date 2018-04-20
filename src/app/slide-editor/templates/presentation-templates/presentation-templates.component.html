@@ -4553,6 +4553,13 @@
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
               </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
           </ng-template>
         </ngb-panel>
@@ -4636,6 +4643,13 @@
                   </label>
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
+              </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
               </div>
             </div>
           </ng-template>
@@ -4734,6 +4748,13 @@
                   </label>
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
+              </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
               </div>
             </div>
           </ng-template>
@@ -4834,6 +4855,13 @@
                   </label>
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
+              </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
               </div>
             </div>
           </ng-template>
@@ -4985,6 +5013,13 @@
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
               </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
           </ng-template>
         </ngb-panel>
@@ -5075,6 +5110,13 @@
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
               </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
           </ng-template>
         </ngb-panel>
@@ -5162,6 +5204,13 @@
                   </label>
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
+              </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
               </div>
             </div>
           </ng-template>
@@ -5281,6 +5330,13 @@
                   </label>
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
+              </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
               </div>
             </div>
           </ng-template>
@@ -5432,6 +5488,13 @@
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
               </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
           </ng-template>
         </ngb-panel>
@@ -5551,6 +5614,13 @@
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
               </div>
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
+              </div>
             </div>
           </ng-template>
         </ngb-panel>
@@ -5628,6 +5698,14 @@
                   </label>
                   <input type="file" accept=".wav,.WAV" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                 </span>
+              </div>
+
+              <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                  id="inlineFormCustomSelect">
+                  <option value="-1" selected>Choose Destination Slide...</option>
+                  <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                </select>
               </div>
             </div>
           </ng-template>
