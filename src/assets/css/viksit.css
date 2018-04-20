@@ -134,7 +134,7 @@ display: block !important;
     color: #FFFFFF;
     display: block;
     border-color: #d9534f;
-    width: 93px;
+    width: 98px;
     height: 100%;
     border: 1px solid transparent;
     padding-top: 2px;
@@ -176,3 +176,10 @@ display: block !important;
         border-radius: 10px;
         background-color: #F5F5F5;
     }
+
+.dropdown-toggle {
+    cursor: pointer;
+}
+.btn.disabled, .btn:disabled {
+    cursor: not-allowed !important;
+  }
