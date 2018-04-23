@@ -116,13 +116,27 @@ export class CreateCourseTaskComponent implements OnInit {
   myOptions: INgxMyDpOptions = {
     // other options...
     dateFormat: 'dd/mm/yyyy',
-    closeSelectorOnDateSelect: true
+    closeSelectorOnDateSelect: true,
+    disableUntil: { year: 0, month: 0, day: 0 }
   };
 
   // Initialized to specific date (09.10.2018)
   model: any = { date: { day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() } };
 
-
+  disableUntil() {
+    let d = new Date();
+    d.setDate(d.getDate() - 1);
+    let copy = this.getCopyOfOptions();
+    copy.disableUntil = {
+      year: d.getFullYear(),
+      month: d.getMonth() + 1,
+      day: d.getDate()
+    };
+    this.myOptions = copy;
+  }
+  getCopyOfOptions(): INgxMyDpOptions {
+    return JSON.parse(JSON.stringify(this.myOptions));
+  }
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
   }
@@ -160,7 +174,6 @@ export class CreateCourseTaskComponent implements OnInit {
   }
 
   ngOnInit() {
-
     var modules = Array();
     this.newCourse = new Course("", null, "", "", "", "", modules);
     const local_complex_object = localStorage.getItem('currentUser')
@@ -177,6 +190,7 @@ export class CreateCourseTaskComponent implements OnInit {
       console.log(this.users);
     });
 
+    this.disableUntil();
   }
 
   isValidForm() {
