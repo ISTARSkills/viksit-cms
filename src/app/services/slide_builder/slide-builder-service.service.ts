@@ -227,8 +227,6 @@ export class SlideBuilderServiceService {
         && slide.interactivelist[3] != null && slide.interactivelist[3].image.url.trim() != ''
         && slide.interactivelist[4] != null && slide.interactivelist[4].image.url.trim() != ''
         && slide.interactivelist[5] != null && slide.interactivelist[5].image.url.trim() != ''
-        && slide.interactivelist[6] != null && slide.interactivelist[6].image.url.trim() != ''
-        && slide.interactivelist[7] != null && slide.interactivelist[7].image.url.trim() != ''
       ) {
         isValid = true;
       } else {

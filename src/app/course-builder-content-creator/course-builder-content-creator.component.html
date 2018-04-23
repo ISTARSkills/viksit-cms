@@ -170,8 +170,8 @@
                                               <div (click)="$event.stopPropagation();$event.preventDefault();dragOperationFunction('lesson')" class="col-1 p-0">
                                                 <i class="fas fa-exchange-alt"></i>
                                               </div>
-                                              <div class="col-9 lesson-header-size p-0 text-center" (click)="hideDescription(lesson)" ngbTooltip="{{lesson.name}}" triggers="mouseenter:mouseleave"
-                                                placement="top"> {{lesson.name.length>20 ? (lesson.name.substring(0,20))+"...": lesson.name}}</div>
+                                              <div class="col-9 lesson-header-size p-0 text-center" ngbTooltip="{{lesson.name}}" triggers="mouseenter:mouseleave" placement="top">
+                                                {{lesson.name.length>20 ? (lesson.name.substring(0,20))+"...": lesson.name}}</div>
                                               <div class="col-1 p-0 text-center">
                                                 <i (click)="$event.stopPropagation();$event.preventDefault();open('Lesson',lesson,content,j,k,l)" class="far fa-edit" aria-hidden="true"></i>
                                               </div>
