@@ -50,8 +50,23 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   myOptions: INgxMyDpOptions = {
     // other options...
     dateFormat: 'dd-mm-yyyy',
+    disableUntil: { year: 0, month: 0, day: 0 }
   };
 
+  disableUntil() {
+    let d = new Date();
+    d.setDate(d.getDate() - 1);
+    let copy = this.getCopyOfOptions();
+    copy.disableUntil = {
+      year: d.getFullYear(),
+      month: d.getMonth() + 1,
+      day: d.getDate()
+    };
+    this.myOptions = copy;
+  }
+  getCopyOfOptions(): INgxMyDpOptions {
+    return JSON.parse(JSON.stringify(this.myOptions));
+  }
 
   // Initialized to specific date (09.10.2018)
   dateFormatted: Date;
@@ -105,7 +120,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
         }
       }
     });
-
+    this.disableUntil();
   }
 
   enterSecondStep($event) {

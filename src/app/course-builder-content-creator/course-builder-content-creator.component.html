@@ -237,7 +237,7 @@
             <input type="file" (change)="fileChangeEvent($event)" accept=".png,.PNG" />
             <input #itemType type="hidden" name="item_type" [(ngModel)]="item_type">
           </div>
-          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1" format="png" *ngIf=" type == 'Module';"
+          <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1" format="png" *ngIf=" type != 'Lesson';"
             (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
           <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1.85/1" format="png" *ngIf=" type == 'Lesson';"
             (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (loadImageFailed)="loadImageFailed()"></image-cropper>
