@@ -50,6 +50,7 @@ import { SlideBuilderServiceService } from './services/slide_builder/slide-build
 import { PlayPresentationService } from './services/playpresentation/play-presentation-service';
 import { AssessmentBuilderComponent } from './assessment-builder/assessment-builder.component';
 import { AssessmentTemplateComponent } from './assessment-builder/assessment-template/assessment-template.component';
+import { MediaconvertorComponent } from './mediaconvertor/mediaconvertor.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { AssessmentTemplateComponent } from './assessment-builder/assessment-tem
     PresentationTemplatesComponent,
     AssessmentBuilderComponent,
     AssessmentTemplateComponent,
+    MediaconvertorComponent,
   ],
   imports: [
     BrowserModule,

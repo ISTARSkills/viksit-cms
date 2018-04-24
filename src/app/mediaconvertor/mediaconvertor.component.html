@@ -1,0 +1,52 @@
+<div class="container">
+  <ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>
+  <div class="col-md-12 col-md-offset-2">
+    <h3>Upload Media</h3>
+    <form method="POST" action="#" enctype="multipart/form-data">
+      <!-- COMPONENT START -->
+      <div class="form-group">
+        <div class="input-group input-file" name="Fichier1">
+          <input (click)="inputFile.click()" type="text" class="form-control" [(ngModel)]="fileName" name="fileName" placeholder='Choose a file...'
+          />
+          <span class="input-group-btn">
+            <button class="btn btn-default btn-choose" type="button" (click)="inputFile.click()">Choose</button>
+            <input multiple (change)="onChangeAudio($event)" #inputFile style="display: none" type="file" class="form-control" placeholder='Choose a file...'
+            />
+          </span>
+
+
+        </div>
+      </div>
+      <!-- COMPONENT END -->
+      <div class="row">
+        <div class="col-12">
+          <table *ngIf="fileUrl != null && fileUrl.length != 0" class="w-100">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Old File Size</th>
+                <th>New File Size</th>
+                <th>Url</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let file of fileUrl">
+                <td>{{file.name}}</td>
+                <td>{{file.old_file}}</td>
+                <td>{{file.new_file}}</td>
+                <td>
+
+
+                  <video [src]="file.url" controls height="39px;">
+                  </video>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>

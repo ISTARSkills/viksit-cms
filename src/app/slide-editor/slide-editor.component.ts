@@ -119,14 +119,14 @@ export class SlideEditorComponent implements OnInit {
   }
 
   isClassVisible(newValue: number, template_type: string) {
-    console.log(template_type);
+    // console.log(template_type);
     this.switchexpression = template_type
     this.isVisible = true;
     this.highlightedDiv = newValue;
     this.slide.type = template_type
     this.slide.fragmentcount = this.getFragmentCount(template_type);
 
-    console.log(this.slide);
+    //  console.log(this.slide);
     //  console.log(this.isVisible + " >> " + this.highlightedDiv + " >> " + this.switchexpression)
   }
 
@@ -211,8 +211,8 @@ export class SlideEditorComponent implements OnInit {
 
     this.loading = true;
 
-    console.log('save called>>');
-    console.log(this.lesson);
+    //console.log('save called>>');
+    //console.log(this.lesson);
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),

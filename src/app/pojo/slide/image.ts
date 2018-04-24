@@ -1,4 +1,4 @@
-export class Image {
+export class CMSImage {
 
     url: string;
     fragment_order: number;

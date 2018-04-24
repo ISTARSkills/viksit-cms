@@ -1,11 +1,11 @@
-import { Image } from "./image";
+import { CMSImage } from "./image";
 
 export class InteractiveList {
 
     text: string;
     description: string;
     id: number
-    image: Image;
+    image: CMSImage;
     gridX: number;
     gridY: number;
     isMultiSelect: boolean;
@@ -15,7 +15,7 @@ export class InteractiveList {
     isCorrectOption: boolean;
     transition_type: string;
     destination_slide: number;
-    constructor(text: string, description: string, id: number, image: Image, fragmentAudioUrl: string, isMultiSelect: boolean, points: number,
+    constructor(text: string, description: string, id: number, image: CMSImage, fragmentAudioUrl: string, isMultiSelect: boolean, points: number,
         xp: number, isCorrectOption: boolean, destination_slide: number, transition_type: string) {
         this.text = text;
         this.description = description;

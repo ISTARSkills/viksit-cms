@@ -22,7 +22,8 @@
     </div>
 
     <div class="col-6">
-      <a (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</a>
+      <button [disabled]="!isLessonSaveActive()" (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</button>
+      <a href="/app-mediaconvertor" target="_blank" class="custom-btn-color btn btn-danger float-right mr-2">convert audio</a>
     </div>
   </div>
   <div [hidden]="mobilePreviewIsVisible" #mobilePreview class="col-4 float-right lesson-mobile-preview animated">

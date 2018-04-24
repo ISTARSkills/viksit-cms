@@ -10,7 +10,7 @@ import { Slide } from '../pojo/slide/slide';
 import { NgbModal, ModalDismissReasons, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { List } from '../pojo/slide/list';
 import { SubTitle } from '../pojo/slide/subtitle';
-import { Image } from '../pojo/slide/image';
+import { CMSImage } from '../pojo/slide/image';
 import { InteractiveList } from '../pojo/slide/interactivelist';
 import { Question } from '../pojo/assessment/question';
 import { Option } from '../pojo/assessment/option';
@@ -184,7 +184,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   public startAssessmentPreview(slidePreviewPosition) {
 
-    console.log(slidePreviewPosition);
+    //  console.log(slidePreviewPosition);
     this.question = this.lesson.stages[slidePreviewPosition];
 
   }
@@ -216,7 +216,22 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   }
 
+  isLessonSaveActive() {
 
+    var isTrue = false;
+    for (let stage of this.lesson.stages) {
+
+      if (stage.slides.length == 0) {
+        isTrue = false;
+        break;
+      } else {
+        isTrue = true;
+      }
+
+    }
+
+    return isTrue;
+  }
 
   public getFragmentCount(type) {
 
@@ -236,7 +251,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     var interactivelists = Array();
     this.newTitle = new Title("", 1, "none", 500);
     this.newParagraph = new Paragraph("", 2, "none", 500);
-    this.image = new Image("", 3, "none", 500);
+    this.image = new CMSImage("", 3, "none", 500);
     for (let i = 0; i < 16; i++) {
       this.newList = new List("", "", i);
       this.newInteractiveList = new InteractiveList("", "", i, this.image, "", false, 0, 0, false, -1, "Bounce")
@@ -263,7 +278,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
 
 
-    console.log(this.lesson.stages[index].slides.length)
+    // console.log(this.lesson.stages[index].slides.length)
     sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
     // this.currentModalInstance.close();
 
@@ -427,7 +442,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
   public addSlideComponent = function (index) {
 
-    console.log(index);
+    //console.log(index);
     let currentIndx = this.getNewSlide(index)
     this.router.navigate(['/slide_editor/' + index + '/' + currentIndx], { relativeTo: this.route });
 

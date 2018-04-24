@@ -13,7 +13,7 @@ import { Observable } from 'rxjs/Observable';
 import { Skill } from '../../../pojo/skill/skill';
 import { List } from '../../../pojo/slide/list';
 import { InteractiveList } from '../../../pojo/slide/interactivelist';
-import { Image } from '../../../pojo/slide/image';
+import { CMSImage } from '../../../pojo/slide/image';
 
 @Component({
   selector: 'app-presentation-templates',
@@ -279,6 +279,9 @@ export class PresentationTemplatesComponent implements OnInit {
   }
 
   public onChangeImage(event) {
+
+
+
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
     var headers = new HttpHeaders();
@@ -312,6 +315,8 @@ export class PresentationTemplatesComponent implements OnInit {
   }
 
   onChangeGridImage(event, gridIndex) {
+
+    console.log(event);
 
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
@@ -529,19 +534,19 @@ export class PresentationTemplatesComponent implements OnInit {
 
     if (event == 2) {
       for (let i = 0; i < 4; i++) {
-        let image = new Image("", 3, "none", 500);
+        let image = new CMSImage("", 3, "none", 500);
         let newInteractiveList = new InteractiveList("", "", i, image, "", false, 0, 0, false, -1, "Bounce")
         this.slide.interactivelist.push(newInteractiveList);
       }
     } else if (event == 3) {
       for (let i = 0; i < 9; i++) {
-        let image = new Image("", 3, "none", 500);
+        let image = new CMSImage("", 3, "none", 500);
         let newInteractiveList = new InteractiveList("", "", i, image, "", false, 0, 0, false, -1, "Bounce")
         this.slide.interactivelist.push(newInteractiveList);
       }
     } else if (event == 4) {
       for (let i = 0; i < 16; i++) {
-        let image = new Image("", 3, "none", 500);
+        let image = new CMSImage("", 3, "none", 500);
         let newInteractiveList = new InteractiveList("", "", i, image, "", false, 0, 0, false, -1, "Bounce")
         this.slide.interactivelist.push(newInteractiveList);
       }
