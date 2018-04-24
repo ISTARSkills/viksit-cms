@@ -201,7 +201,7 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
       .subscribe(res => {
         //  console.log('response files res', res);
         this.audioUrl = res.toString();
@@ -232,7 +232,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
       .subscribe(res => {
         this.fgImage = res.toString();
         this.slide.image.url = this.fgImage;
@@ -263,7 +263,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
       .subscribe(res => {
         this.videoUrl = res.toString();
         this.slide.videoUrl = this.videoUrl;
@@ -295,7 +295,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
       .subscribe(res => {
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
@@ -332,7 +332,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
       .subscribe(res => {
         this.getGridByIndexForImage(gridIndex, res.toString())
         this.loading = false;
@@ -369,7 +369,7 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
       .subscribe(res => {
         this.getGridByIndexForAudio(gridIndex, res.toString())
         this.loading = false;
