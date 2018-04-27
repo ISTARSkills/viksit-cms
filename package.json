@@ -29,6 +29,7 @@
     "core-js": "^2.4.1",
     "hoek": "^5.0.3",
     "jquery": "^3.3.1",
+    "moment": "^2.22.1",
     "ng2-archwizard": "^2.1.0",
     "ng2-dnd": "^5.0.2",
     "ng2-google-charts": "^3.3.0",
