@@ -46,7 +46,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   course: Course;
   courseImage = "";
   moduleImage = "";
-  lessonImage = "";
+  lessonImage: string = "";
   comments;
   navbarIsVisible = false;
   closeResult: string;
@@ -149,7 +149,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
         this.disableUpload = false;
       }
 
-      );
+    );
   }
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService, private sanitizer: DomSanitizer) {
@@ -369,12 +369,15 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.croppedImage = null;
     if (this.type.toLowerCase() === 'course' && value.imageURL != '') {
       this.croppedImage = value.imageURL;
+      this.courseImage = value.imageURL;
       this.disableUpload = true;
     } else if (this.type.toLowerCase() === 'module' && value.imageURL != '') {
       this.croppedImage = value.imageURL;
+      this.moduleImage = value.imageURL;
       this.disableUpload = true;
     } else if (this.type.toLowerCase() === 'lesson' && value.imageURL != '') {
       this.selectlessonType = value.type;
+      this.lessonImage = value.imageURL;
       this.croppedImage = value.imageURL;
       this.disableUpload = true;
     }
@@ -411,7 +414,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
         } else {
           this.course.modules[this.module_index].name = this.title;
           this.course.modules[this.module_index].description = this.desc;
-          this.course.modules[this.module_index].imageURL = this.moduleImage;
+          this.course.modules[this.module_index].imageURL = this.croppedImage;
         }
 
 
@@ -440,7 +443,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
           this.course.modules[this.module_index].sessions[this.session_index].lessons[this.lesson_index].description = this.desc;
           this.course.modules[this.module_index].sessions[this.session_index].lessons[this.lesson_index].type = this.selectlessonType;
           this.course.modules[this.module_index].sessions[this.session_index].lessons[this.lesson_index].imageURL = this.lessonImage;
-
         }
         break;
 
