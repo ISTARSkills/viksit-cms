@@ -219,17 +219,18 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   isLessonSaveActive() {
 
     var isTrue = false;
-    for (let stage of this.lesson.stages) {
+    if (this.lesson != undefined && this.lesson.stages != undefined && this.lesson.stages != null && this.lesson.stages.length != 0) {
+      for (let stage of this.lesson.stages) {
 
-      if (stage.slides.length == 0) {
-        isTrue = false;
-        break;
-      } else {
-        isTrue = true;
+        if (stage.slides != undefined && stage.slides != null && stage.slides.length > 0) {
+          isTrue = true;
+        } else {
+          isTrue = false;
+          break;
+        }
+
       }
-
     }
-
     return isTrue;
   }
 
@@ -356,12 +357,6 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
           this.setAllStageIndex();
         }
-
-        // 
-
-
-
-
         sessionStorage.setItem('lesson', JSON.stringify(this.lesson));
         swal(
           'Done',

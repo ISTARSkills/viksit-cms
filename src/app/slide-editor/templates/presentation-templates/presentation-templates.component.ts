@@ -205,7 +205,7 @@ export class PresentationTemplatesComponent implements OnInit {
       .subscribe(res => {
         //  console.log('response files res', res);
         this.audioUrl = res.toString();
-        this.slide.audioUrl = this.bgImage;
+        this.slide.audioUrl = this.audioUrl;
         // this.audio.src = this.slide.audioUrl;
         this.loading = false;
       }, error => {
