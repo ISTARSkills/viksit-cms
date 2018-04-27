@@ -335,8 +335,15 @@ export class SlideBuilderServiceService {
       } else {
         isValid = false;
       }
+    } else if (slide.type === 'ASSESSMENT_TYPE_1') {
+      if (slide.paragraph != null && slide.paragraph.text.trim() != '') {
+        isValid = true;
+      } else {
+        isValid = false;
+      }
     }
-    //
+
+    //ASSESSMENT_TYPE_1
     //  console.log(slide);
     return isValid;
 
