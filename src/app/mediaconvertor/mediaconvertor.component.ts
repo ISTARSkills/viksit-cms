@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppConfiguration } from '../app.constants';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-mediaconvertor',
@@ -14,6 +16,7 @@ export class MediaconvertorComponent implements OnInit {
   public fileName: string = "";
   isDowloadTrue: boolean = true;
   fileUrl: Array<any>;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -39,7 +42,7 @@ export class MediaconvertorComponent implements OnInit {
       formData.append("item_type", 'AUDIO_CONVERTOR');
       formData.append("item_id", 0);
       formData.append("file", files[i], files[i]['name']);
-      this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+      this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
         .subscribe(res => {
           this.url = res.toString();
           var f = new File([this.url], this.url.split("/")[5]);
@@ -51,8 +54,11 @@ export class MediaconvertorComponent implements OnInit {
           // this.loading = false;
         });
     }
-
     this.loading = false;
-
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
   }
 }

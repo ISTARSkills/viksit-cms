@@ -14,6 +14,8 @@ import { CMSImage } from '../pojo/slide/image';
 import { InteractiveList } from '../pojo/slide/interactivelist';
 import { Question } from '../pojo/assessment/question';
 import { Option } from '../pojo/assessment/option';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 declare var require: any;
 const swal = require('sweetalert2');
 
@@ -63,6 +65,8 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     size: 'lg',
     windowClass: 'animated bounceInUp',
   };
+  private ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private modalService: NgbModal, private router: Router, private route: ActivatedRoute, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.id = this.route.snapshot.params.id;
   }
@@ -78,10 +82,10 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     if (this.id != undefined) {
       this.loading = true;
       const req = this.lessonBuilderService.getlessonDetails(this.id);
-      req.subscribe(
+      req.takeUntil(this.ngUnsubscribe).subscribe(
         data => {
           this.lessonBuilderService.lessonSave(data['data'])
-          this.lessonBuilderService.currentLesson.subscribe(lesson => this.lesson = lesson)
+          this.lessonBuilderService.currentLesson.takeUntil(this.ngUnsubscribe).subscribe(lesson => this.lesson = lesson)
           //console.log("lesson");
           //console.log(this.lesson);
           this.loading = false;
@@ -298,7 +302,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //console.log(res)
       this.lesson = res['data']
       this.lessonBuilderService.lessonSave(res['data'])
@@ -464,5 +468,9 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
+  }
 }

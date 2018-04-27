@@ -46,7 +46,7 @@ export class LessonBuilderServiceService {
 
         if (slide.id === id) {
           slideExist = true;
-          console.log(slide)
+          // console.log(slide)
           return Observable.of(slide)
         }
       }
@@ -76,9 +76,9 @@ export class LessonBuilderServiceService {
 
     this.http.get(AppConfiguration.ServerWithApiUrl + 'lesson/1/get_learning_objectives/').subscribe(
       data => {
-        console.log("skills");
+        //console.log("skills");
         this.SkillList = data['data']
-        console.log(this.SkillList);
+        // console.log(this.SkillList);
       },
       err => {
         console.log('Something went wrong!');

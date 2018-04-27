@@ -6,6 +6,8 @@ import { Lesson } from '../pojo/lesson/lesson';
 import { Session } from '../pojo/session/session';
 import { Module } from '../pojo/module/module';
 import { Course } from '../pojo/course';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-partial-clone-modal',
@@ -24,6 +26,8 @@ export class PartialCloneModalComponent implements OnInit {
   @Input() loading;
   @Output() loadingChange = new EventEmitter<any>();
   disableOnFinish = true;
+  private ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -92,7 +96,7 @@ export class PartialCloneModalComponent implements OnInit {
     const body = new HttpParams().set('course_object', JSON.stringify(newCourse)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //console.log(res['data']);
       this.courses = null;
       this.courses = res['data'];
@@ -125,5 +129,10 @@ export class PartialCloneModalComponent implements OnInit {
       isValid = false;
     }
     return isValid;
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
   }
 }

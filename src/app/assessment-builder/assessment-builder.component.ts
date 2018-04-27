@@ -5,6 +5,8 @@ import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { LessonBuilderServiceService } from '../services/lesson_bulider/lesson-builder-service.service';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { AppConfiguration } from '../app.constants';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-assessment-builder',
@@ -31,6 +33,7 @@ export class AssessmentBuilderComponent implements OnInit {
   stage;
   lesson;
   public loading = false;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.stage = this.route.snapshot.params.id;
@@ -83,7 +86,7 @@ export class AssessmentBuilderComponent implements OnInit {
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_assessment/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //  console.log(res)
       this.lesson = res['data']
       this.loading = false;
@@ -123,5 +126,9 @@ export class AssessmentBuilderComponent implements OnInit {
       this.isOn = true;
     }
   }
-
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
+  }
 }

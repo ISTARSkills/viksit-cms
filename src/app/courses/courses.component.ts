@@ -2,10 +2,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { AppConfiguration } from '../app.constants';
-import { Session } from 'selenium-webdriver';
-import { Lesson } from '../pojo/lesson/lesson';
-import { Module } from '../pojo/module/module';
+import 'rxjs/add/operator/takeUntil';
 import { NgbModal, ModalDismissReasons, NgbModalOptions, NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
+import { Subject } from 'rxjs/Subject';
+import { Lesson } from '../pojo/lesson/lesson';
 declare var require: any;
 const swal = require('sweetalert2');
 
@@ -30,6 +30,7 @@ export class CoursesComponent implements OnInit {
     size: 'lg',
     windowClass: 'animated bounceInUp',
   };
+  private ngUnsubscribe: Subject<any> = new Subject();
 
   constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private modalService: NgbModal) { }
 
@@ -39,12 +40,16 @@ export class CoursesComponent implements OnInit {
     this.complex_object = JSON.parse(local_complex_object);
     this.userType = this.complex_object.studentProfile.userType;
     this.loading = true;
-    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/get_all_course_structure/' + this.complex_object.id).subscribe(data => {
+    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/get_all_course_structure/' + this.complex_object.id).takeUntil(this.ngUnsubscribe).subscribe(data => {
       // Read the result field from the JSON response.
       //console.log('---> ' + data['data'][0]);
       this.courses = data['data'];
       this.storedCourses = data['data'];
       this.loading = false;
+    }, err => {
+      this.loading = false;
+      swal('Something went wrong!');
+
     });
   }
   open(content, s: string, course: any) {
@@ -103,12 +108,12 @@ export class CoursesComponent implements OnInit {
         const body = new HttpParams().set('course_object', JSON.stringify(course));
         this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/publish_course/' + course.id + '/' + action, body, {
           headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-        }).subscribe(res => {
+        }).takeUntil(this.ngUnsubscribe).subscribe(res => {
           //console.log(res['data']);
           course = res['data'];
           this.loading = false;
         }, error => {
-
+          swal('Something went wrong');
         });
         swal(
           'Done',
@@ -190,5 +195,10 @@ export class CoursesComponent implements OnInit {
   redirectToAssignPage(course) {
     var courseTaskId = course.taskId;
     this.router.navigate(['../review_task/' + courseTaskId], { relativeTo: this.route });
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
   }
 }

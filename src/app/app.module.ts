@@ -1,4 +1,3 @@
-import { ContextMenuModule } from 'ngx-contextmenu';
 import { AppConfiguration } from './app.constants';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,11 +15,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardContentCreatorComponent } from './dashboard-content-creator/dashboard-content-creator.component';
 import { CourseBuilderContentCreatorComponent } from './course-builder-content-creator/course-builder-content-creator.component';
 import { LessonBuilderContentCreatorComponent } from './lesson-builder-content-creator/lesson-builder-content-creator.component';
-import { SlickModule } from 'ngx-slick';
 import { DashboardContentAdminComponent } from './dashboard-content-admin/dashboard-content-admin.component';
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
-import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DndModule } from 'ng2-dnd';
 import { Ng2GoogleChartsModule } from 'ng2-google-charts';
 import { GraphComponent } from './graph/graph.component';
@@ -80,17 +75,14 @@ import { MediaconvertorComponent } from './mediaconvertor/mediaconvertor.compone
   ],
   imports: [
     BrowserModule,
-    DropzoneModule,
     NgbModule.forRoot(),
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    SlickModule.forRoot(),
     DndModule.forRoot(),
     Ng2GoogleChartsModule,
     ArchwizardModule,
-    ContextMenuModule.forRoot(),
     NgxMyDatePickerModule.forRoot(),
     NgSelectModule,
     ColorPickerModule,

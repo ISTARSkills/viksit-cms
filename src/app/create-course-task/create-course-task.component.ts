@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper/dist/lib/dropzone.interfaces';
 import { AppConfiguration } from '../app.constants';
 import { WizardComponent } from 'ng2-archwizard';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
@@ -9,6 +8,7 @@ import { INgxMyDpOptions, IMyDateModel, IMyDate } from 'ngx-mydatepicker';
 import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
@@ -28,6 +28,55 @@ export class CreateCourseTaskComponent implements OnInit {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   disableUpload = false;
+  complex_object;
+  progress = 50;
+  isOn = true;
+  isDisabled = false;
+  currentprogress = 0;
+  progressWidth1 = 0;
+  newCourse: Course;
+  progressWidth2 = 0;
+  isInclude2ndStep = false;
+  users = [];
+  courseImage = "";
+  item_id;
+  item_type = "COURSE_CREATION_TASK";
+  selectedUser = null;
+  @ViewChild('userSelectionInstance') userSelectionInstance: NgbTypeahead;
+  userSelectfocus$ = new Subject<string>();
+  userSelectclick$ = new Subject<string>();
+  @ViewChild(WizardComponent)
+  public wizard: WizardComponent;
+  public loading = false;
+  myOptions: INgxMyDpOptions = {
+    // other options...
+    dateFormat: 'dd/mm/yyyy',
+    closeSelectorOnDateSelect: true,
+    disableUntil: { year: 0, month: 0, day: 0 }
+  };
+  private ngUnsubscribe: Subject<any> = new Subject();
+
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
+  }
+
+  // Initialized to specific date (09.10.2018)
+  model: any = { date: { day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() } };
+
+  disableUntil() {
+    let d = new Date();
+    d.setDate(d.getDate() - 1);
+    let copy = this.getCopyOfOptions();
+    copy.disableUntil = {
+      year: d.getFullYear(),
+      month: d.getMonth() + 1,
+      day: d.getDate()
+    };
+    this.myOptions = copy;
+  }
+  getCopyOfOptions(): INgxMyDpOptions {
+    return JSON.parse(JSON.stringify(this.myOptions));
+  }
+
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
     this.disableUpload = false;
@@ -41,7 +90,7 @@ export class CreateCourseTaskComponent implements OnInit {
     // show cropper
   }
   loadImageFailed() {
-    swal('Something went wrong. Try again!!');
+    swal('Please check file format!! Only PNG supported');
     // show message
   }
   uploadImage() {
@@ -77,74 +126,9 @@ export class CreateCourseTaskComponent implements OnInit {
 
     );
   }
-
-  complex_object;
-  progress = 50;
-  isOn = true;
-  isDisabled = false;
-  currentprogress = 0;
-  progressWidth1 = 0;
-  newCourse: Course;
-  progressWidth2 = 0;
-  isInclude2ndStep = false;
-  users = [];
-  courseImage = "";
-  item_id;
-  item_type = "COURSE_CREATION_TASK";
-  selectedUser = null;
-  @ViewChild('userSelectionInstance') userSelectionInstance: NgbTypeahead;
-  userSelectfocus$ = new Subject<string>();
-  userSelectclick$ = new Subject<string>();
-  @ViewChild(WizardComponent)
-  public wizard: WizardComponent;
-  public loading = false;
-  public config: DropzoneConfigInterface = {
-    url: AppConfiguration.ServerWithApiUrl + 'image/upload',
-    method: 'POST',
-    maxFiles: 1,
-    clickable: true,
-    createImageThumbnails: true,
-    acceptedFiles: 'image/png',
-    errorReset: null,
-    cancelReset: null,
-    addRemoveLinks: true,
-    params: { 'item_type': this.item_type },
-    init: function () {
-
-    }
-  };
-  myOptions: INgxMyDpOptions = {
-    // other options...
-    dateFormat: 'dd/mm/yyyy',
-    closeSelectorOnDateSelect: true,
-    disableUntil: { year: 0, month: 0, day: 0 }
-  };
-
-  // Initialized to specific date (09.10.2018)
-  model: any = { date: { day: new Date().getDate(), month: new Date().getMonth() + 1, year: new Date().getFullYear() } };
-
-  disableUntil() {
-    let d = new Date();
-    d.setDate(d.getDate() - 1);
-    let copy = this.getCopyOfOptions();
-    copy.disableUntil = {
-      year: d.getFullYear(),
-      month: d.getMonth() + 1,
-      day: d.getDate()
-    };
-    this.myOptions = copy;
-  }
-  getCopyOfOptions(): INgxMyDpOptions {
-    return JSON.parse(JSON.stringify(this.myOptions));
-  }
-
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient) {
-  }
-
   onDateChanged(event: IMyDateModel): void {
 
   }
-
 
   userSearch = (text$: Observable<string>) =>
     text$
@@ -153,25 +137,6 @@ export class CreateCourseTaskComponent implements OnInit {
       .merge(this.userSelectclick$.filter(() => !this.userSelectionInstance.isPopupOpen()))
       .map(term => (term === '' ? this.users : this.users.filter(v => v.email.toLowerCase().indexOf(term.toLowerCase()) > -1)));
   userFormatter = (x: { email: string, id: number }) => x.id + ' ' + x.email;
-
-
-  onUploadSuccess(file) {
-
-    // console.log(file);
-    console.log(file[0].upload.filename);
-    console.log(file[0].type);
-    this.courseImage = file[0].xhr.response
-
-    this.newCourse.imageURL = this.courseImage;
-  }
-
-
-  onUploadError(file) {
-
-    console.log(file);
-    console.log(file[0].upload.filename);
-    console.log(file[0].type);
-  }
 
   ngOnInit() {
     var modules = Array();
@@ -184,7 +149,7 @@ export class CreateCourseTaskComponent implements OnInit {
     const body = new HttpParams().set('type', JSON.stringify(types));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'user/user_bytype', body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(data => {
+    }).takeUntil(this.ngUnsubscribe).takeUntil(this.ngUnsubscribe).subscribe(data => {
       // Read the result field from the JSON response.
       this.users = data['data'];
       console.log(this.users);
@@ -204,7 +169,6 @@ export class CreateCourseTaskComponent implements OnInit {
   }
 
   enterSecondStep($event) {
-
     if (this.wizard != undefined) {
       console.log(">>> " + this.wizard.model.currentStepIndex);
       this.currentprogress = this.wizard.model.currentStepIndex;
@@ -214,8 +178,6 @@ export class CreateCourseTaskComponent implements OnInit {
         this.isOn = true;
       }
       if (this.wizard.model.currentStepIndex == 1) {
-
-
         this.isInclude2ndStep = true;
         console.log("this.newCourse >>> " + this.newCourse.name);
         this.progressWidth1 = 50;
@@ -227,7 +189,6 @@ export class CreateCourseTaskComponent implements OnInit {
         this.isOn = true;
         this.isDisabled = true;
       }
-
     } else {
       console.log(this.wizard);
       this.progressWidth1 = 0;
@@ -238,12 +199,7 @@ export class CreateCourseTaskComponent implements OnInit {
 
   }
 
-
-
-
-
   finishFunction() {
-
     console.log(this.newCourse);
     console.log(this.selectedUser);
     console.log(this.model.formatted);
@@ -255,7 +211,6 @@ export class CreateCourseTaskComponent implements OnInit {
       } else {
         dueDate = this.model.date.day + "/" + this.model.date.month + "/" + this.model.date.year;
       }
-
       var assignee_object = {
         "userAssingedTo": [this.selectedUser.id],
         "dueDate": dueDate
@@ -264,20 +219,18 @@ export class CreateCourseTaskComponent implements OnInit {
       const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse)).set('assignee_object', JSON.stringify(assignee_object));
       this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/create_course_task/' + this.complex_object.id, body, {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-      }).subscribe(res => {
+      }).takeUntil(this.ngUnsubscribe).subscribe(res => {
         console.log(res['data']);
         this.loading = false;
         this.router.navigate(['/dashboard'], { relativeTo: this.route });
       });
     } else {
-
       alert("Please Assign The Task to a User");
-
-
     }
-
-
-
   }
-
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
+  }
 }

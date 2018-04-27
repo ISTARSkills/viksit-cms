@@ -18,6 +18,7 @@ import { Module } from '../../../pojo/module/module';
 import { Session } from '../../../pojo/session/session';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http/';
 import { AppConfiguration } from '../../../app.constants';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-session-wizard',
@@ -53,6 +54,8 @@ export class SessionWizardComponent implements OnInit {
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
   complex_object;
+  private ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
@@ -307,7 +310,7 @@ export class SessionWizardComponent implements OnInit {
     const body = new HttpParams().set('course_object', JSON.stringify(clonedObject)).set('assignee_object', JSON.stringify(assignee_object));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/clone_task/' + this.complex_object.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //console.log(res['data']);
       this.courses = res['data'];
       this.coursesChange.emit(this.courses);
@@ -333,5 +336,10 @@ export class SessionWizardComponent implements OnInit {
       this.checkValid = true;
     }
     return this.checkValid;
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
   }
 }

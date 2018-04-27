@@ -14,6 +14,8 @@ import { Skill } from '../../../pojo/skill/skill';
 import { List } from '../../../pojo/slide/list';
 import { InteractiveList } from '../../../pojo/slide/interactivelist';
 import { CMSImage } from '../../../pojo/slide/image';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
   selector: 'app-presentation-templates',
@@ -63,6 +65,8 @@ export class PresentationTemplatesComponent implements OnInit {
   skills$: Observable<Skill[]>;
   selectedskillId;
   selectGrid = 4;
+  private ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private modalService: NgbModal, private playppt: PlayPresentationService, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) { }
 
   getFragmentOrdering() {
@@ -100,7 +104,7 @@ export class PresentationTemplatesComponent implements OnInit {
       case 'LESSON_INTRODUCTION_CARD':
         break;
       case 'NO_CONTENT':
-        console.log("this.audio_delay" + this.audio_delay)
+        //console.log("this.audio_delay" + this.audio_delay)
         this.totalDuration = this.audio_delay;
         break;
       case 'INTERACTIVE_2_CROSS_2':
@@ -156,7 +160,7 @@ export class PresentationTemplatesComponent implements OnInit {
       }
 
       this.onPlayDisable = false;
-      console.log(this.onPlayDisable);
+      //console.log(this.onPlayDisable);
     }, this.totalDuration);
 
 
@@ -168,13 +172,13 @@ export class PresentationTemplatesComponent implements OnInit {
   }
 
   onTextChangeColor(color) {
-    console.log(color);
+    //console.log(color);
     this.textcolor = color;
     this.slide.fontColor = this.textcolor;
   }
 
   onDestinationSlideChange(destination_slide) {
-    console.log(destination_slide);
+    //console.log(destination_slide);
     this.slide.destination_slide = destination_slide;
   }
 
@@ -201,7 +205,7 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
       .subscribe(res => {
         //  console.log('response files res', res);
         this.audioUrl = res.toString();
@@ -232,7 +236,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
       .subscribe(res => {
         this.fgImage = res.toString();
         this.slide.image.url = this.fgImage;
@@ -263,7 +267,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
       .subscribe(res => {
         this.videoUrl = res.toString();
         this.slide.videoUrl = this.videoUrl;
@@ -274,7 +278,7 @@ export class PresentationTemplatesComponent implements OnInit {
         this.slide.videoUrl = this.videoUrl;
         this.loading = false;
       });
-    console.log(this.slide);
+    //console.log(this.slide);
 
   }
 
@@ -295,7 +299,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
       .subscribe(res => {
         this.bgImage = res.toString();
         this.slide.bgImage = this.bgImage;
@@ -316,7 +320,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
   onChangeGridImage(event, gridIndex) {
 
-    console.log(event);
+    //console.log(event);
 
     const files: Array<File> = event.target.files;
     const formData: any = new FormData();
@@ -332,7 +336,7 @@ export class PresentationTemplatesComponent implements OnInit {
     }
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
       .subscribe(res => {
         this.getGridByIndexForImage(gridIndex, res.toString())
         this.loading = false;
@@ -369,7 +373,7 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log('form data variable :   ' + formData.toString());
     this.loading = true;
 
-    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' })
+    this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', formData, { headers: headers, responseType: 'text' }).takeUntil(this.ngUnsubscribe)
       .subscribe(res => {
         this.getGridByIndexForAudio(gridIndex, res.toString())
         this.loading = false;
@@ -411,7 +415,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
 
 
-    this.lessonBuilderService.getAllSlide().subscribe(data => {
+    this.lessonBuilderService.getAllSlide().takeUntil(this.ngUnsubscribe).subscribe(data => {
       this.destinationslideIds = [];
 
       this.lessonType = data.type;
@@ -465,14 +469,14 @@ export class PresentationTemplatesComponent implements OnInit {
   }
 
   public onChangeDestinationslideId(event, gridIndex) {
-    console.log(event);
-    console.log(gridIndex);
+    //console.log(event);
+    //console.log(gridIndex);
     this.getGridByIndexForDestinationSlide(gridIndex, event)
   }
 
   onChangeSkill(event) {
 
-    console.log(event);
+    // console.log(event);
     if (event != null) {
       this.slide.learning_objectives.push(event);
 
@@ -481,7 +485,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
   addSkill(skillName) {
 
-    console.log(skillName);
+    //console.log(skillName);
     if (skillName.trim() != "") {
       this.slide.learning_objectives.push({ id: null, name: skillName });
 
@@ -527,8 +531,8 @@ export class PresentationTemplatesComponent implements OnInit {
 
   selectGridFunction(event) {
 
-    console.log(event);
-    console.log(this.selectGrid);
+    //console.log(event);
+    //console.log(this.selectGrid);
     this.slide.interactivelist = []
     var interactivelists = Array();
 
@@ -551,7 +555,7 @@ export class PresentationTemplatesComponent implements OnInit {
         this.slide.interactivelist.push(newInteractiveList);
       }
     }
-    console.log(this.slide);
+    //console.log(this.slide);
 
   }
 
@@ -561,7 +565,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
     this.skills$ = this.lessonBuilderService.getSkillForQuestions();
 
-    console.log(this.skills$);
+    //console.log(this.skills$);
 
   }
 
@@ -573,7 +577,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
   public isCorrectOptionFunction(option: string) {
 
-    console.log(this.isMultiSelect);
+    //console.log(this.isMultiSelect);
 
     if (this.isMultiSelect === false) {
 
@@ -584,7 +588,7 @@ export class PresentationTemplatesComponent implements OnInit {
 
       if (option == '1') {
         this.slide.interactivelist[0].isCorrectOption = true;
-        console.log(this.slide.interactivelist[1].isCorrectOption);
+        //console.log(this.slide.interactivelist[1].isCorrectOption);
       } else if (option == '2') {
         this.slide.interactivelist[1].isCorrectOption = true;
       } else if (option == '3') {
@@ -633,6 +637,9 @@ export class PresentationTemplatesComponent implements OnInit {
     // console.log(this.slide);
 
   }
-
-
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
+  }
 }

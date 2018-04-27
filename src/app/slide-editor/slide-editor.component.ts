@@ -10,6 +10,8 @@ import { Slide } from '../pojo/slide/slide';
 import { LessonBuilderServiceService } from '../services/lesson_bulider/lesson-builder-service.service';
 import { ParamMap, Router, ActivatedRoute } from '@angular/router';
 import { SlideBuilderServiceService } from '../services/slide_builder/slide-builder-service.service';
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-slide-editor',
@@ -38,13 +40,14 @@ export class SlideEditorComponent implements OnInit {
   isInclude2ndStep = false;
   selectedType = "PRESENTATION"
   slide: Slide;
-  slides: any;
   index;
   stage;
   lesson;
   public loading = false;
+  private ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private sideValidator: SlideBuilderServiceService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
+  constructor(private sideValidator: SlideBuilderServiceService, private router: Router, private route: ActivatedRoute, private sanitizer: DomSanitizer,
+    private http: HttpClient, private lessonBuilderService: LessonBuilderServiceService) {
     this.index = this.route.snapshot.params.index;
     this.stage = this.route.snapshot.params.id;
   }
@@ -58,9 +61,8 @@ export class SlideEditorComponent implements OnInit {
       { presentation: ["LESSON_INTRODUCTION_CARD", "TITLE_PARAGRAPH_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD", "ONLY_TITLE", "ONLY_2BOX", "ONLY_2TITLE", "ONLY_2TITLE_IMAGE", "ONLY_LIST", "ONLY_LIST_NUMBERED", "ONLY_TITLE_IMAGE", "ONLY_TITLE_PARAGRAPH_IMAGE", "ONLY_TITLE_PARAGRAPH", "ONLY_PARAGRAPH", "ONLY_PARAGRAPH_IMAGE"] },
       { interactive: ["LESSON_INTRODUCTION_CARD", "TITLE_PARAGRAPH_CARD", "IMAGE_TITLE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_2", "INTERACTIVE_3_CROSS_2", "ONLY_VIDEO", "VIDEO_TITLE_PARA_CARD", "INTERACTIVE_CARDS_LIST", "NO_CONTENT", "TITLE_IMAGE_PARAGRAPH_CARD", "IMAGE_PARAGRAPH_CARD", "INTERACTIVE_2_CROSS_1", "AUDIO_SPEECH_CARD", "AUDIO_TITLE_IMAGE_PARAGRAPH_CARD", "DRAGGABLE_CARD_1", "DRAGGABLE_CARD_2", "DRAGGABLE_CARD_3", "DRAGGABLE_CARD_4", "DRAGGABLE_CARD_5", "ONLY_TITLE", "ONLY_2BOX", "ONLY_2TITLE", "ONLY_2TITLE_IMAGE", "ONLY_LIST", "ONLY_LIST_NUMBERED", "ONLY_TITLE_IMAGE", "ONLY_TITLE_PARAGRAPH_IMAGE", "ONLY_TITLE_PARAGRAPH", "ONLY_PARAGRAPH", "ONLY_PARAGRAPH_IMAGE"] }]
 
-    this.lessonBuilderService.getAllSlide().subscribe(data => {
+    this.lessonBuilderService.getAllSlide().takeUntil(this.ngUnsubscribe).subscribe(data => {
       this.lesson = data;
-      this.slides = [];
       this.slide = this.lesson.stages[this.stage].slides[this.index]
 
 
@@ -86,8 +88,6 @@ export class SlideEditorComponent implements OnInit {
         }
 
       }
-
-
 
     });
 
@@ -216,7 +216,7 @@ export class SlideEditorComponent implements OnInit {
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //  console.log(res)
       this.lesson = res['data']
       this.loading = false;
@@ -262,5 +262,9 @@ export class SlideEditorComponent implements OnInit {
       this.isOn = true;
     }
   }
-
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
+  }
 }

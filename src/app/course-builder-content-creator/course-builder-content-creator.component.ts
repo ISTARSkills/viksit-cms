@@ -12,11 +12,10 @@ import { NgbPanelChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import { NgbAccordion } from '@ng-bootstrap/ng-bootstrap/accordion/accordion';
 import { Module } from '../pojo/module/module';
 import { AppConfiguration } from './../app.constants';
-import { DROPZONE_CONFIG, DropzoneConfigInterface, DropzoneModule } from 'ngx-dropzone-wrapper';
-import { ContextMenuComponent, ContextMenuService } from 'ngx-contextmenu';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap/popover/popover';
 import { CourseBuilderServiceService } from '../services/course_builder/course-builder-service.service';
 import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 import { DomSanitizer } from '@angular/platform-browser';
 declare var require: any;
 const swal = require('sweetalert2');
@@ -28,17 +27,8 @@ const swal = require('sweetalert2');
 })
 export class CourseBuilderContentCreatorComponent implements OnInit {
 
-  @ViewChild(ContextMenuComponent) public contextMenu: ContextMenuComponent;
   @ViewChild('itemType') itemType;
   @ViewChild('jumbotron') jumbotron;
-  public contextMenuActions = [
-    {
-      html: (item) => `Insert Comment`,
-      click: (item) => alert('clicked'),
-      enabled: (item) => true,
-      visible: (item) => item,
-    }
-  ];
   @Input() newCourse;
   pipe = new DatePipe('en-US');
   complex_object;
@@ -47,7 +37,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   courseImage = "";
   moduleImage = "";
   lessonImage: string = "";
-  comments;
   navbarIsVisible = false;
   closeResult: string;
   title = '';
@@ -56,7 +45,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   item_id: number;
   item_type: string;
   modalName = "";
-  simpleDrop: any = null;
   dragOperation = 'module';
   selectlessonType = 'PRESENTATION';
   module_index;
@@ -75,27 +63,15 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     windowClass: 'animated bounceInUp',
     backdrop: 'static'
   };
-  public config: DropzoneConfigInterface = {
-    url: AppConfiguration.ServerWithApiUrl + 'image/upload',
-    method: 'POST',
-    maxFiles: 1,
-    clickable: true,
-    maxFilesize: 1,
-    createImageThumbnails: true,
-    acceptedFiles: 'image/png',
-    errorReset: null,
-    cancelReset: null,
-    addRemoveLinks: true,
-    dictDefaultMessage: 'Upload Image',
-    init: function () {
-      this.on("removedfile", function (file) {
-      });
-    }
-  };
-
   imageChangedEvent: any = '';
   croppedImage: any = '';
   disableUpload = false;
+  private ngUnsubscribe: Subject<any> = new Subject();
+
+  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private courseBuilderServive: CourseBuilderServiceService, private sanitizer: DomSanitizer) {
+    this.id = this.route.snapshot.params.id;
+
+  }
   fileChangeEvent(event: any): void {
     this.imageChangedEvent = event;
     this.disableUpload = false;
@@ -110,7 +86,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     // show cropper
   }
   loadImageFailed() {
-    swal('Something went wrong. Try again!!');
+    swal('Please check file format!! Only PNG supported');
     // show message
   }
 
@@ -131,9 +107,9 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     this.http.post(AppConfiguration.ServerWithApiUrl + 'image/upload', fd, {
       headers: headers,
       responseType: 'text'
-    }).subscribe(
+    }).takeUntil(this.ngUnsubscribe).subscribe(
       res => {
-        console.log(res)
+        // console.log(res)
         this.loading = false;
         this.disableUpload = true;
         if (this.type.toLowerCase() === 'course') {
@@ -151,12 +127,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
     );
   }
-
-  constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private modalService: NgbModal, private contextMenuService: ContextMenuService, private courseBuilderServive: CourseBuilderServiceService, private sanitizer: DomSanitizer) {
-    this.id = this.route.snapshot.params.id;
-
-  }
-
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
@@ -351,11 +321,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     //console.log(this.course);
   };
 
-  public moveToLessonsFunction = function (module, session, lesson) {
-
-  }
-
-
   public open(type, value, content, module_index, session_index, lesson_index) {
     this.imageChangedEvent = null;
     this.croppedImage = null;
@@ -417,7 +382,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
           this.course.modules[this.module_index].imageURL = this.croppedImage;
         }
 
-
         break;
       case 'session':
         if (this.idNew) {
@@ -428,9 +392,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
           this.course.modules[this.module_index].sessions[this.session_index].name = this.title;
           this.course.modules[this.module_index].sessions[this.session_index].description = this.desc;
         }
-
-
-
 
         break;
       case 'lesson':
@@ -462,31 +423,6 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     }
   }
 
-  onUploadSuccess(file) {
-
-    // console.log(file);
-    //console.log(file[0].upload.filename);
-    //console.log(file[0].type);
-    //console.log(file[0].xhr.response);
-    if (this.type.toLowerCase() === 'course') {
-      this.courseImage = file[0].xhr.response
-    } else if (this.type.toLowerCase() === 'module') {
-      this.moduleImage = file[0].xhr.response
-
-    } else if (this.type.toLowerCase() === 'lesson') {
-      this.lessonImage = file[0].xhr.response
-
-    }
-
-  }
-
-
-  onUploadError(file) {
-
-    // console.log(file);
-    // console.log(file[0].upload.filename);
-    // console.log(file[0].type);
-  }
   ngOnInit() {
 
 
@@ -510,7 +446,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
 
       this.loading = true;
       // Make the HTTP request:
-      this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).subscribe(data => {
+      this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.id).takeUntil(this.ngUnsubscribe).subscribe(data => {
         // Read the result field from the JSON response.
         this.course = data['data'];
         //console.log(this.course);
@@ -538,7 +474,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     //console.log('review called>>');
     this.loading = true;
     // Make the HTTP request:
-    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/send_course_structure_review/' + this.id).subscribe(data => {
+    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/send_course_structure_review/' + this.id).takeUntil(this.ngUnsubscribe).subscribe(data => {
       // Read the result field from the JSON response.
       this.loading = false;
       this.router.navigate(['../../dashboard'], { relativeTo: this.route });
@@ -552,7 +488,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
     const body = new HttpParams().set('course_object', JSON.stringify(this.course));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/edit_course_structure/' + this.complex_object.id + '/' + this.id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //console.log(res)
       this.course = res['data'];
       this.isSubmitTrue = true;
@@ -564,30 +500,19 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
   saveVisible(modules) {
 
     if (modules != null && modules.length != 0) {
-
       for (let module of modules) {
-
         if (module.sessions != null && module.sessions.length != 0) {
-
           for (let session of module.sessions) {
-
             if (session.lessons != null && session.lessons.length != 0) {
-
               return false;
-
             } else {
               return true;
             }
-
           }
         } else {
           return true;
         }
-
       }
-
-
-
     } else {
       return true;
     }
@@ -626,5 +551,10 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
       ratio = "1.85/1";
     }
     return ratio;
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
   }
 }

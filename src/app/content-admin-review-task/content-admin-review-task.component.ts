@@ -14,6 +14,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import { DatePipe } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Lesson } from '../pojo/lesson/lesson';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'app-content-admin-review-task',
@@ -43,6 +44,8 @@ export class ContentAdminReviewTaskComponent implements OnInit {
   public todaydate = new Date();
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
+  private ngUnsubscribe: Subject<any> = new Subject();
+
   constructor(private http: HttpClient, private datePipe: DatePipe, private router: Router, private route: ActivatedRoute) {
     this.task_id = this.route.snapshot.params.task_id;
 
@@ -84,7 +87,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     this.loading = true;
     const local_complex_object = localStorage.getItem('currentUser');
     this.complex_object = JSON.parse(local_complex_object);
-    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.task_id).subscribe(data => {
+    this.http.get(AppConfiguration.ServerWithApiUrl + 'course/1/course_structure/' + this.task_id).takeUntil(this.ngUnsubscribe).subscribe(data => {
       // Read the result field from the JSON response.
       this.newCourse = data['data'];
       this.courseDueDate = this.newCourse.dueDate;
@@ -110,7 +113,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     const body = new HttpParams().set('type', JSON.stringify(types));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'user/user_bytype', body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(data => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(data => {
       // Read the result field from the JSON response.
       this.users = data['data'];
       //this.getCourseAssignee();
@@ -203,7 +206,7 @@ export class ContentAdminReviewTaskComponent implements OnInit {
     const body = new HttpParams().set('course_object', JSON.stringify(this.newCourse));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'course/1/review_course_structure/' + this.complex_object.id + '/' + this.task_id, body, {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
-    }).subscribe(res => {
+    }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       this.newCourse = res['data'];
       this.loading = false;
       this.router.navigate(['/dashboard'], { relativeTo: this.route });
@@ -268,5 +271,10 @@ export class ContentAdminReviewTaskComponent implements OnInit {
       });
     }
 
+  }
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+    console.log("unsubscribe");
   }
 }
