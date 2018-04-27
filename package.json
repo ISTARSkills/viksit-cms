@@ -45,6 +45,7 @@
     "ngx-swiper-wrapper": "^5.3.4",
     "npm": "^5.8.0",
     "rxjs": "^5.5.2",
+    "ssri": "^6.0.0",
     "sweetalert2": "^7.12.0",
     "zone.js": "^0.8.20"
   },
