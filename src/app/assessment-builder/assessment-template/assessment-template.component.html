@@ -515,6 +515,43 @@
     </div>
   </ng-container>
 
+
+  <ng-container *ngSwitchCase="'Essay_Type_Question'">
+    <div class="col-8" style="overflow-y: auto; max-height: 78vh;">
+
+      <div class="card">
+        <div class="card-block">
+          <div class="row ">
+            <div class="col-12">
+              <label>Question Text</label>
+              <input type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question..">
+            </div>
+
+            <div class="col-12">
+              <label>Question Explanation</label>
+              <textarea type="text" [(ngModel)]="question.explanation" class="form-control" aria-describedby="" placeholder="Enter Question Explanation.."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-4 text-center">
+
+      <img class='card-img-top custom-notask-imgtag mx-auto' style="width: 80%" src='../../assets/image/mobile_preview.png' alt=''>
+      <div [style.backgroundColor]="bgcolor" class="card custom_mobile-preview" style="background-size: cover" [style.background-image]="'url('+bgImage+')'">
+        <div class="card-block p-2">
+          <div class="row m-0">
+
+            <div class="mx-auto title2-text text-center animated">{{question.text}}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
 </div>
 
 

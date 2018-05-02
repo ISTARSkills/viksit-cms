@@ -16,7 +16,7 @@ import 'rxjs/add/operator/takeUntil';
 export class AssessmentBuilderComponent implements OnInit {
   @ViewChild(WizardComponent)
   public wizard: WizardComponent;
-  templateList = ["SINGLE_CHOICE", "MULTIPLE_CHOICE", "SINGLE_CHOICE_WITH_PARA", "MULTIPLE_CHOICE_WITH_PARA"];
+  templateList = ["SINGLE_CHOICE", "MULTIPLE_CHOICE", "SINGLE_CHOICE_WITH_PARA", "MULTIPLE_CHOICE_WITH_PARA", "Essay_Type_Question"];
   progressWidth1 = 0;
   progressWidth2 = 0;
   currentprogress = 0;

@@ -4016,6 +4016,14 @@
                     <input type="file" accept=".mp3,.MP3" class="form-control-file" id="audioInputFile" aria-describedby="fileHelp" (change)="onChangeAudio($event)">
                   </span>
                 </div>
+
+                <div class="col-3" *ngIf="isDestinationSlideVisible()">
+                  <select (change)="onDestinationSlideChange($event.target.value)" [(ngModel)]="slide.destination_slide" class="custom-select mr-sm-2"
+                    id="inlineFormCustomSelect">
+                    <option value="-1" selected>Choose Destination Slide...</option>
+                    <option value="{{destinationslideId.id}}" *ngFor="let destinationslideId of destinationslideIds; index as i ">{{destinationslideId.name}}</option>
+                  </select>
+                </div>
               </div>
             </ng-template>
           </ngb-panel>
