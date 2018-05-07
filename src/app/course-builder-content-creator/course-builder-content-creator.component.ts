@@ -125,7 +125,7 @@ export class CourseBuilderContentCreatorComponent implements OnInit {
         this.disableUpload = false;
       }
 
-    );
+      );
   }
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);

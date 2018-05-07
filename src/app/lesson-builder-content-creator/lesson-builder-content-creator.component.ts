@@ -223,7 +223,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   isLessonSaveActive() {
 
     var isTrue = false;
-    if (this.lesson != undefined && this.lesson.stages != undefined && this.lesson.stages != null && this.lesson.stages.length != 0) {
+    if (this.lesson != undefined && this.lesson.type != 'ASSESSMENT' && this.lesson.stages != undefined && this.lesson.stages != null && this.lesson.stages.length != 0) {
       for (let stage of this.lesson.stages) {
 
         if (stage.slides != undefined && stage.slides != null && stage.slides.length > 0) {
@@ -234,6 +234,13 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
         }
 
       }
+    } else if (this.lesson != undefined && this.lesson.type == 'ASSESSMENT' && this.lesson.stages != undefined && this.lesson.stages != null && this.lesson.stages.length != 0) {
+
+
+      isTrue = true;
+
+
+
     }
     return isTrue;
   }
@@ -301,7 +308,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     //console.log('save called>>');
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8'),
     }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //console.log(res)
       this.lesson = res['data']

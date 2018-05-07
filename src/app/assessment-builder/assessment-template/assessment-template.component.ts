@@ -34,6 +34,10 @@ export class AssessmentTemplateComponent implements OnInit {
       this.isMultiSelect = true;
     }
 
+    if (this.question.type === 'Essay_Type_Question') {
+      this.question.options[0].marking_schema = true;
+    }
+
   }
 
   ignore(event: Event) {

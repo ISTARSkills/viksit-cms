@@ -215,7 +215,7 @@ export class SlideEditorComponent implements OnInit {
     //console.log(this.lesson);
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
     this.http.post(AppConfiguration.ServerWithApiUrl + 'lesson/1/save_slides/' + this.lesson.id, body, {
-      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded'),
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8'),
     }).takeUntil(this.ngUnsubscribe).subscribe(res => {
       //  console.log(res)
       this.lesson = res['data']

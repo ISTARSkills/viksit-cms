@@ -524,7 +524,11 @@
           <div class="row ">
             <div class="col-12">
               <label>Question Text</label>
-              <input type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question..">
+              <textarea type="text" [(ngModel)]="question.text" class="form-control" aria-describedby="" placeholder="Enter Question.."></textarea>
+            </div>
+            <div class="col-12">
+              <label>Answer Text</label>
+              <textarea type="text" [(ngModel)]="question.options[0].text" class="form-control" aria-describedby="" placeholder="Enter answer.."></textarea>
             </div>
 
             <div class="col-12">
@@ -546,7 +550,11 @@
 
             <div class="mx-auto title2-text text-center animated">{{question.text}}</div>
           </div>
-
+          <div class="card w-100 mt-2 correct-option">
+            <div class="card-body">
+              {{question.options[0].text}}
+            </div>
+          </div>
         </div>
       </div>
     </div>
