@@ -23,7 +23,7 @@
 
     <div class="col-6">
       <button [disabled]="!isLessonSaveActive()" (click)="saveEndExitClicked()" class="custom-btn-color btn btn-danger float-right mr-2">Save</button>
-      <a href="/app-mediaconvertor" target="_blank" class="custom-btn-color btn btn-danger float-right mr-2">convert audio</a>
+      <a routerLink="/app-mediaconvertor" target="_blank" class="custom-btn-color btn btn-danger float-right mr-2">convert audio</a>
     </div>
   </div>
   <div [hidden]="mobilePreviewIsVisible" #mobilePreview class="col-4 float-right lesson-mobile-preview animated">
@@ -211,7 +211,7 @@
                       <div class="row m-0 row-eq-height">
 
                         <div class="col-2 pl-1">
-                          <a href="/slide_editor/{{j}}/{{k}}">
+                          <a routerLink="/slide_editor/{{j}}/{{k}}">
                             <i class="fas fa-edit"></i>
                           </a>
 
@@ -243,7 +243,7 @@
                 <div class="card-header  p-0 pt-3 pb-3">
                   <div class="row m-0 row-eq-height">
                     <div class="col-2 pl-1">
-                      <a href="/assessment_editor/{{j}}">
+                      <a routerLink="/assessment_editor/{{j}}">
                         <i class="fas fa-edit"></i>
                       </a>
 

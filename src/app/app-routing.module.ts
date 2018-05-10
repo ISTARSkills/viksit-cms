@@ -29,5 +29,5 @@ const routes: Routes = [{ path: '', redirectTo: '/login', pathMatch: 'full', can
 
 
 ];
-@NgModule({ imports: [RouterModule.forRoot(routes)], exports: [RouterModule] })
+@NgModule({ imports: [RouterModule.forRoot(routes, { useHash: true })], exports: [RouterModule] })
 export class AppRoutingModule { }

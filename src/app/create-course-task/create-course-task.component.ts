@@ -124,7 +124,7 @@ export class CreateCourseTaskComponent implements OnInit {
         this.disableUpload = false;
       }
 
-    );
+      );
   }
   onDateChanged(event: IMyDateModel): void {
 

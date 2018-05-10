@@ -46,6 +46,7 @@ import { PlayPresentationService } from './services/playpresentation/play-presen
 import { AssessmentBuilderComponent } from './assessment-builder/assessment-builder.component';
 import { AssessmentTemplateComponent } from './assessment-builder/assessment-template/assessment-template.component';
 import { MediaconvertorComponent } from './mediaconvertor/mediaconvertor.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { MediaconvertorComponent } from './mediaconvertor/mediaconvertor.compone
     CourseBuilderServiceService,
     LessonBuilderServiceService,
     SlideBuilderServiceService,
-    PlayPresentationService],
+    PlayPresentationService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 
