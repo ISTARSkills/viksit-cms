@@ -131,22 +131,14 @@
         <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="isCollapsed = !isCollapsed"
           [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
           <i class="fas fa-comments"></i> Comments</button>
+        <button *ngIf="lesson?.type == 'ASSESSMENT'" (click)="openOptions(content)" type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2">
+          <i class="fas fa-plus-circle"></i>Add Options</button>
         <button type="button" class="btn btn-outline-danger course_header_buttons float-right mr-2" (click)="mobilePreviewFunction('show')">
           <i class="far fa-play-circle"></i> Preview </button>
-
-        <div *ngIf="lesson?.type === 'ASSESSMENT'" class="btn-group btn-group-toggle  mr-3 float-right" ngbRadioGroup [(ngModel)]="lesson.isRetryable">
-          <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-            <input ngbButton type="radio" class="invisible" [value]="true">Retriable
-          </label>
-          <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
-            <input ngbButton type="radio" class="invisible" [value]="false">Non-Retriable
-          </label>
-        </div>
         <div *ngIf="lesson != null" class=" col-3 float-right">
           <label class=" col-5">Lesson Duration</label>
           <input type="number" [(ngModel)]="lesson.duration" class=" col-6" aria-describedby="" placeholder="Duration in min..">
         </div>
-
         <div id="collapseExample" [ngbCollapse]="isCollapsed">
           <div class="card custom-chat">
             <div class="card-body m-2">
@@ -280,22 +272,32 @@
     </div>
     <ng-template #content let-c="close" let-d="dismiss">
       <div class="modal-header">
-        <h4 class="modal-title m-auto">{{modalName}}</h4>
+        <h4 class="modal-title m-auto">Options</h4>
         <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <div *ngIf=" type == 'PRESENTATION';">
-          <label for="typeahead-format ">Slide Type:</label>
-          <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="selectSlideType">
-            <option value="ONLY_TITLE_PARAGRAPH_NEW">ONLY_TITLE_PARAGRAPH_NEW</option>
-          </select>
+      <div class="modal-body text-center">
+        <div *ngIf="lesson?.type === 'ASSESSMENT'" class="btn-group btn-group-toggle  mr-3" ngbRadioGroup [(ngModel)]="lesson.isRetryable">
+          <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+            <input ngbButton type="radio" class="invisible" [value]="true">Retriable
+          </label>
+          <label ngbButtonLabel class="btn-outline-danger btn-sm mb-0">
+            <input ngbButton type="radio" class="invisible" [value]="false">Non-Retriable
+          </label>
+        </div>
+        <div *ngIf="lesson?.type === 'ASSESSMENT'" class="col-12 row p-0 my-2">
+          <label class=" col-7">Minmum Passing Score</label>
+          <input type="number" [(ngModel)]="lesson.minPassScore" class=" col-5" aria-describedby="" placeholder="Min. Passing Score">
+        </div>
+        <div *ngIf="lesson?.type === 'ASSESSMENT' && lesson.isRetryable" class="col-12 row p-0 my-2">
+          <label class=" col-7">No. of Attempts</label>
+          <input type="number" [(ngModel)]="lesson.noOfAttempts" class=" col-5" aria-describedby="" placeholder="No. of Attempts">
         </div>
       </div>
       <div class="modal-footer ">
-        <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Close</button>
-        <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="save(content)">Save</button>
+        <button type="button " class="btn btn-outline-dark " (click)="c( 'Close click') ">Done</button>
+        <!-- <button type="button " data-dismiss="modal " class="btn btn-outline-dark " (click)="saveOptions(content)">Save</button> -->
       </div>
     </ng-template>
   </div>

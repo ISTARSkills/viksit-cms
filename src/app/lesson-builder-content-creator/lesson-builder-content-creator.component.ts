@@ -62,8 +62,8 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   image_delay = 0;
   selectSlideType = "TITLE_PARAGRAPH_CARD";
   options: NgbModalOptions = {
-    size: 'lg',
     windowClass: 'animated bounceInUp',
+    centered: true
   };
   private ngUnsubscribe: Subject<any> = new Subject();
 
@@ -303,7 +303,9 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
 
 
   saveEndExitClicked() {
-
+    if (!this.lesson.isRetryable) {
+      this.lesson.noOfAttempts = 1;
+    }
     this.loading = true;
     //console.log('save called>>');
     const body = new HttpParams().set('lesson_object', JSON.stringify(this.lesson));
@@ -466,7 +468,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
     }
   }
 
-  public open(content) {
+  public openOptions(content) {
 
     this.currentModalInstance = this.modalService.open(content, this.options);
     this.currentModalInstance.result.then((result) => {
