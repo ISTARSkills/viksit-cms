@@ -62,8 +62,7 @@ export class LessonBuilderContentCreatorComponent implements OnInit {
   image_delay = 0;
   selectSlideType = "TITLE_PARAGRAPH_CARD";
   options: NgbModalOptions = {
-    windowClass: 'animated bounceInUp',
-    centered: true
+    windowClass: 'animated bounceInUp'
   };
   private ngUnsubscribe: Subject<any> = new Subject();
 
